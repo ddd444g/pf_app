@@ -27,7 +27,7 @@ jobs:
 
   rspec:
     docker:
-      - image: cimg/ruby:2.7.3
+      - image: cimg/ruby:2.7.3-node
       - image: cimg/mysql:5.7
         environment:
           MYSQL_ROOT_PASSWORD: password
@@ -45,7 +45,7 @@ jobs:
       - ruby/install-deps
       - run:
           name: yarn Install
-          command: yarn install --cache-folder ~/.cache/yarn
+          command: yarn install
       - run:
           name: webpack install
           command: bundle exec bin/webpack
