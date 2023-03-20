@@ -1,0 +1,17 @@
+<h3>ユーザー編集</h3>
+
+<%= form_with model: @user do |f| %>
+  <table>
+    <tr>
+      <th><%= f.label :name ,"名前" %></th>
+      <td><%= f.text_field :name %></td>
+    </tr>
+  </table>
+
+  <div>
+    <ul>
+      <li><%= f.submit "編集を完了する" %></li>
+      <li><%= link_to "ユーザー情報一覧に戻る", :users %></li>
+    </ul>
+  </div>
+<% end %>

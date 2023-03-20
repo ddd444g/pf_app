@@ -1,0 +1,35 @@
+<h3>ユーザー情報一覧</h3>
+
+<% if flash[:notice] %>
+  <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>名前</th>
+      <th>更新日</th>
+      <th>作成日</th>
+      <th>参照</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.name %></td>
+        <td><%= user.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= user.created_at.to_s(:datetime_jp) %></td>
+        <td><%= link_to "参照", user %></td>
+        <td><%= link_to "編集", [:edit, user] %></td>
+        <td><%= link_to "削除", user, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= link_to "ユーザー新規登録", :new_user %></p>
