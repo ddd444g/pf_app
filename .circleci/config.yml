@@ -45,8 +45,10 @@ jobs:
       - ruby/install-deps
       - run:
           name: yarn Install
-          command: yarn install
-      - run: bundle exec bin/webpack
+          command: yarn install --cache-folder ~/.cache/yarn
+      - run:
+          name: webpack install
+          command: bundle exec bin/webpack
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
