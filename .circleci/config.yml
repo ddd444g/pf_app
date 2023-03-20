@@ -1,0 +1,61 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.4.0
+
+jobs:
+  build:
+    docker:
+      - image: cimg/ruby: 2.7
+    working_directory: ~/pf_app
+    steps:
+      - checkout:
+          path: ~/pf_app
+      - ruby/install-deps
+
+  rubocop:
+    docker:
+      - image: cimg/ruby: 2.7
+    working_directory: ~/pf_app
+    steps:
+      - checkout:
+          path: ~/pf_app
+      - ruby/install-deps
+      - run:
+          name: Run rubocop
+          command: bundle exec rubocop
+
+  rspec:
+    docker:
+      - image: cimg/ruby: 2.7
+      - image: cimg/mysql:5.7
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: myapp_test
+          MYSQL_USER: test
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      APP_DATABASE_HOST: "127.0.0.1"
+      RAILS_ENV: test
+    working_directory: ~/pf_app
+    steps:
+      - checkout:
+          path: ~/pf_app
+      - ruby/install-deps
+      - run:
+          name: Database setup
+          command: bundle exec rails db:migrate
+      - run:
+          ame: Run rspec
+          command: bundle exec rails spec
+
+workflows:
+  version: 2.1
+  build_test:
+    jobs:
+      - build
+      - rubocop
+      - rspec:
+          requires:
+            - build
