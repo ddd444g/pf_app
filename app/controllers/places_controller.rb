@@ -6,7 +6,7 @@ class PlacesController < ApplicationController
   end
 
   def create
-    @place = Place.new(params.require(:place).permit(:name, :latitude, :longitude, :user_id))
+    @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id))
     if @place.save
       flash[:notice] = "新規登録をしました"
       redirect_to :users
@@ -27,7 +27,7 @@ class PlacesController < ApplicationController
 
   def update
     @place = Place.find(params[:id])
-    if @place.update(params.require(:place).permit(:name, :latitude, :longitude))
+    if @place.update(params.require(:place).permit(:name, :memo, :latitude, :longitude))
       flash[:notice] = "登録内容を更新しました"
       redirect_to :users
     else

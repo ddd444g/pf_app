@@ -38,6 +38,7 @@
   <thead>
     <tr>
       <th>登録名</th>
+      <th>memo</th>
       <th>更新日時</th>
       <th>投稿日時</th>
       <th>投稿者(User_id)</th>
@@ -51,6 +52,7 @@
     <% @places.each do |place| %>
       <tr>
         <td><%= place.name %></td>
+        <td><%= place.memo %></td>
         <td><%= place.updated_at.to_s(:datetime_jp) %></td>
         <td><%= place.created_at.to_s(:datetime_jp) %></td>
         <td><%= place.user_id %></td>
