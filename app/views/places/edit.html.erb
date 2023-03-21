@@ -1,5 +1,7 @@
 <h3>投稿編集</h3>
 
+<%= render "shared/error", obj: @place %>
+
 <%= form_with model: @place do |f| %>
   <table>
     <tr>
