@@ -1,28 +1,26 @@
-<h3>ユーザー詳細</h3>
+<h3>投稿編集</h3>
 
-<table>
-  <tr>
-    <th>名前</th>
-    <td><%= @user.name %></td>
-  </tr>
-</table>
+<%= form_with model: @place do |f| %>
+  <table>
+    <tr>
+      <th><%= f.label :name,"登録名" %></th>
+      <td><%= f.text_field :name %></td>
+    </tr>
+  </table>
 
-<h3>行きたい場所新規登録</h3>
-
-<%= form_with(model: @place, local: true) do |f| %>
-  <div class="actions">
-    <%= f.label :name,"登録名" %>
-    <%= f.text_field :name %>
-    <%= f.submit "投稿を完了する" %>
-    <%= f.hidden_field :latitude,:value => nil, id: :lat %>
-    <%= f.hidden_field :longitude,:value => nil, id: :lng %>
-    <%= f.hidden_field :user_id, value: @user.id %>
+  <div>
+    <ul>
+      <li><%= f.submit "編集を完了する" %></li>
+      <li><%= link_to "ユーザー情報一覧に戻る", :users %></li>
+    </ul>
   </div>
+  <%= f.hidden_field :latitude,:value => @place.latitude, id: :lat %>
+  <%= f.hidden_field :longitude,:value => @place.longitude, id: :lng %>
 <% end %>
 
 <h2>Map</h2>
 
-<input id="address" type="textbox" value="東京駅">
+<input id="address" type="textbox" value=<%= @place.name %>>
 <input type="button" value="検索" onclick="codeAddress()">
 <p>ピンをドラック＆ドロップで位置の調整ができます。<p>
 <div id='map'></div>
@@ -43,13 +41,13 @@
     geocoder = new google.maps.Geocoder();
 
     map = new google.maps.Map(document.getElementById('map'), {
-      center:  {lat: 35.6803997, lng:139.7690174},
+      center:  {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>},
       zoom: 15,
     });
 
     marker = new google.maps.Marker({
       map: map,
-      position: {lat: 35.6803997, lng:139.7690174},
+      position: {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>},
       draggable: true
     });
 
@@ -91,9 +89,3 @@
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
 </script>
-
-<div>
-  <ul>
-    <li><%= link_to "ユーザー情報一覧に戻る", :users %></li>
-  </ul>
-</div>
