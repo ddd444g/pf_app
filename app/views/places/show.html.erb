@@ -1,0 +1,78 @@
+<h3>行きたい場所詳細</h3>
+
+<table>
+  <tr>
+    <th>登録名</th>
+    <td><%= @place.name %></td>
+  </tr>
+  <tr>
+    <th>memo</th>
+    <td><%= @place.memo %></td>
+  </tr>
+  <tr>
+    <th>更新日時</th>
+    <td><%= @place.updated_at.to_s(:datetime_jp) %></td>
+  </tr>
+  <tr>
+    <th>投稿日時</th>
+    <td><%= @place.created_at.to_s(:datetime_jp) %></td>
+  </tr>
+  <tr>
+    <th>投稿者(User_id)</th>
+    <td><%= @place.user_id %></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  function initMap() {
+    let test = {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
+    let map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: test
+    });
+
+    let transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(map);
+    let contentString = '登録名：<%= @place.name %>';
+    let infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
+    let marker = new google.maps.Marker({
+      position:test,
+      map: map,
+      title: contentString
+    });
+
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+</script>
+
+<style type="text/css">
+  #map {
+    height: 200px;
+    width: 70%;}
+</style>
+
+<div id="map"></div>
+
+<h3>ユーザー詳細</h3>
+
+<table>
+  <tr>
+    <th>名前</th>
+    <td><%= @place.user.name %></td>
+  </tr>
+</table>
+
+<div>
+  <ul>
+    <li><%= link_to "ユーザー情報一覧に戻る", :users %></li>
+  </ul>
+</div>

@@ -32,4 +32,36 @@
   </tbody>
 </table>
 
+<h3>行きたい場所一覧</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>登録名</th>
+      <th>memo</th>
+      <th>更新日時</th>
+      <th>投稿日時</th>
+      <th>投稿者(User_id)</th>
+      <th>参照</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @places.each do |place| %>
+      <tr>
+        <td><%= place.name %></td>
+        <td><%= place.memo %></td>
+        <td><%= place.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= place.created_at.to_s(:datetime_jp) %></td>
+        <td><%= place.user_id %></td>
+        <td><%= link_to "参照", place %></td>
+        <td><%= link_to "編集", [:edit, place] %></td>
+        <td><%= link_to "削除", place, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <p><%= link_to "ユーザー新規登録", :new_user %></p>

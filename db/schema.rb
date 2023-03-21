@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_230_320_024_216) do
-  create_table 'users', charset: 'utf8mb4', force: :cascade do |t|
-    t.string 'name'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+ActiveRecord::Schema.define(version: 2023_03_21_143244) do
+  create_table "places", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.float "latitude"
+    t.float "longitude"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "memo"
+  end
+
+  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 end
