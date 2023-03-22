@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @places = Place.all
+    @gone_places = GonePlace.all
   end
 
   def new
