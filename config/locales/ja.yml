@@ -2,6 +2,16 @@ ja:
    activerecord:
      models:
        user: ユーザー
+       place: 行きたい場所
+       gone_place: 訪問済みの場所
      attributes:
        user:
          name: 名前
+       place:
+        name: 名前
+        latitude: map
+        longitude: 登録
+       gone_place:
+        name: 名前
+        review: レビュー  
+        score: スコア

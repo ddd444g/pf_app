@@ -64,4 +64,37 @@
   </tbody>
 </table>
 
+<h3>訪問済み一覧</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>登録名</th>
+      <th>レビュー</th>
+      <th>スコア</th>
+      <th>更新日時</th>
+      <th>投稿日時</th>
+      <th>投稿者(User_id)</th>
+      <th>参照</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @gone_places.each do |gone_place| %>
+      <tr>
+        <td><%= gone_place.name %></td>
+        <td><%= gone_place.review %></td>
+        <td><%= gone_place.score %></td>
+        <td><%= gone_place.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= gone_place.created_at.to_s(:datetime_jp) %></td>
+        <td><%= gone_place.user_id %></td>
+        <td><%= link_to "参照", gone_place %></td>
+        <td><%= link_to "編集", [:edit, gone_place] %></td>
+        <td><%= link_to "削除", gone_place, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <p><%= link_to "ユーザー新規登録", :new_user %></p>

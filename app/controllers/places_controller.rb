@@ -19,6 +19,7 @@ class PlacesController < ApplicationController
 
   def show
     @place = Place.find(params[:id])
+    @gone_place = GonePlace.new
   end
 
   def edit
