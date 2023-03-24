@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
   let!(:user) { create(:user) }
 
   describe 'User' do
-    it 'nameがあれば有効な状態であること' do
+    it 'name,enail,passwordがあれば有効な状態であること' do
       expect(user).to be_valid
     end
   end

@@ -1,0 +1,13 @@
+<%= @error_message %>
+
+<% if flash[:notice] %>
+  <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+
+<%= form_with model: @user do |f| %>
+  <%= f.label :email, "メールアドレス" %>
+  <%= f.text_field :email,:value => @email %>
+  <%= f.label :password, "パスワード" %>
+  <%= f.password_field :password,:value => @password %>
+  <%= f.submit "ログインする"%>
+<% end %>

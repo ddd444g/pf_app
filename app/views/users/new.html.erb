@@ -6,7 +6,15 @@
   <table>
     <tr>
       <th><%= f.label :name ,"名前" %></th>
-      <td><%= f.text_field :name %></td>
+      <td><%= f.text_field :name, :value => @user.name %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :email ,"メールアドレス" %></th>
+      <td><%= f.text_field :email, :value => @user.email %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :password ,"パスワード" %></th>
+      <td><%= f.password_field :password %></td>
     </tr>
   </table>
 
