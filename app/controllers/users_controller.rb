@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params.require(:user).permit(:name, :email, :password))
+    @user = User.new(params.require(:user).permit(:name, :email, :password, :password_confirmation))
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = 'ユーザーを新規登録しました'
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(params.require(:user).permit(:name, :email, :password))
+    if @user.update(params.require(:user).permit(:name, :email, :password, :password_confirmation))
       flash[:notice] = "ユーザーIDが「#{@user.id}」の情報を更新しました"
       redirect_to("/users/#{@user.id}")
     else
@@ -55,8 +55,8 @@ class UsersController < ApplicationController
   end
 
   def login
-    @user = User.find_by(email: params[:email], password: params[:password])
-    if @user
+    @user = User.find_by(email: params[:email])
+    if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       flash[:notice] = "ログインしました"
       redirect_to("/users")
