@@ -64,29 +64,32 @@
 
 <div id="map"></div>
 
-<h3>この場所を訪問済みに登録する</h3>
+<% if @place.user_id == @current_user.id %>
+
+  <h3>この場所を訪問済みに登録する</h3>
  
-<%= form_with model: @gone_place do |f| %>
-  <table>
-    <tr>
-      <th><%= f.label :review, "レビュー" %></th>
-      <td><%= f.text_area :review, class:"posts-content" %></td>
-    </tr>
-    <tr>
-      <th><%= f.label :score, "スコア" %></th>
-      <td><%= f.number_field :score, in: 1..10, class:"posts-content" %></td>
-    </tr>
-  </table>
-  <%= f.hidden_field :user_id, value: @place.user_id %>
-  <%= f.hidden_field :place_id, value: @place.id %>
-  <%= f.hidden_field :name, value: @place.name %>
-  <%= f.hidden_field :latitude, value: @place.latitude %>
-  <%= f.hidden_field :longitude, value: @place.longitude %>
-  <div>
-    <ul>
-      <li><%= f.submit "投稿を完了する"%></li>
-    </ul>
-  </div>
+  <%= form_with model: @gone_place do |f| %>
+    <table>
+      <tr>
+        <th><%= f.label :review, "レビュー" %></th>
+        <td><%= f.text_area :review, class:"posts-content" %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :score, "スコア" %></th>
+        <td><%= f.number_field :score, in: 1..10, class:"posts-content" %></td>
+      </tr>
+    </table>
+    <%= f.hidden_field :user_id, value: @place.user_id %>
+    <%= f.hidden_field :place_id, value: @place.id %>
+    <%= f.hidden_field :name, value: @place.name %>
+    <%= f.hidden_field :latitude, value: @place.latitude %>
+    <%= f.hidden_field :longitude, value: @place.longitude %>
+    <div>
+      <ul>
+        <li><%= f.submit "投稿を完了する"%></li>
+      </ul>
+    </div>
+  <% end %>
 <% end %>
 
 <h3>ユーザー詳細</h3>

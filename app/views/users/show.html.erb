@@ -12,97 +12,101 @@
     <td><%= @user.name %></td>
     <th>email</th>
     <td><%= @user.email %></td>
-    <th>編集</th>
-    <td><%= link_to("編集", "/users/#{@user.id}/edit") %></td>
+    <% if @user.id == @current_user.id %>
+      <th>編集</th>
+      <td><%= link_to("編集", "/users/#{@user.id}/edit") %></td>
+    <% end %>
   </tr>
 </table>
 
-<h3>行きたい場所新規登録</h3>
+<% if @user.id == @current_user.id %>
+  <h3>行きたい場所新規登録</h3>
 
-<%= form_with(model: @place, local: true) do |f| %>
-  <div class="actions">
-    <%= f.label :name,"登録名" %>
-    <%= f.text_field :name %>
-    <%= f.label :memo,"memo" %>
-    <%= f.text_field :memo %>
-    <%= f.submit "投稿を完了する" %>
-    <%= f.hidden_field :latitude,:value => nil, id: :lat %>
-    <%= f.hidden_field :longitude,:value => nil, id: :lng %>
-    <%= f.hidden_field :user_id, value: @user.id %>
-  </div>
-<% end %>
+  <%= form_with(model: @place, local: true) do |f| %>
+    <div class="actions">
+      <%= f.label :name,"登録名" %>
+      <%= f.text_field :name %>
+      <%= f.label :memo,"memo" %>
+      <%= f.text_field :memo %>
+      <%= f.submit "投稿を完了する" %>
+      <%= f.hidden_field :latitude,:value => nil, id: :lat %>
+      <%= f.hidden_field :longitude,:value => nil, id: :lng %>
+      <%= f.hidden_field :user_id, value: @user.id %>
+    </div>
+  <% end %>
 
-<h2>Map</h2>
+  <h2>Map</h2>
 
-<input id="address" type="textbox" value="">
-<input type="button" value="検索" onclick="codeAddress()">
-<p>ピンをドラック＆ドロップで位置の調整ができます。<p>
-<div id='map'></div>
+  <input id="address" type="textbox" value="">
+  <input type="button" value="検索" onclick="codeAddress()">
+  <p>ピンをドラック＆ドロップで位置の調整ができます。<p>
+  <div id='map'></div>
 
-<style>
-#map {
-  height: 600px;
-  width: 600px;
-}
-</style>
-
-<script>
-  let map;
-  let marker;
-  let geocoder;
-
-  function initMap() {
-    geocoder = new google.maps.Geocoder();
-
-    map = new google.maps.Map(document.getElementById('map'), {
-      center:  {lat: 35.6803997, lng:139.7690174},
-      zoom: 15,
-    });
-
-    marker = new google.maps.Marker({
-      map: map,
-      position: {lat: 1, lng: 1}, //デフォルトでは見えない位置に指定するためこの数字
-      draggable: true
-    });
-
-    google.maps.event.addListener(marker, 'dragend', function(ev){
-      document.getElementById('lat').value = ev.latLng.lat();
-      document.getElementById('lng').value = ev.latLng.lng();
-    });
+  <style>
+  #map {
+    height: 600px;
+    width: 600px;
   }
+  </style>
 
-  function codeAddress() {
-    let inputAddress = document.getElementById('address').value;
-    geocoder.geocode({'address': inputAddress}, function(results, status) {
-      if (status == 'OK') {
-        if (marker) {
-          marker.setMap(null);
+  <script>
+    let map;
+    let marker;
+    let geocoder;
+
+    function initMap() {
+      geocoder = new google.maps.Geocoder();
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        center:  {lat: 35.6803997, lng:139.7690174},
+        zoom: 15,
+      });
+
+      marker = new google.maps.Marker({
+        map: map,
+        position: {lat: 1, lng: 1}, //デフォルトでは見えない位置に指定するためこの数字
+        draggable: true
+      });
+
+      google.maps.event.addListener(marker, 'dragend', function(ev){
+        document.getElementById('lat').value = ev.latLng.lat();
+        document.getElementById('lng').value = ev.latLng.lng();
+      });
+    }
+
+    function codeAddress() {
+      let inputAddress = document.getElementById('address').value;
+      geocoder.geocode({'address': inputAddress}, function(results, status) {
+        if (status == 'OK') {
+          if (marker) {
+            marker.setMap(null);
+          }
+          map.setCenter(results[0].geometry.location);
+
+          marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location,
+            draggable: true
+          });
+
+          document.getElementById('lat').value = results[0].geometry.location.lat();
+          document.getElementById('lng').value = results[0].geometry.location.lng();
+
+          google.maps.event.addListener(marker, 'dragend', function(ev){
+            document.getElementById('lat').value = ev.latLng.lat();
+            document.getElementById('lng').value = ev.latLng.lng();
+          });
+        } else {
+          alert('該当する結果がありませんでした：' + status);
         }
-        map.setCenter(results[0].geometry.location);
+      });
+    }
+  </script>
 
-        marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location,
-          draggable: true
-        });
-
-        document.getElementById('lat').value = results[0].geometry.location.lat();
-        document.getElementById('lng').value = results[0].geometry.location.lng();
-
-        google.maps.event.addListener(marker, 'dragend', function(ev){
-          document.getElementById('lat').value = ev.latLng.lat();
-          document.getElementById('lng').value = ev.latLng.lng();
-        });
-      } else {
-        alert('該当する結果がありませんでした：' + status);
-      }
-    });
-  }
-</script>
-
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
-</script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+  </script>
+<% end %>
 
 <div>
   <ul>
