@@ -6,6 +6,8 @@ class PlacesController < ApplicationController
   end
 
   def new
+    @place = Place.new
+    @user = User.find_by(id: session[:user_id])
   end
 
   def create
@@ -14,9 +16,8 @@ class PlacesController < ApplicationController
       flash[:notice] = "新規登録をしました"
       redirect_to :users
     else
-      @user = User.find_by(params[:place][:user_id])
-      @places = @user.places
-      render "users/show"
+      @user = User.find_by(id: session[:user_id])
+      render "places/new"
     end
   end
 
