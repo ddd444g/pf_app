@@ -11,6 +11,7 @@
       <th>名前</th>
       <th>email</th>
       <th>パスワード</th>
+      <th>ゲスト</th>
       <th>更新日</th>
       <th>作成日</th>
       <th>参照</th>
@@ -26,6 +27,7 @@
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.password_digest %></td>
+        <td><%= user.guest %></td>
         <td><%= user.updated_at.to_s(:datetime_jp) %></td>
         <td><%= user.created_at.to_s(:datetime_jp) %></td>
         <td><%= link_to "参照", user %></td>

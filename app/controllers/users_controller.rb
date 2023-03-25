@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user, only: [:index, :show, :edit, :update]
   before_action :forbid_login_user, only: [:new, :create, :login_form, :login]
   before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_guest_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -79,6 +80,26 @@ class UsersController < ApplicationController
     if @user != @current_user
       flash[:notice] = "権限がありません"
       redirect_to("/users")
+    end
+  end
+
+  def guest_login
+    user = User.find_or_create_by(email: "guest@exapmle.com") do |guest_user|
+      guest_user.password = SecureRandom.urlsafe_base64
+      guest_user.name = "ゲストユーザー"
+      guest_user.guest = true
+      guest_user.save
+    end
+    session[:user_id] = user.id
+    flash[:notice] = "ゲストユーザーとしてログインしました"
+    redirect_to("/users")
+  end
+
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    if @user.guest?
+      flash[:notice] = "権限がありません"
+      redirect_to users_path
     end
   end
 end
