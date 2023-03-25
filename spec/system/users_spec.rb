@@ -4,7 +4,10 @@ RSpec.describe 'Users_system', type: :system do
   let!(:user) { create(:user) }
 
   before do
-    visit users_path
+    visit login_path
+    fill_in "メールアドレス", with: user.email
+    fill_in "パスワード", with: user.password
+    click_button "ログインする"
   end
 
   describe 'user一覧の情報が表示されてるか' do

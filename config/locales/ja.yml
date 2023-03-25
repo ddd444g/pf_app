@@ -7,6 +7,9 @@ ja:
      attributes:
        user:
          name: 名前
+         email: メールアドレス
+         password: パスワード
+         password_confirmation: 確認用パスワード
        place:
         name: 名前
         latitude: map

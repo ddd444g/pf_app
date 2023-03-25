@@ -1,4 +1,7 @@
 class GonePlacesController < ApplicationController
+  before_action :authenticate_user
+  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+
   def index
   end
 
@@ -42,5 +45,13 @@ class GonePlacesController < ApplicationController
     @gone_place.destroy
     flash[:notice] = "訪問済み場所を削除しました"
     redirect_to :users
+  end
+
+  def ensure_correct_user
+    @gone_place = GonePlace.find(params[:id])
+    if @gone_place.user != @current_user
+      flash[:notice] = "権限がありません"
+      redirect_to("/users")
+    end
   end
 end

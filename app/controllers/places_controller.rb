@@ -1,4 +1,7 @@
 class PlacesController < ApplicationController
+  before_action :authenticate_user
+  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+
   def index
   end
 
@@ -41,5 +44,13 @@ class PlacesController < ApplicationController
     @place.destroy
     flash[:notice] = "投稿を削除しました"
     redirect_to :users
+  end
+
+  def ensure_correct_user
+    @place = Place.find(params[:id])
+    if @place.user != @current_user
+      flash[:notice] = "権限がありません"
+      redirect_to("/users")
+    end
   end
 end
