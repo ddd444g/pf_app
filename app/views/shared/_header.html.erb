@@ -17,6 +17,9 @@
       <li>
         <%= link_to("ログイン", "/login") %>
       </li>
+      <li>
+        <%= link_to "ゲストログイン", guest_login_path, method: :post %>
+      </li>
     <% end %>
   </ul>
 </header>
