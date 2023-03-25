@@ -27,7 +27,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @place = Place.new
     @places = @user.places
   end
 
