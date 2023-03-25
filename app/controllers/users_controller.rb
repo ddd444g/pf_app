@@ -92,7 +92,7 @@ class UsersController < ApplicationController
     end
     session[:user_id] = user.id
     flash[:notice] = "ゲストユーザーとしてログインしました"
-    redirect_to("/users")
+    redirect_to users_path
   end
 
   def ensure_guest_user
