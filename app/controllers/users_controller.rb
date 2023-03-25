@@ -98,7 +98,7 @@ class UsersController < ApplicationController
   def ensure_guest_user
     @user = User.find(params[:id])
     if @user.guest?
-      flash[:notice] = "権限がありません"
+      flash[:notice] = "ゲストユーザーの編集はできません"
       redirect_to users_path
     end
   end
