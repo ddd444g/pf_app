@@ -6,19 +6,33 @@ class GonePlacesController < ApplicationController
   end
 
   def new
+    @gone_place = GonePlace.new
+    @user = User.find_by(id: session[:user_id])
   end
 
   def create
     @gone_place = GonePlace.new(params.require(:gone_place).
     permit(:name, :user_id, :place_id, :review, :score, :latitude, :longitude))
     if @gone_place.save
-      @place = Place.find(params[:gone_place][:place_id])
+      @place = Place.find_by(id: params[:gone_place][:place_id])
       @place.destroy
       flash[:notice] = "訪問済みに登録し、行きたい場所から削除しました"
       redirect_to :users
     else
-      @place = Place.find_by(params[:gone_place][:place_id])
+      @place = Place.find_by(id: params[:gone_place][:place_id])
       render "places/show"
+    end
+  end
+
+  def not_from_place_create
+    @user = User.find_by(id: session[:user_id])
+    @gone_place = GonePlace.new(params.require(:gone_place).
+    permit(:name, :user_id, :review, :score, :latitude, :longitude))
+    if @gone_place.save
+      flash[:notice] = "訪問済みに登録しました"
+      redirect_to :users
+    else
+      render "gone_places/new"
     end
   end
 

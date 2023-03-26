@@ -18,3 +18,5 @@ ja:
         name: 名前
         review: レビュー  
         score: スコア
+        latitude: map
+        longitude: 登録

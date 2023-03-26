@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @places = @user.places
+    @gone_places = @user.gone_places
   end
 
   def edit
