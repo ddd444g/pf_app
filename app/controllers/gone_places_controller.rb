@@ -61,6 +61,28 @@ class GonePlacesController < ApplicationController
     redirect_to :users
   end
 
+  def once_again
+    @gone_place = GonePlace.find(params[:id])
+    if @gone_place.once_again
+      flash[:notice] = "'すでに登録されています"
+    else
+      @gone_place.update(once_again: true)
+      flash[:notice] = "もう一度行きたいに登録しました"
+    end
+    redirect_to users_path
+  end
+
+  def cancel_once_again
+    @gone_place = GonePlace.find(params[:id])
+    if @gone_place.once_again
+      @gone_place.update(once_again: false)
+      flash[:notice] = "もう一度行きたいを解除しました"
+    else
+      flash[:notice] = "まだもう一度行きたいに登録されていません"
+    end
+    redirect_to users_path
+  end
+
   def ensure_correct_user
     @gone_place = GonePlace.find(params[:id])
     if @gone_place.user != @current_user
