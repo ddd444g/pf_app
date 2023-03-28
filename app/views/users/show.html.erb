@@ -58,6 +58,7 @@
       <th>更新日時</th>
       <th>投稿日時</th>
       <th>投稿者(User_id)</th>
+      <th>もう一度行きたい</th>
       <th>参照</th>
       <th>編集</th>
       <th>削除</th>
@@ -72,9 +73,42 @@
         <td><%= gone_place.updated_at.to_s(:datetime_jp) %></td>
         <td><%= gone_place.created_at.to_s(:datetime_jp) %></td>
         <td><%= gone_place.user_id %></td>
+        <td><%= button_to "もう一度行きたい", once_again_path(gone_place), method: :post %></td>
         <td><%= link_to "参照", gone_place %></td>
         <td><%= link_to "編集", [:edit, gone_place] %></td>
         <td><%= link_to "削除", gone_place, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>もう一度行きたい一覧</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>登録名</th>
+      <th>レビュー</th>
+      <th>スコア</th>
+      <th>更新日時</th>
+      <th>投稿日時</th>
+      <th>投稿者(User_id)</th>
+      <th>もう一度行きたい</th>
+      <th>参照</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @once_again_places.each do |once_again_place| %>
+      <tr>
+        <td><%= once_again_place.name %></td>
+        <td><%= once_again_place.review %></td>
+        <td><%= once_again_place.score %></td>
+        <td><%= once_again_place.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= once_again_place.created_at.to_s(:datetime_jp) %></td>
+        <td><%= once_again_place.user_id %></td>
+        <td><%= button_to "解除する", cancel_once_again_path(once_again_place), method: :post %></td>
+        <td><%= link_to "参照", once_again_place %></td>
       </tr>
     <% end %>
   </tbody>
