@@ -64,7 +64,7 @@ class GonePlacesController < ApplicationController
   def once_again
     @gone_place = GonePlace.find(params[:id])
     if @gone_place.once_again
-      flash[:notice] = "'すでに登録されています"
+      flash[:notice] = "すでに登録されています"
     else
       @gone_place.update(once_again: true)
       flash[:notice] = "もう一度行きたいに登録しました"
