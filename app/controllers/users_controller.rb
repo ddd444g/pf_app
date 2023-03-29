@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @places = @user.places
     @gone_places = @user.gone_places
-    @once_again_places = GonePlace.where(once_again: true)
+    @once_again_places = @user.gone_places.where(once_again: true)
   end
 
   def edit
