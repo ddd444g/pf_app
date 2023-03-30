@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = 'ユーザーを新規登録しました'
-      redirect_to("/users/#{@user.id}")
+      redirect_to user_path(@user)
     else
       render 'new'
     end
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @places = @user.places
     @gone_places = @user.gone_places
-    @once_again_places = GonePlace.where(once_again: true)
+    @once_again_places = @user.gone_places.where(once_again: true)
   end
 
   def edit
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(params.require(:user).permit(:name, :email, :password, :password_confirmation))
       flash[:notice] = "ユーザーIDが「#{@user.id}」の情報を更新しました"
-      redirect_to("/users/#{@user.id}")
+      redirect_to user_path(@user)
     else
       render 'edit'
     end
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     flash[:notice] = 'ユーザーを削除しました'
-    redirect_to :users
+    redirect_to new_user_path
   end
 
   def login_form
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       flash[:notice] = "ログインしました"
-      redirect_to("/users")
+      redirect_to user_path(@user)
     else
       @error_message = "メールアドレスまたはパスワードが間違っています"
       @email = params[:email]
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user != @current_user
       flash[:notice] = "権限がありません"
-      redirect_to("/users")
+      redirect_to @current_user ? user_path(@current_user) : :root
     end
   end
 
@@ -94,14 +94,14 @@ class UsersController < ApplicationController
     end
     session[:user_id] = user.id
     flash[:notice] = "ゲストユーザーとしてログインしました"
-    redirect_to users_path
+    redirect_to user_path(user)
   end
 
   def ensure_guest_user
     @user = User.find(params[:id])
     if @user.guest?
       flash[:notice] = "ゲストユーザーの編集はできません"
-      redirect_to users_path
+      redirect_to user_path(@user)
     end
   end
 end

@@ -10,7 +10,8 @@
     <%= javascript_pack_tag 'application' %>
   </head>
   <body>
-    <%= render "shared/header" %>
+    <%= render "shared/header", current_user: @current_user %>
     <%= yield %>
+    <%= render "shared/footer" %>
   </body>
 </html>
