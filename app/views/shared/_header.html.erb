@@ -1,5 +1,8 @@
 <header class="header-right">
   <ul class="header-menus">
+    <li>
+      <%= link_to "top", root_path %>
+    </li>
     <% if current_user %>
       <li>
         <%= link_to(current_user.name , "/users/#{current_user.id}") %>
