@@ -11,90 +11,31 @@
     <th>memo</th>
     <td><%= @place.memo %></td>
   </tr>
-  <tr>
-    <th>投稿者(User_id)</th>
-    <td><%= @place.user_id %></td>
-  </tr>
 </table>
 
-<script type="text/javascript">
-  function initMap() {
-    let test = {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
-    let map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 15,
-      center: test
-    });
+<%= render "shared/place_map", place: @place %>
 
-    let transitLayer = new google.maps.TransitLayer();
-        transitLayer.setMap(map);
-    let contentString = '登録名：<%= @place.name %>';
-    let infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
+<h3>この場所を訪問済みに登録する</h3>
 
-    let marker = new google.maps.Marker({
-      position:test,
-      map: map,
-      title: contentString
-    });
-
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-    });
-  }
-</script>
-
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
-</script>
-
-<style type="text/css">
-  #map {
-    height: 200px;
-    width: 70%;}
-</style>
-
-<div id="map"></div>
-
-<% if @place.user_id == @current_user.id %>
-
-  <h3>この場所を訪問済みに登録する</h3>
- 
-  <%= form_with model: @gone_place do |f| %>
-    <table>
-      <tr>
-        <th><%= f.label :review, "レビュー" %></th>
-        <td><%= f.text_area :review, class:"posts-content" %></td>
-      </tr>
-      <tr>
-        <th><%= f.label :score, "スコア" %></th>
-        <td><%= f.number_field :score, in: 1..10, class:"posts-content" %></td>
-      </tr>
-    </table>
-    <%= f.hidden_field :user_id, value: @place.user_id %>
-    <%= f.hidden_field :place_id, value: @place.id %>
-    <%= f.hidden_field :name, value: @place.name %>
-    <%= f.hidden_field :latitude, value: @place.latitude %>
-    <%= f.hidden_field :longitude, value: @place.longitude %>
-    <div>
-      <ul>
-        <li><%= f.submit "投稿を完了する"%></li>
-      </ul>
-    </div>
-  <% end %>
+<%= form_with model: @gone_place do |f| %>
+  <table>
+    <tr>
+      <th><%= f.label :review, "レビュー" %></th>
+      <td><%= f.text_area :review, class:"posts-content" %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :score, "スコア" %></th>
+      <td><%= f.number_field :score, in: 1..10, class:"posts-content" %></td>
+    </tr>
+  </table>
+  <%= f.hidden_field :user_id, value: @place.user_id %>
+  <%= f.hidden_field :place_id, value: @place.id %>
+  <%= f.hidden_field :name, value: @place.name %>
+  <%= f.hidden_field :latitude, value: @place.latitude %>
+  <%= f.hidden_field :longitude, value: @place.longitude %>
+  <div>
+    <ul>
+      <li><%= f.submit "投稿を完了する"%></li>
+    </ul>
+  </div>
 <% end %>
-
-<h3>ユーザー詳細</h3>
-
-<table>
-  <tr>
-    <th>名前</th>
-    <td><%= @place.user.name %></td>
-  </tr>
-</table>
-
-<div>
-  <ul>
-    <li><%= link_to "ユーザー情報一覧に戻る", :users %></li>
-  </ul>
-</div>

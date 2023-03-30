@@ -21,73 +21,10 @@
   <div>
     <ul>
       <li><%= f.submit "編集を完了する" %></li>
-      <li><%= link_to "ユーザー情報一覧に戻る", :users %></li>
     </ul>
   </div>
   <%= f.hidden_field :latitude,:value => @gone_place.latitude, id: :lat %>
   <%= f.hidden_field :longitude,:value => @gone_place.longitude, id: :lng %>
 <% end %>
 
-<h2>Map</h2>
-
-<input id="address" type="textbox" value=<%= @gone_place.name %>>
-<input type="button" value="検索" onclick="codeAddress()">
-<p>ピンをドラック＆ドロップで位置の調整ができます。<p>
-<div id='map'></div>
-
-<style>
-#map {
-  height: 600px;
-  width: 600px;
-}
-</style>
-
-<script>
-  let map
-  let marker
-  let aft = false
-
-  function initMap(){
-    geocoder = new google.maps.Geocoder()
-
-    map = new google.maps.Map(document.getElementById('map'), {
-      center:  {lat: <%= @gone_place.latitude %>, lng: <%= @gone_place.longitude %>},
-      zoom: 15,
-    });
-  }
-
-  let geocoder
-
-  function codeAddress(){
-    let inputAddress = document.getElementById('address').value;
-    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-      if (status == 'OK') {
-        if (aft == true){
-           marker.setMap(null);
-        }
-        map.setCenter(results[0].geometry.location);
-          marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location,
-            draggable: true
-          });
-
-        aft = true
-
-        document.getElementById('lat').value = results[0].geometry.location.lat();
-        document.getElementById('lng').value = results[0].geometry.location.lng();
-
-        google.maps.event.addListener( marker, 'dragend', function(ev){
-          document.getElementById('lat').value = ev.latLng.lat();
-          document.getElementById('lng').value = ev.latLng.lng();
-        });
-      } else {
-        alert('該当する結果がありませんでした：' + status);
-      }
-    });
-  }
-</script>
-
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
-</script>
+<%= render "shared/register_place_map", gone_place: @gone_place %>
