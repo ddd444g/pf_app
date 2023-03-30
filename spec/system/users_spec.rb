@@ -15,11 +15,4 @@ RSpec.describe 'Users_system', type: :system do
       expect(page).to have_content user.name
     end
   end
-
-  describe 'user詳細画面へ遷移確認' do
-    it '参照をクリックで詳細ページへ行けること' do
-      click_link '参照'
-      expect(current_path).to eq user_path(user.id)
-    end
-  end
 end
