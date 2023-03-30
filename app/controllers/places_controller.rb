@@ -14,7 +14,7 @@ class PlacesController < ApplicationController
     @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id))
     if @place.save
       flash[:notice] = "新規登録をしました"
-      redirect_to :users
+      redirect_to user_path(@place.user)
     else
       @user = User.find_by(id: session[:user_id])
       render "places/new"
@@ -34,7 +34,7 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:id])
     if @place.update(params.require(:place).permit(:name, :memo, :latitude, :longitude))
       flash[:notice] = "登録内容を更新しました"
-      redirect_to :users
+      redirect_to user_path(@place.user)
     else
       render "edit"
     end
@@ -43,15 +43,15 @@ class PlacesController < ApplicationController
   def destroy
     @place = Place.find(params[:id])
     @place.destroy
-    flash[:notice] = "投稿を削除しました"
-    redirect_to :users
+    flash[:notice] = "行きたい場所を削除しました"
+    redirect_to user_path(@place.user)
   end
 
   def ensure_correct_user
     @place = Place.find(params[:id])
     if @place.user != @current_user
       flash[:notice] = "権限がありません"
-      redirect_to("/users")
+      redirect_to @current_user ? user_path(@current_user) : :root
     end
   end
 end

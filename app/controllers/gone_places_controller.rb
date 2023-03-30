@@ -17,7 +17,7 @@ class GonePlacesController < ApplicationController
       @place = Place.find_by(id: params[:gone_place][:place_id])
       @place.destroy
       flash[:notice] = "訪問済みに登録し、行きたい場所から削除しました"
-      redirect_to :users
+      redirect_to user_path(@gone_place.user)
     else
       @place = Place.find_by(id: params[:gone_place][:place_id])
       render "places/show"
@@ -30,7 +30,7 @@ class GonePlacesController < ApplicationController
     permit(:name, :user_id, :review, :score, :latitude, :longitude))
     if @gone_place.save
       flash[:notice] = "訪問済みに登録しました"
-      redirect_to :users
+      redirect_to user_path(@user)
     else
       render "gone_places/new"
     end
@@ -48,7 +48,7 @@ class GonePlacesController < ApplicationController
     @gone_place = GonePlace.find(params[:id])
     if @gone_place.update(params.require(:gone_place).permit(:name, :review, :score, :latitude, :longitude))
       flash[:notice] = "訪問済み場所の情報を更新しました"
-      redirect_to :users
+      redirect_to user_path(@gone_place.user)
     else
       render "gone_places/edit"
     end
@@ -58,7 +58,7 @@ class GonePlacesController < ApplicationController
     @gone_place = GonePlace.find(params[:id])
     @gone_place.destroy
     flash[:notice] = "訪問済み場所を削除しました"
-    redirect_to :users
+    redirect_to user_path(@gone_place.user)
   end
 
   def once_again
@@ -69,7 +69,7 @@ class GonePlacesController < ApplicationController
       @gone_place.update(once_again: true)
       flash[:notice] = "もう一度行きたいに登録しました"
     end
-    redirect_to users_path
+    redirect_to user_path(@current_user)
   end
 
   def cancel_once_again
@@ -80,14 +80,14 @@ class GonePlacesController < ApplicationController
     else
       flash[:notice] = "まだもう一度行きたいに登録されていません"
     end
-    redirect_to users_path
+    redirect_to user_path(@current_user)
   end
 
   def ensure_correct_user
     @gone_place = GonePlace.find(params[:id])
     if @gone_place.user != @current_user
       flash[:notice] = "権限がありません"
-      redirect_to("/users")
+      redirect_to @current_user ? user_path(@current_user) : :root
     end
   end
 end
