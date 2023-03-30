@@ -1,8 +1,8 @@
 <header class="header-right">
   <ul class="header-menus">
-    <% if @current_user %>
+    <% if current_user %>
       <li>
-        <%= link_to(@current_user.name , "/users/#{@current_user.id}") %>
+        <%= link_to(current_user.name , "/users/#{current_user.id}") %>
       </li>
       <li>
         <%= link_to("ログアウト", "/logout", method: :post, data: { confirm: "ログアウトしますか？" }) %>
