@@ -1,0 +1,25 @@
+<h3>もう一度行きたい一覧</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>登録名</th>
+      <th>レビュー</th>
+      <th>スコア</th>
+      <th>もう一度行きたい</th>
+      <th>参照</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% once_again_places.each do |once_again_place| %>
+      <tr>
+        <td><%= once_again_place.name %></td>
+        <td><%= once_again_place.review %></td>
+        <td><%= once_again_place.score %></td>
+        <td><%= button_to "解除する", cancel_once_again_path(once_again_place), method: :post %></td>
+        <td><%= link_to "参照", once_again_place %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

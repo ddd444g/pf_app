@@ -1,0 +1,136 @@
+<h3>ユーザー情報一覧</h3>
+
+<% if flash[:notice] %>
+  <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>名前</th>
+      <th>email</th>
+      <th>ゲスト</th>
+      <th>更新日</th>
+      <th>作成日</th>
+      <th>参照</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.guest %></td>
+        <td><%= user.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= user.created_at.to_s(:datetime_jp) %></td>
+        <td><%= link_to "参照", user %></td>
+        <td><%= link_to "編集", [:edit, user] %></td>
+        <td><%= link_to "削除", user, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>行きたい場所一覧</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>登録名</th>
+      <th>memo</th>
+      <th>更新日時</th>
+      <th>投稿日時</th>
+      <th>投稿者(User_id)</th>
+      <th>参照</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @places.each do |place| %>
+      <tr>
+        <td><%= place.name %></td>
+        <td><%= place.memo %></td>
+        <td><%= place.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= place.created_at.to_s(:datetime_jp) %></td>
+        <td><%= place.user_id %></td>
+        <td><%= link_to "参照", place %></td>
+        <td><%= link_to "編集", [:edit, place] %></td>
+        <td><%= link_to "削除", place, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>訪問済み一覧</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>登録名</th>
+      <th>レビュー</th>
+      <th>スコア</th>
+      <th>更新日時</th>
+      <th>投稿日時</th>
+      <th>投稿者(User_id)</th>
+      <th>もう一度行きたい</th>
+      <th>参照</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @gone_places.each do |gone_place| %>
+      <tr>
+        <td><%= gone_place.name %></td>
+        <td><%= gone_place.review %></td>
+        <td><%= gone_place.score %></td>
+        <td><%= gone_place.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= gone_place.created_at.to_s(:datetime_jp) %></td>
+        <td><%= gone_place.user_id %></td>
+        <td><%= button_to 'もう一度行きたい', once_again_path(gone_place), method: :post %></td>
+        <td><%= link_to "参照", gone_place %></td>
+        <td><%= link_to "編集", [:edit, gone_place] %></td>
+        <td><%= link_to "削除", gone_place, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>もう一度行きたい一覧</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>登録名</th>
+      <th>レビュー</th>
+      <th>スコア</th>
+      <th>更新日時</th>
+      <th>投稿日時</th>
+      <th>投稿者(User_id)</th>
+      <th>もう一度行きたい</th>
+      <th>参照</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @once_again_places.each do |once_again_place| %>
+      <tr>
+        <td><%= once_again_place.name %></td>
+        <td><%= once_again_place.review %></td>
+        <td><%= once_again_place.score %></td>
+        <td><%= once_again_place.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= once_again_place.created_at.to_s(:datetime_jp) %></td>
+        <td><%= once_again_place.user_id %></td>
+        <td><%= button_to '解除する', cancel_once_again_path(once_again_place), method: :post %></td>
+        <td><%= link_to "参照", once_again_place %></td>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= link_to "ユーザー新規登録", :new_user %></p>

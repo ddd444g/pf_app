@@ -1,0 +1,26 @@
+<h3>訪問済み場所詳細</h3>
+
+<table>
+  <tr>
+    <th>登録名</th>
+    <td><%= @gone_place.name %></td>
+  </tr>
+  <tr>
+    <th>レビュー</th>
+    <td><%= @gone_place.review %></td>
+  </tr>
+  <tr>
+    <th>スコア</th>
+    <td><%= @gone_place.score %></td>
+  </tr>
+  <tr>
+    <th>スコア</th>
+    <td><%= @gone_place.score %></td>
+  </tr>
+  <tr>
+    <th>もう一度行きたい</th>
+    <td><%= button_to '登録する', once_again_path(@gone_place), method: :post %></td>
+  </tr>
+</table>
+
+<%= render "shared/gone_place_map", gone_place: @gone_place %>

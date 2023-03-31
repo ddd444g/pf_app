@@ -1,0 +1,15 @@
+inherit_from:
+  - .rubocop_airbnb.yml
+
+LineLength:
+  Max: 120
+
+AllCops:
+  Exclude:
+    - 'db/seeds.rb'
+    - 'bin/*'
+    - 'config/**/*'
+    - 'lib/tasks/*'
+    - 'vendor/**/*'
+    - 'Gemfile'
+    - 'spec/spec_helper.rb'

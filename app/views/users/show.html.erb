@@ -1,0 +1,22 @@
+<h3>ユーザー詳細</h3>
+
+<% if flash[:notice] %>
+  <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+
+<table>
+  <tr>
+    <th>名前</th>
+    <td><%= @user.name %></td>
+    <th>email</th>
+    <td><%= @user.email %></td>
+    <th>編集</th>
+    <td><%= link_to("編集", "/users/#{@user.id}/edit") %></td>
+  </tr>
+</table>
+
+<%= render "shared/places", places: @places %>
+
+<%= render "shared/gone_places", gone_places: @gone_places %>
+
+<%= render "shared/once_again_places", once_again_places: @once_again_places %>

@@ -1,0 +1,20 @@
+<h3>訪問済みの場所新規登録</h3>
+
+<%= render "shared/error", obj: @gone_place %>
+
+<%= form_with(model: @gone_place, local: true, method: :post, url: not_from_place_create_path) do |f| %>
+  <div class="actions">
+    <%= f.label :name,"登録名" %>
+    <%= f.text_field :name %>
+    <%= f.label :review,"レビュー" %>
+    <%= f.text_field :review %>
+    <%= f.label :score, "スコア" %>
+    <%= f.number_field :score, in: 1..10, class:"posts-content" %>
+    <%= f.submit "投稿を完了する" %>
+    <%= f.hidden_field :latitude,:value => nil, id: :lat %>
+    <%= f.hidden_field :longitude,:value => nil, id: :lng %>
+    <%= f.hidden_field :user_id, value: @user.id %>
+  </div>
+<% end %>
+
+<%= render "shared/register_place_map", gone_place: @gone_place %>

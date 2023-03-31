@@ -1,0 +1,172 @@
+html, body {
+  height: 100%;
+  background-color: #e6e6e6
+}
+
+/* header */
+.header-right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  text-align: right;
+  width: auto;
+  background-color: #fff;
+  z-index: 999;
+}
+
+.header-menus {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.header-menus li {
+  display: inline-block;
+  margin: 0 10px;
+  line-height: 64px;
+  font-size: 13px;
+  color: black;
+  padding-left: 15px;
+}
+
+.header-menus a {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.header-menus a:hover {
+  text-decoration: underline;
+}
+
+.header-menus {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: flex-end; /* 右寄せ */
+}
+
+/* ウィンドウの幅が960px以下の場合 */
+@media screen and (max-width: 960px) {
+  .header-right {
+    text-align: center;
+  }
+  
+  .header-menus {
+    display: block;
+  }
+  
+  .header-menus li {
+    display: block;
+    margin: 0;
+    line-height: 40px;
+  }
+  
+  .header-menus a {
+    font-size: 16px;
+  }
+}
+
+/* footer */
+.footer {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+  width: 100%;
+  height: 50px;
+  bottom: 0;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    height: auto;
+  }
+  
+  .footer p {
+    font-size: 10px;
+  }
+}
+
+/* 見出しのスタイルを設定 */
+h3 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 1em;
+  color: #333333;
+}
+
+/* テーブルのスタイルを設定 */
+table {
+  border-collapse: collapse;
+  margin-bottom: 2em;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px #aaaaaa;
+}
+
+table th, table td {
+  padding: 0.5em;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #dddddd;
+}
+
+table th {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+/* ボタンのスタイルを設定 */
+button, input[type="submit"] {
+  padding: 0.5em 1em;
+  border: none;
+  background-color: #4CAF50;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+/* リンクのスタイルを設定 */
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* メッセージ表示エリアのスタイルを設定 */
+.notice {
+  padding: 0.5em;
+  background-color: #dff0d8;
+  border: 1px solid #d6e9c6;
+  color: #3c763d;
+  margin-bottom: 1em;
+}
+
+/* 幅が780px以下の場合 */
+@media screen and (max-width: 780px) {
+  table {
+    width: 100%;
+  }
+  table th, table td {
+    font-size: 0.8em;
+  }
+}

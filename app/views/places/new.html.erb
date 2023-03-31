@@ -1,0 +1,18 @@
+<h3>行きたい場所新規登録</h3>
+
+<%= render "shared/error", obj: @place %>
+
+<%= form_with(model: @place, local: true) do |f| %>
+  <div class="actions">
+    <%= f.label :name,"登録名" %>
+    <%= f.text_field :name %>
+    <%= f.label :memo,"memo" %>
+    <%= f.text_field :memo %>
+    <%= f.submit "投稿を完了する" %>
+    <%= f.hidden_field :latitude,:value => nil, id: :lat %>
+    <%= f.hidden_field :longitude,:value => nil, id: :lng %>
+    <%= f.hidden_field :user_id, value: @user.id %>
+  </div>
+<% end %>
+
+<%= render "shared/register_place_map", place: @place %>
