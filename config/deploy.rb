@@ -2,7 +2,7 @@
 lock "~> 3.17.2"
 
 set :application, "pf_app"
-set :repo_url, "git@example.com:ddd444g/pf_app.git"
+set :repo_url, "git@github.com:ddd444g/pf_app.git"
 
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads"
 
@@ -10,7 +10,6 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bund
 # set :ssh_options, {
 #   auth_methods: ['publickey'], 
 #   keys: ['~/.ssh/pf_app.pem'] 
-#   ssh -i pf_app.pem ec2-user@3.113.169.220
 # }
 
 set :linked_files, %w[config/master.key]
