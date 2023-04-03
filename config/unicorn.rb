@@ -1,15 +1,15 @@
 worker_processes 2
-working_directory "/var/www/rails/pf_app/current"
+working_directory "/var/www/pf_app/current"
 timeout 30
 
 # Listen on a Unix data socket
-listen "/var/www/rails/pf_app/shared/tmp/sockets/.unicorn.sock"
+listen "/var/www/pf_app/shared/tmp/sockets/.unicorn.sock"
 
 # Path to unicorn PID file (the server's process ID)
-pid "/var/www/rails/pf_app/shared/tmp/pids/unicorn.pid"
+pid "/var/www/pf_app/shared/tmp/pids/unicorn.pid"
 
-stderr_path "/var/www/rails/pf_app/shared/log/unicorn.log"
-stdout_path "/var/www/rails/pf_app/shared/log/unicorn.log"
+stderr_path "/var/www/pf_app/shared/log/unicorn.log"
+stdout_path "/var/www/pf_app/shared/log/unicorn.log"
 
 # loading booster
 preload_app true
