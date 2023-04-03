@@ -8,13 +8,13 @@ set :branch, 'main'
 
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads"
 
-SSH接続設定
-set :ssh_options, {
-  auth_methods: ['publickey'], 
-  keys: ['~/.ssh/pf_app_2.pem'] 
-}
+# SSH接続設定
+# set :ssh_options, {
+#   auth_methods: ['publickey'], 
+#   keys: ['~/.ssh/pf_app_2.pem'] 
+# }
 
-# set :linked_files, %w[config/master.key]
+set :linked_files, %w[config/master.key]
 
 set :keep_releases, 5
 
