@@ -1,3 +1,3 @@
 # README
 
-![](img/aws.dio.svg)
+![](/aws.png)

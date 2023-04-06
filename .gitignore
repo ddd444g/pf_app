@@ -39,4 +39,4 @@ yarn-debug.log*
 
 /.env
 
-/img
+/aws.png
