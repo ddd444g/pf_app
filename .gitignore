@@ -38,5 +38,3 @@ yarn-debug.log*
 /vendor/bundle
 
 /.env
-
-/aws.png
