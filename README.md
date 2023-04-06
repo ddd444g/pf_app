@@ -59,6 +59,7 @@ __最低限の土台が出来たと思っています。ここから改善、追
   - CircleCI
   - Docker
   - nginx
+  - unicorn
   - mysql
   - AWS ( EC2, ALB, ACM, Route53, VPC )
 
