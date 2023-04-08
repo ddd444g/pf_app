@@ -45,7 +45,7 @@ __最低限の土台が出来たと思っています。ここから改善、追
 
 ## 使用技術
 - フロントエンド
-  - HTML/CSS/Haml/Sass
+  - HTML/CSS
   - Google Maps API
 
 - バックエンド
