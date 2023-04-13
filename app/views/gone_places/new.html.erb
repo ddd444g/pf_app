@@ -1,20 +1,27 @@
-<h3>訪問済みの場所新規登録</h3>
+<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">訪問済みの場所新規登録</h3>
 
 <%= render "shared/error", obj: @gone_place %>
 
-<%= form_with(model: @gone_place, local: true, method: :post, url: not_from_place_create_path) do |f| %>
-  <div class="actions">
-    <%= f.label :name,"登録名" %>
-    <%= f.text_field :name %>
-    <%= f.label :review,"レビュー" %>
-    <%= f.text_field :review %>
-    <%= f.label :score, "スコア" %>
-    <%= f.number_field :score, in: 1..10, class:"posts-content" %>
-    <%= f.submit "投稿を完了する" %>
-    <%= f.hidden_field :latitude,:value => nil, id: :lat %>
-    <%= f.hidden_field :longitude,:value => nil, id: :lng %>
-    <%= f.hidden_field :user_id, value: @user.id %>
+<%= form_with(model: @gone_place, local: true, method: :post, url: not_from_place_create_path, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
   </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :review,"レビュー", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.text_field :review, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+  </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :score, "スコア", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.number_field :score, in: 1..10, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+  </div>
+  <%= render "shared/register_place_map", gone_place: @gone_place %>
+  <div class="mt-4">
+    <ul>
+      <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+    </ul>
+  </div>
+  <%= f.hidden_field :latitude,:value => nil, id: :lat %>
+  <%= f.hidden_field :longitude,:value => nil, id: :lng %>
+  <%= f.hidden_field :user_id, value: @user.id %>
 <% end %>
-
-<%= render "shared/register_place_map", gone_place: @gone_place %>
