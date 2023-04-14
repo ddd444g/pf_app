@@ -1,41 +1,40 @@
-<h3>行きたい場所詳細</h3>
+<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">行きたい場所詳細</h3>
 
 <%= render "shared/error", obj: @gone_place %>
 
-<table>
-  <tr>
-    <th>登録名</th>
-    <td><%= @place.name %></td>
-  </tr>
-  <tr>
-    <th>memo</th>
-    <td><%= @place.memo %></td>
-  </tr>
-</table>
+<div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">登録名</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @place.name %></p>
+  </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">memo</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @place.memo %></p>
+  </div>
 
-<%= render "shared/place_map", place: @place %>
+  <%= render "shared/place_map", place: @place %>
 
-<h3>この場所を訪問済みに登録する</h3>
+</div>
 
-<%= form_with model: @gone_place do |f| %>
-  <table>
-    <tr>
-      <th><%= f.label :review, "レビュー" %></th>
-      <td><%= f.text_area :review, class:"posts-content" %></td>
-    </tr>
-    <tr>
-      <th><%= f.label :score, "スコア" %></th>
-      <td><%= f.number_field :score, in: 1..10, class:"posts-content" %></td>
-    </tr>
-  </table>
+<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所を訪問済みに登録する</h3>
+
+<%= form_with model: @gone_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :review,"レビュー", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.text_field :review, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+  </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :score, "スコア", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.number_field :score, in: 1..10, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+  </div>
   <%= f.hidden_field :user_id, value: @place.user_id %>
   <%= f.hidden_field :place_id, value: @place.id %>
   <%= f.hidden_field :name, value: @place.name %>
   <%= f.hidden_field :latitude, value: @place.latitude %>
   <%= f.hidden_field :longitude, value: @place.longitude %>
-  <div>
+  <div class="mt-4">
     <ul>
-      <li><%= f.submit "投稿を完了する"%></li>
+      <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
     </ul>
   </div>
 <% end %>

@@ -15,7 +15,9 @@
     <%= f.label :score, "スコア", class: "block text-gray-700 font-bold mb-2" %>
     <%= f.number_field :score, in: 1..10, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
   </div>
+
   <%= render "shared/register_place_map", gone_place: @gone_place %>
+
   <div class="mt-4">
     <ul>
       <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
