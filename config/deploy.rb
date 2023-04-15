@@ -4,8 +4,8 @@ lock "~> 3.17.2"
 set :application, "pf_app"
 set :repo_url, "git@github.com:ddd444g/pf_app.git"
 
-set :branch, 'main'
-# set :branch, 'feature/tailwind-Introduce'
+# set :branch, 'main'
+set :branch, 'feature/tailwind-Introduce'
 
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads"
 
