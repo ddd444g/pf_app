@@ -1,5 +1,6 @@
 const { environment } = require('@rails/webpacker')
 
+
 const tailwindcss = require('tailwindcss');
 environment.loaders.append('tailwindcss', {
   test: /\.css$/i,
@@ -14,6 +15,7 @@ environment.loaders.append('tailwindcss', {
     },
   ],
 });
+
 
 // 追加
 // ここから
