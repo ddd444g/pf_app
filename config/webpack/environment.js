@@ -1,5 +1,22 @@
 const { environment } = require('@rails/webpacker')
 
+
+const tailwindcss = require('tailwindcss');
+environment.loaders.append('tailwindcss', {
+  test: /\.css$/i,
+  use: [
+    {
+      loader: 'postcss-loader',
+      options: {
+        postcssOptions: {
+          plugins: [tailwindcss('./app/javascript/css/tailwind.js')],
+        },
+      },
+    },
+  ],
+});
+
+
 // 追加
 // ここから
 const customConfig = {

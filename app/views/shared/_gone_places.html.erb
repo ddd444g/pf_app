@@ -1,27 +1,27 @@
-<h3>訪問済み一覧</h3>
+<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">訪問済み一覧</h3>
 
-<table>
+<table class="w-full border-collapse border border-blue-500">
   <thead>
-    <tr>
-      <th>登録名</th>
-      <th>レビュー</th>
-      <th>スコア</th>
-      <th>もう一度行きたい</th>
-      <th>参照</th>
-      <th>編集</th>
-      <th>削除</th>
+    <tr class="bg-blue-100">
+      <th class="px-4 py-2 border border-blue-500">登録名</th>
+      <th class="px-4 py-2 border border-blue-500">レビュー</th>
+      <th class="px-4 py-2 border border-blue-500">スコア</th>
+      <th class="px-4 py-2 border border-blue-500">もう一度行きたい</th>
+      <th class="px-4 py-2 border border-blue-500">参照</th>
+      <th class="px-4 py-2 border border-blue-500">編集</th>
+      <th class="px-4 py-2 border border-blue-500">削除</th>
     </tr>
   </thead>
   <tbody>
     <% gone_places.each do |gone_place| %>
-      <tr>
-        <td><%= gone_place.name %></td>
-        <td><%= gone_place.review %></td>
-        <td><%= gone_place.score %></td>
-        <td><%= button_to "もう一度行きたい", once_again_path(gone_place), method: :post %></td>
-        <td><%= link_to "参照", gone_place %></td>
-        <td><%= link_to "編集", [:edit, gone_place] %></td>
-        <td><%= link_to "削除", gone_place, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      <tr class="border-t border-blue-500">
+        <td class="px-4 py-2 border border-blue-500"><%= gone_place.name %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= gone_place.review %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= gone_place.score %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= button_to "もう一度行きたい", once_again_path(gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800" %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", gone_place, class: "text-blue-500 hover:text-blue-700" %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= link_to "編集", [:edit, gone_place], class: "text-blue-500 hover:text-blue-700" %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= link_to "削除", gone_place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700" %></td>
       </tr>
     <% end %>
   </tbody>

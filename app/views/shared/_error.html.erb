@@ -1,7 +1,10 @@
 <% if obj.errors.any? %>
   <% obj.errors.full_messages.each do |message| %>
-    <ul>
-      <li><%= message %></li>
-    </ul>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center mx-auto w-1/2" role="alert">
+      <ul>
+        <li><%= message %></li>
+      </ul>
+    </div>
+    <hr class="my-2" />
   <% end %>
 <% end %>

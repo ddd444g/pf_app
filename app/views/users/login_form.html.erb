@@ -1,13 +1,19 @@
-<%= @error_message %>
+<%= content_tag :div, @error_message, class: "text-center mx-auto w-1/2 text-red-700 bg-red-100 p-4 rounded" %>
 
 <% if flash[:notice] %>
-  <p class="notice"><%= flash[:notice] %></p>
+  <p class="text-center mx-auto w-1/2 text-red-700 bg-red-100 p-4 rounded"><%= flash[:notice] %></p>
 <% end %>
 
-<%= form_with model: @user do |f| %>
-  <%= f.label :email, "メールアドレス" %>
-  <%= f.text_field :email,:value => @email %>
-  <%= f.label :password, "パスワード" %>
-  <%= f.password_field :password,:value => @password %>
-  <%= f.submit "ログインする"%>
+<%= form_with model: @user, html: {class: "mt-6"} do |f| %>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :email, "メールアドレス", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.text_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300", :value => @email %>
+  </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :password, "パスワード", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.password_field :password, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300", :value => @password %>
+  </div>
+  <div class="mb-40 text-center">
+    <%= f.submit "ログインする", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
+  </div>
 <% end %>

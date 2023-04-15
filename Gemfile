@@ -23,6 +23,9 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt'
 # gem 'dotenv'
 gem 'dotenv-rails'
+# rspec実行時にエラーが出るため追加
+gem 'uglifier'
+
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
