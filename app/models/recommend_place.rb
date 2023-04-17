@@ -1,0 +1,2 @@
+class RecommendPlace < ApplicationRecord
+end
