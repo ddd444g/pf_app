@@ -1,5 +1,7 @@
 class GonePlace < ApplicationRecord
   belongs_to :user
+  belongs_to :recommend_place
+
   has_one :place
 
   validates :name, presence: true

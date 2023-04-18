@@ -38,6 +38,7 @@ class GonePlacesController < ApplicationController
 
   def show
     @gone_place = GonePlace.find(params[:id])
+    @recommend_place = RecommendPlace.new
   end
 
   def edit

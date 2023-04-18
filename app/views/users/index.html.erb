@@ -133,4 +133,32 @@
   </tbody>
 </table>
 
+<h3>おススメ場所一覧</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>おススメ場所の名前</th>
+      <th>おススメコメント</th>
+      <th>更新日時</th>
+      <th>投稿日時</th>
+      <th>投稿者(User_id)</th>
+      <th>投稿場所(GonePlace_id)</th>
+      <th>参照</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recommend_places.each do |recommend_place| %>
+      <tr>
+        <td><%= recommend_place.recommend_place_name %></td>
+        <td><%= recommend_place.recommend_comment %></td>
+        <td><%= recommend_place.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= recommend_place.created_at.to_s(:datetime_jp) %></td>
+        <td><%= recommend_place.user_id %></td>
+        <td><%= recommend_place.gone_place_id %></td>
+        <td><%= link_to "参照", recommend_place %></td>
+    <% end %>
+  </tbody>
+</table>
+
 <p><%= link_to "ユーザー新規登録", :new_user %></p>

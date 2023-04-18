@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   has_many :places
   has_many :gone_places
+  has_many :recommend_places
 
   validates :name, presence: true
   validates :password, presence: true, length: { minimum: 6 }
