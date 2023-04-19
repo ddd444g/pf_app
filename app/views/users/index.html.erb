@@ -145,6 +145,8 @@
       <th>投稿者(User_id)</th>
       <th>投稿場所(GonePlace_id)</th>
       <th>参照</th>
+      <th>編集</th>
+      <th>削除</th>
     </tr>
   </thead>
   <tbody>
@@ -157,6 +159,8 @@
         <td><%= recommend_place.user_id %></td>
         <td><%= recommend_place.gone_place_id %></td>
         <td><%= link_to "参照", recommend_place %></td>
+        <td><%= link_to "編集", [:edit, recommend_place] %></td>
+        <td><%= link_to "削除", recommend_place, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
     <% end %>
   </tbody>
 </table>

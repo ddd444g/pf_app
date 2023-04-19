@@ -4,6 +4,7 @@ ja:
        user: ユーザー
        place: 行きたい場所
        gone_place: 訪問済みの場所
+       recommend_place: おススメの場所
      attributes:
        user:
          name: 名前
@@ -20,3 +21,6 @@ ja:
         score: スコア
         latitude: map
         longitude: 登録
+       recommend_place:
+        recommend_place_name: おススメ場所の名前
+        recommend_comment: おススメコメント
