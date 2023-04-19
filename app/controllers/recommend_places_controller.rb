@@ -1,4 +1,7 @@
 class RecommendPlacesController < ApplicationController
+  before_action :authenticate_user
+  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+
   def index
   end
 
@@ -44,5 +47,13 @@ class RecommendPlacesController < ApplicationController
     @recommend_place.destroy
     flash[:notice] = "おススメの場所を削除しました"
     redirect_to user_path(@recommend_place.user)
+  end
+
+  def ensure_correct_user
+    @recommend_place = RecommendPlace.find(params[:id])
+    if @recommend_place.user != @current_user
+      flash[:notice] = "権限がありません"
+      redirect_to @current_user ? user_path(@current_user) : :root
+    end
   end
 end
