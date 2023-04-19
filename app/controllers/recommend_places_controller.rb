@@ -1,8 +1,9 @@
 class RecommendPlacesController < ApplicationController
   before_action :authenticate_user
-  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
+    @recommend_places = RecommendPlace.all
   end
 
   def new
