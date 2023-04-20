@@ -6,6 +6,7 @@
       <th class="px-4 py-2 border border-blue-500">登録名</th>
       <th class="px-4 py-2 border border-blue-500">おススメコメント</th>
       <th class="px-4 py-2 border border-blue-500">参照</th>
+      <th class="px-4 py-2 border border-blue-500">投稿ユーザー名</th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,7 @@
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_place_name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_comment %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", recommend_place, class: "text-blue-500 hover:text-blue-700" %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.user.name %></td>
       </tr>
     <% end %>
   </tbody>
