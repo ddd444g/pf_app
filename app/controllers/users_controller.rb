@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @places = Place.all
     @gone_places = GonePlace.all
     @once_again_places = GonePlace.where(once_again: true)
+    @recommend_places = RecommendPlace.all
   end
 
   def new
@@ -31,6 +32,7 @@ class UsersController < ApplicationController
     @places = @user.places
     @gone_places = @user.gone_places
     @once_again_places = @user.gone_places.where(once_again: true)
+    @recommend_places = @user.recommend_places
   end
 
   def edit

@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :places
-  has_many :gone_places
+  has_many :places, dependent: :delete_all
+  has_many :gone_places, dependent: :destroy
+  has_many :recommend_places, dependent: :delete_all
 
   validates :name, presence: true
   validates :password, presence: true, length: { minimum: 6 }

@@ -1,4 +1,6 @@
-<%= content_tag :div, @error_message, class: "text-center mx-auto w-1/2 text-red-700 bg-red-100 p-4 rounded" %>
+<% if @error_message.present? %>
+  <%= content_tag :div, @error_message, class: "text-center mx-auto w-1/2 text-red-700 bg-red-100 p-4 rounded" %>
+<% end %>
 
 <% if flash[:notice] %>
   <p class="text-center mx-auto w-1/2 text-red-700 bg-red-100 p-4 rounded"><%= flash[:notice] %></p>
