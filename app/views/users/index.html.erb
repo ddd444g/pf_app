@@ -46,6 +46,7 @@
       <th>更新日時</th>
       <th>投稿日時</th>
       <th>投稿者(User_id)</th>
+      <th>おすすめ場所id(Recommned_place_id)</th>
       <th>参照</th>
       <th>編集</th>
       <th>削除</th>
@@ -60,6 +61,7 @@
         <td><%= place.updated_at.to_s(:datetime_jp) %></td>
         <td><%= place.created_at.to_s(:datetime_jp) %></td>
         <td><%= place.user_id %></td>
+        <td><%= place.recommend_place_id %></td>
         <td><%= link_to "参照", place %></td>
         <td><%= link_to "編集", [:edit, place] %></td>
         <td><%= link_to "削除", place, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>

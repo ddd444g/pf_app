@@ -48,7 +48,8 @@ class PlacesController < ApplicationController
   end
 
   def new_from_recommend_places
-    @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id))
+    @place = Place.new(params.require(:place).
+    permit(:name, :memo, :latitude, :longitude, :user_id, :recommend_place_id))
     if @place.save
       flash[:notice] = "おすすめ場所から行きたい場所に登録をしました"
       redirect_to user_path(@place.user)
