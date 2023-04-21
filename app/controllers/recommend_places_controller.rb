@@ -25,6 +25,7 @@ class RecommendPlacesController < ApplicationController
   def show
     @recommend_place = RecommendPlace.find(params[:id])
     @gone_place = @recommend_place.gone_place
+    @place = Place.new
   end
 
   def edit
