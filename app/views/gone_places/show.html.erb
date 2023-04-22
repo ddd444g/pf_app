@@ -24,23 +24,29 @@
   </div>
 </div>
 
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所をおススメ場所として公開する</h3>
+<% if @gone_place.recommend == true %>
 
-<%= form_with model: @recommend_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :recommend_place_name,"おすすめ場所の名前", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.text_field :recommend_place_name, value: @gone_place.name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :recommend_comment, "おススメコメント", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.text_field :recommend_comment, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <%= f.hidden_field :user_id, value: @gone_place.user_id %>
-  <%= f.hidden_field :gone_place_id, value: @gone_place.id %>
-  <div class="mt-4">
-    <ul>
-      <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-    </ul>
-  </div>
+  <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所はおすすめに公開済みです</h3>
+
+<% else %>
+
+  <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所をおススメ場所として公開する</h3>
+
+  <%= form_with model: @recommend_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
+    <div class="mb-10 text-center mx-auto w-1/2">
+      <%= f.label :recommend_place_name,"おすすめ場所の名前", class: "block text-gray-700 font-bold mb-2" %>
+      <%= f.text_field :recommend_place_name, value: @gone_place.name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+    </div>
+    <div class="mb-10 text-center mx-auto w-1/2">
+      <%= f.label :recommend_comment, "おススメコメント", class: "block text-gray-700 font-bold mb-2" %>
+      <%= f.text_field :recommend_comment, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+    </div>
+    <%= f.hidden_field :user_id, value: @gone_place.user_id %>
+    <%= f.hidden_field :gone_place_id, value: @gone_place.id %>
+    <div class="mt-4">
+      <ul>
+        <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+      </ul>
+    </div>
+  <% end %>
 <% end %>
-

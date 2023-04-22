@@ -47,6 +47,19 @@ class PlacesController < ApplicationController
     redirect_to user_path(@place.user)
   end
 
+  def new_from_recommend_places
+    @place = Place.new(params.require(:place).
+    permit(:name, :memo, :latitude, :longitude, :user_id, :recommend_place_id))
+    if @place.save
+      flash[:notice] = "おすすめ場所から行きたい場所に登録をしました"
+      redirect_to user_path(@place.user)
+    else
+      @user = User.find_by(id: session[:user_id])
+      @recommend_place = RecommendPlace.find_by(id: params[:gone_place][:recommend_place_id])
+      render "recommend_places/show"
+    end
+  end
+
   def ensure_correct_user
     @place = Place.find(params[:id])
     if @place.user != @current_user

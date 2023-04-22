@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   post "not_from_place_create", to: "gone_places#not_from_place_create"
 
+  # 他人のおすすめ場所を自分の行きたい場所へ登録する処理
+  post "new_from_recommend_places", to: "places#new_from_recommend_places"
+
   post "/gone_places/:id/once_again", to: "gone_places#once_again", as: :once_again
   post "/gone_places/:id/cancel_once_again", to: "gone_places#cancel_once_again", as: :cancel_once_again
 

@@ -11,5 +11,28 @@
   </div>
 
   <%= render "shared/gone_place_map", gone_place: @gone_place %>
-
 </div>
+
+<% if @recommend_place.user_id != @current_user.id %>
+  <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所を行きたい場所に保存する</h3>
+
+  <%= form_with(model: @place, local: true, url: new_from_recommend_places_path, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
+   <% if @current_user.places.exists?(recommend_place_id: @recommend_place.id) %>
+    <p class="mb-10 text-center mx-auto w-1/2 bg-yellow-200 block text-gray-700 font-bold mb-2">この場所はすでに行きたい場所へ登録済みです</p>
+  <% end %>
+    <div class="mb-10 text-center mx-auto w-1/2">
+      <p class="block text-gray-700 font-bold mb-2">登録名</p>
+      <p class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @recommend_place.recommend_place_name %></p>
+    </div>
+    <div class="mb-10 text-center mx-auto w-1/2">
+      <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
+      <%= f.text_field :memo, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+    </div>
+    <%= f.submit '登録する', class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
+    <%= f.hidden_field :user_id, value: @current_user.id %>
+    <%= f.hidden_field :name, value: @recommend_place.recommend_place_name %>
+    <%= f.hidden_field :recommend_place_id, value: @recommend_place.id %>
+    <%= f.hidden_field :latitude, value: @gone_place.latitude %>
+    <%= f.hidden_field :longitude, value: @gone_place.longitude %>
+  <% end %>
+<% end %>

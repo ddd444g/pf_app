@@ -14,7 +14,7 @@ class RecommendPlacesController < ApplicationController
       :recommend_comment, :gone_place_id, :user_id))
     @gone_place = GonePlace.find_by(id: params[:recommend_place][:gone_place_id])
     if @recommend_place.save
-      @gone_place.update(recommend_place_id: @recommend_place.id)
+      @gone_place.update(recommend_place_id: @recommend_place.id, recommend: true)
       flash[:notice] = "おすすめ場所として公開しました"
       redirect_to user_path(@recommend_place.user)
     else
@@ -25,6 +25,7 @@ class RecommendPlacesController < ApplicationController
   def show
     @recommend_place = RecommendPlace.find(params[:id])
     @gone_place = @recommend_place.gone_place
+    @place = Place.new
   end
 
   def edit
@@ -46,6 +47,8 @@ class RecommendPlacesController < ApplicationController
   def destroy
     @recommend_place = RecommendPlace.find(params[:id])
     @recommend_place.destroy
+    @gone_place = @recommend_place.gone_place
+    @gone_place.update(recommend: false)
     flash[:notice] = "おススメの場所を削除しました"
     redirect_to user_path(@recommend_place.user)
   end

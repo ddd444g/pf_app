@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_20_051629) do
+ActiveRecord::Schema.define(version: 2023_04_22_045019) do
   create_table "gone_places", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
     t.float "latitude"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2023_04_20_051629) do
     t.integer "place_id"
     t.boolean "once_again", default: false, null: false
     t.integer "recommend_place_id"
+    t.boolean "recommend", default: false, null: false
     t.index ["recommend_place_id"], name: "index_gone_places_on_recommend_place_id"
   end
 
@@ -34,6 +35,7 @@ ActiveRecord::Schema.define(version: 2023_04_20_051629) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "memo"
+    t.integer "recommend_place_id"
   end
 
   create_table "recommend_places", charset: "utf8mb4", force: :cascade do |t|
@@ -52,6 +54,6 @@ ActiveRecord::Schema.define(version: 2023_04_20_051629) do
     t.string "email"
     t.string "password_digest"
     t.boolean "guest", default: false, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, length: 191
   end
 end
