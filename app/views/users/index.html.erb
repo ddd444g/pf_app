@@ -82,6 +82,7 @@
       <th>投稿日時</th>
       <th>投稿者(User_id)</th>
       <th>もう一度行きたい</th>
+      <th>おすすめ公開済み</th>
       <th>参照</th>
       <th>編集</th>
       <th>削除</th>
@@ -97,6 +98,7 @@
         <td><%= gone_place.created_at.to_s(:datetime_jp) %></td>
         <td><%= gone_place.user_id %></td>
         <td><%= button_to 'もう一度行きたい', once_again_path(gone_place), method: :post %></td>
+        <td><%= gone_place.recommend %></td>
         <td><%= link_to "参照", gone_place %></td>
         <td><%= link_to "編集", [:edit, gone_place] %></td>
         <td><%= link_to "削除", gone_place, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
