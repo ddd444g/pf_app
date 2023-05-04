@@ -1,0 +1,12 @@
+<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">プラン詳細</h3>
+
+<div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">プラン名</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.plan_name %></p>
+  </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">時間</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.start_time&.strftime("%-m月%-d日%H時%M分")%>~<%= @plan.end_time&.strftime("%-m月%-d日%H時%M分")%></p>
+  </div>
+</div>

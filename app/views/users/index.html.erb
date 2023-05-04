@@ -169,4 +169,36 @@
   </tbody>
 </table>
 
+<h3>プラン一覧</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>開始日時</th>
+      <th>終了日時</th>
+      <th>更新日時</th>
+      <th>投稿日時</th>
+      <th>投稿者(User_id)</th>
+      <th>参照</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <td><%= plan.plan_name %></td>
+        <td><%= plan.start_time&.strftime("%m月%d日") %></td>
+        <td><%= plan.end_time&.strftime("%m月%d日") %></td>
+        <td><%= plan.updated_at.to_s(:datetime_jp) %></td>
+        <td><%= plan.created_at.to_s(:datetime_jp) %></td>
+        <td><%= plan.user_id %></td>
+        <td><%= link_to "参照", plan %></td>
+        <td><%= link_to "編集", [:edit, plan] %></td>
+        <td><%= link_to "削除", plan, method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+    <% end %>
+  </tbody>
+</table>
+
 <p><%= link_to "ユーザー新規登録", :new_user %></p>

@@ -1,0 +1,45 @@
+<h1>自分の予定</h1>
+
+<% if flash[:notice] %>
+  <p class="text-center mx-auto w-1/2 text-blue-700 bg-blue-100 p-4 rounded"><%= flash[:notice] %></p>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>id</th>
+      <th>時間</th>
+      <th>user_id</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <td><%= plan.plan_name %></td>
+        <td><%= plan.id%></td>
+        <td><%= plan.start_time&.strftime("%Y-%m-%d %H:%M") %></td>
+        <td><%= plan.user_id %></td>
+        <td><%= link_to 'Show', plan %></td>
+        <td><%= link_to 'Edit', edit_plan_path(plan.id) %></td>
+        <td><%= link_to "削除", plan_path(plan), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'プラン作成', new_plan_path %>
+
+<%= month_calendar events: @plans do |date, plans| %>
+  <%= date.day %>
+
+  <% plans.each do |plan| %>
+    <div>
+      <%= link_to plan.plan_name, plan %>
+    </div>
+  <% end %>
+<% end %>
