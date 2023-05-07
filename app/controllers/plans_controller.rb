@@ -15,7 +15,7 @@ class PlansController < ApplicationController
     @plan = Plan.new(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id))
     if @plan.save
       flash[:notice] = "新規登録をしました"
-      redirect_to user_path(@plan.user)
+      redirect_to plan_path(@plan)
     else
       @user = User.find_by(id: session[:user_id])
       render "plans/new"
@@ -34,7 +34,7 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
     if @plan.update(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id))
       flash[:notice] = "登録内容を更新しました"
-      redirect_to user_path(@plan.user)
+      redirect_to plan_path(@plan)
     else
       render "edit"
     end
