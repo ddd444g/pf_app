@@ -13,7 +13,7 @@ class PlansController < ApplicationController
   end
 
   def create
-    @plan = Plan.new(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id))
+    @plan = Plan.new(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id, :plan_color))
     if @plan.save
       flash[:notice] = "新規登録をしました"
       redirect_to plan_path(@plan)
@@ -33,7 +33,7 @@ class PlansController < ApplicationController
 
   def update
     @plan = Plan.find(params[:id])
-    if @plan.update(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id))
+    if @plan.update(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id, :plan_color))
       flash[:notice] = "登録内容を更新しました"
       redirect_to plan_path(@plan)
     else

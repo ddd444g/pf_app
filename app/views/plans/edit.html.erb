@@ -15,6 +15,10 @@
     <%= f.label :end_time,"終了日時", class: "block text-gray-700 font-bold mb-2" %>
     <%= f.datetime_field :end_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
   </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :plan_color,"色分け", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.select :plan_color, [["赤", "red"], ["青", "blue"], ["緑", "green"], ["紫", "purple"], ["黄色", "yellow"]], class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+  </div>
 
   <div class="mt-4">
     <ul>

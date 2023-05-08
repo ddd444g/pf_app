@@ -4,6 +4,7 @@ class Plan < ApplicationRecord
   validates :plan_name, presence: true
   validates :start_time, presence: true
   validates :end_time, presence: true
+  validates :plan_color, presence: true
   validate :date_before_start
   validate :date_before_end
   validate :start_same_end
