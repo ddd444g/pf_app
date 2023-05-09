@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :places, dependent: :delete_all
   has_many :gone_places, dependent: :destroy
   has_many :recommend_places, dependent: :delete_all
+  has_many :plans, dependent: :delete_all
 
   validates :name, presence: true
   validates :password, presence: true, length: { minimum: 6 }
