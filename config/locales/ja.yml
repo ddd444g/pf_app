@@ -5,7 +5,7 @@ ja:
        place: 行きたい場所
        gone_place: 訪問済みの場所
        recommend_place: おススメの場所
-       plan: プラン
+       plan: 予定
      attributes:
        user:
          name: 名前
@@ -26,6 +26,6 @@ ja:
         recommend_place_name: おススメ場所の名前
         recommend_comment: おススメコメント
        plan:
-        plan_name: プラン名
+        plan_name: 予定名
         start_time: 開始日時
         end_time: 終了日時
