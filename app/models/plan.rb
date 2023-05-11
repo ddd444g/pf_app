@@ -1,5 +1,6 @@
 class Plan < ApplicationRecord
   belongs_to :user
+  has_many :plan_places, dependent: :delete_all
 
   validates :plan_name, presence: true
   validates :start_time, presence: true
