@@ -1,4 +1,7 @@
 class PlanPlacesController < ApplicationController
+  before_action :authenticate_user
+  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+
   def create
     @user = User.find_by(id: session[:user_id])
     @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
@@ -38,5 +41,13 @@ class PlanPlacesController < ApplicationController
     @plan_place.destroy
     flash[:notice] = "行く予定場所を削除しました"
     redirect_to plan_path(@plan_place.plan)
+  end
+
+  def ensure_correct_user
+    @plan_place = PlanPlace.find(params[:id])
+    if @plan_place.user != @current_user
+      flash[:notice] = "権限がありません"
+      redirect_to @current_user ? user_path(@current_user) : :root
+    end
   end
 end
