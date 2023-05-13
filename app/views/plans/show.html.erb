@@ -10,34 +10,29 @@
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.plan_name %></p>
   </div>
   <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">時間</p>
+    <p class="block text-gray-700 font-bold mb-2">予定期間</p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.start_time&.strftime("%-m月%-d日%H時%M分")%>~<%= @plan.end_time&.strftime("%-m月%-d日%H時%M分")%></p>
   </div>
 
-  <table class="table-auto bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
+  <table class="mb-10 table-auto bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
     <thead>
       <tr>
-        <th class="px-4 py-2">開始</th>
-        <th class="px-4 py-2"><%= @plan.start_time&.strftime("%-m月%-d日%-H時%M分") %></th>
+        <th class="border px-4 py-2">予定時刻</th>
+        <th class="px-4 py-2">plan_place_name</th>
+        <th class="border px-4 py-2">memo</th>
       </tr>
     </thead>
     <tbody>
       <% @plan_places.each do |plan_place| %>
         <tr>
-          <td class="border px-4 py-2"></td>
+          <td class="border px-4 py-2"><%= plan_place.start_time&.strftime("%-m月%-d日%H時%M分")%>~</td>
           <td class="border px-4 py-2"><%= link_to plan_place.plan_place_name, plan_place %></td>
           <td class="border px-4 py-2"><%= plan_place.memo %></td>
           <td class="border px-4 py-2"><%= link_to "edit", edit_plan_place_path(plan_place.id) %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= link_to "削除", plan_place_path(plan_place), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+          <td class="border px-4 py-2"><%= link_to "削除", plan_place_path(plan_place), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
         </tr>
       <% end %>
     </tbody>
-    <thead>
-      <tr>
-        <th class="px-4 py-2">終了</th>
-        <th class="px-4 py-2"><%= @plan.end_time&.strftime("%-m月%-d日%-H時%M分") %></th>
-      </tr>
-    </thead>
   </table>
   <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">行きたい場所新規登録</h3>
 
@@ -54,6 +49,11 @@
     </div>
 
   <%= render "shared/register_place_map", plan_place: @plan_place %>
+
+    <div class="mb-10 mt-10 text-center mx-auto w-1/2">
+      <%= f.label :start_time,"訪問予定時刻", class: "block text-gray-700 font-bold mb-2" %>
+      <%= f.datetime_field :start_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+    </div>
 
     <div class="mt-4">
       <ul>

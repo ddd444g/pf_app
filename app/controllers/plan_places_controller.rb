@@ -2,7 +2,7 @@ class PlanPlacesController < ApplicationController
   def create
     @user = User.find_by(id: session[:user_id])
     @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
-:user_id, :plan_id))
+:user_id, :plan_id, :start_time))
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       flash[:notice] = "行く場所を追加しました"
@@ -24,7 +24,8 @@ class PlanPlacesController < ApplicationController
 
   def update
     @plan_place = PlanPlace.find(params[:id])
-    if @plan_place.update(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude))
+    if @plan_place.update(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
+:start_time))
       flash[:notice] = "登録内容を更新しました"
       redirect_to plan_path(@plan_place.plan)
     else
