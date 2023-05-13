@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :gone_places
   resources :recommend_places
   resources :plans
+  resources :plan_places
 
   root "home#top"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

@@ -24,7 +24,10 @@ class PlansController < ApplicationController
   end
 
   def show
+    @user = User.find_by(id: session[:user_id])
     @plan = Plan.find(params[:id])
+    @plan_place = PlanPlace.new
+    @plan_places = @plan.plan_places.order(:start_time)
   end
 
   def edit

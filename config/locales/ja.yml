@@ -6,6 +6,7 @@ ja:
        gone_place: 訪問済みの場所
        recommend_place: おススメの場所
        plan: 予定
+       plan_place: 行く予定の場所
      attributes:
        user:
          name: 名前
@@ -29,3 +30,8 @@ ja:
         plan_name: 予定名
         start_time: 開始日時
         end_time: 終了日時
+       plan_place:
+        plan_place_name: 登録名
+        latitude: map
+        longitude: 登録
+        start_time: 訪問予定時刻
