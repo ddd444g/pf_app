@@ -51,6 +51,21 @@ class PlansController < ApplicationController
     redirect_to plans_path
   end
 
+  # 行きたい場所ともう一度行きたい場所の一覧を表示
+  def place_and_once_again_place
+    @plan = Plan.find(params[:id])
+    @places = @user.places
+    @once_again_places = @user.gone_places.where(once_again: true)
+  end
+
+  # 行きたい場所ともう一度行きたい場所からplan_placeに登録するページ
+  def from_place_to_plan_place
+    @user = User.find_by(id: session[:user_id])
+    @plan = Plan.find(params[:id])
+    @place = Place.find(params[:place_id])
+    @plan_place = PlanPlace.new
+  end
+
   def ensure_correct_user
     @plan = Plan.find(params[:id])
     if @plan.user != @current_user

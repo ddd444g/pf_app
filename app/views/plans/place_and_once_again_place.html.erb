@@ -1,0 +1,55 @@
+<div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">予定名</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.plan_name %></p>
+  </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">予定期間</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.start_time&.strftime("%-m月%-d日%H時%M分")%>~<%= @plan.end_time&.strftime("%-m月%-d日%H時%M分")%></p>
+  </div>
+</div>
+
+<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">行きたい場所一覧</h3>
+
+<table class="mb-10 p-4 rounded text-center mx-auto w-1/2">
+  <thead>
+    <tr class="bg-blue-100">
+      <th class="px-4 py-2 border border-blue-500">登録名</th>
+      <th class="px-4 py-2 border border-blue-500">memo</th>
+      <th class="px-4 py-2 border border-blue-500">予定に登録する</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @places.each do |place| %>
+      <tr class="border-t border-blue-500">
+        <td class="px-4 py-2 border border-blue-500"><%= place.name %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= place.memo %></td>
+        <td><%= link_to "登録する", from_place_to_plan_place_path(place_id: place.id), class: "header-btn" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">もう一度行きたい一覧</h3>
+
+<table class="mb-10 p-4 rounded text-center mx-auto w-1/2">
+  <thead>
+    <tr class="bg-blue-100">
+      <th class="px-4 py-2 border border-blue-500">登録名</th>
+      <th class="px-4 py-2 border border-blue-500">レビュー</th>
+      <th class="px-4 py-2 border border-blue-500">スコア</th>
+      <th class="px-4 py-2 border border-blue-500">予定に登録する</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @once_again_places.each do |once_again_place| %>
+      <tr class="border-t border-blue-500">
+        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.name %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.review %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.score %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

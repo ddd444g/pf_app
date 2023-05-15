@@ -17,6 +17,21 @@ class PlanPlacesController < ApplicationController
     end
   end
 
+  def from_place_place_to_plan_place_create
+    @user = User.find_by(id: session[:user_id])
+    @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
+:user_id, :plan_id, :place_id, :start_time))
+    if @plan_place.save
+      @plan = Plan.find_by(id: params[:plan_place][:plan_id])
+      flash[:notice] = "行く場所を追加しました"
+      redirect_to plan_path(@plan)
+    else
+      @plan = Plan.find_by(id: params[:plan_place][:plan_id])
+      @place = Place.find_by(id: params[:plan_place][:place_id])
+      render "plans/from_place_to_plan_place"
+    end
+  end
+
   def show
     @plan_place = PlanPlace.find(params[:id])
   end
