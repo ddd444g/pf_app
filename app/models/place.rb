@@ -3,6 +3,8 @@ class Place < ApplicationRecord
   belongs_to :gone_place, optional: true
   belongs_to :recommend_place, optional: true
 
+  has_many :plan_places
+
   geocoded_by :name
   after_validation :geocode, if: :name_changed?
 
