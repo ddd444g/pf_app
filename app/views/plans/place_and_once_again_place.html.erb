@@ -25,7 +25,7 @@
       <tr class="border-t border-blue-500">
         <td class="px-4 py-2 border border-blue-500"><%= place.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= place.memo %></td>
-        <td><%= link_to "登録する", from_place_to_plan_place_path(place_id: place.id), class: "header-btn" %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= link_to "登録する", from_place_to_plan_place_path(place_id: place.id), class: "header-btn" %></td>
       </tr>
     <% end %>
   </tbody>
