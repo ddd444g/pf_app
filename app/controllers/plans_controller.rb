@@ -53,6 +53,7 @@ class PlansController < ApplicationController
 
   # 行きたい場所ともう一度行きたい場所の一覧を表示
   def place_and_once_again_place
+    @user = User.find_by(id: session[:user_id])
     @plan = Plan.find(params[:id])
     @places = @user.places
     @once_again_places = @user.gone_places.where(once_again: true)

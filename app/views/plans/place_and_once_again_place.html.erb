@@ -1,4 +1,4 @@
-<div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
+<div class="mb-10 mt-10 bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
   <div class="mb-10 text-center mx-auto w-1/2">
     <p class="block text-gray-700 font-bold mb-2">予定名</p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.plan_name %></p>
@@ -53,3 +53,7 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="flex justify-center">
+  <%= link_to "予定詳細に戻る", :back, class: "mb-10 inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+</div>
