@@ -1,6 +1,10 @@
 class PlansController < ApplicationController
   before_action :authenticate_user
-  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_correct_user,
+only: [
+  :place_and_once_again_place, :from_place_to_plan_place, :from_once_again_place_to_plan_place, :show, :edit,
+  :update, :destroy,
+]
 
   def index
     @user = User.find_by(id: session[:user_id])
