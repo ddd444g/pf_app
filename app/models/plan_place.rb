@@ -2,6 +2,7 @@ class PlanPlace < ApplicationRecord
   belongs_to :user
   belongs_to :plan
   belongs_to :place, optional: true
+  belongs_to :gone_place, optional: true
 
   geocoded_by :plan_place_name
   after_validation :geocode, if: :plan_place_name_changed?

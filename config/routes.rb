@@ -22,6 +22,12 @@ Rails.application.routes.draw do
   # 行きたい場所に登録されている場所をplan_placeに登録する処理
   post "from_place_to_plan_place_create", to: "plan_places#from_place_place_to_plan_place_create"
 
+  # もう一度行きたいに登録されている場所をplan_placeに登録するページ
+  get "plans/:id/from_once_again_place_to_plan_place", to: "plans#from_once_again_place_to_plan_place", as: "from_once_again_place_to_plan_place"
+
+  # もう一度行きたいに登録されている場所をplan_placeに登録する処理
+  post "from_once_again_place_to_plan_place_create", to: "plan_places#from_once_again_place_to_plan_place_create"
+
   resources :users
   resources :places
   resources :gone_places

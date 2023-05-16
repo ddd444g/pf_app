@@ -49,6 +49,7 @@
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.review %></td>
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.score %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= link_to "登録する", from_once_again_place_to_plan_place_path(gone_place_id: once_again_place.id), class: "header-btn" %></td>
       </tr>
     <% end %>
   </tbody>
