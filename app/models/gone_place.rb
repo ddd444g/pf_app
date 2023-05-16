@@ -4,6 +4,8 @@ class GonePlace < ApplicationRecord
 
   has_one :place
 
+  has_many :plan_places
+
   validates :name, presence: true
   validates :review, presence: true
 

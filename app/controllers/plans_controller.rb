@@ -1,6 +1,10 @@
 class PlansController < ApplicationController
   before_action :authenticate_user
-  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_correct_user,
+only: [
+  :place_and_once_again_place, :from_place_to_plan_place, :from_once_again_place_to_plan_place, :show, :edit,
+  :update, :destroy,
+]
 
   def index
     @user = User.find_by(id: session[:user_id])
@@ -59,11 +63,19 @@ class PlansController < ApplicationController
     @once_again_places = @user.gone_places.where(once_again: true)
   end
 
-  # 行きたい場所ともう一度行きたい場所からplan_placeに登録するページ
+  # 行きたい場所からplan_placeに登録するページ
   def from_place_to_plan_place
     @user = User.find_by(id: session[:user_id])
     @plan = Plan.find(params[:id])
     @place = Place.find(params[:place_id])
+    @plan_place = PlanPlace.new
+  end
+
+  # もう一度行きたいに登録している場所をplan_placeに登録するページ
+  def from_once_again_place_to_plan_place
+    @user = User.find_by(id: session[:user_id])
+    @plan = Plan.find(params[:id])
+    @once_again_place = GonePlace.find(params[:gone_place_id])
     @plan_place = PlanPlace.new
   end
 
