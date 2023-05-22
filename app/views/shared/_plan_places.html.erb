@@ -1,0 +1,20 @@
+<table class="mb-10 table-auto bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
+  <thead>
+    <tr>
+      <th class="border px-4 py-2">予定時刻</th>
+      <th class="px-4 py-2">plan_place_name</th>
+      <th class="border px-4 py-2">memo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% plan_places.each do |plan_place| %>
+      <tr>
+        <td class="border px-4 py-2"><%= plan_place.start_time&.strftime("%-m月%-d日%H時%M分")%>~</td>
+        <td class="border px-4 py-2"><%= link_to plan_place.plan_place_name, plan_place %></td>
+        <td class="border px-4 py-2"><%= plan_place.memo %></td>
+        <td class="border px-4 py-2"><%= link_to "edit", edit_plan_place_path(plan_place.id) %></td>
+        <td class="border px-4 py-2"><%= link_to "削除", plan_place_path(plan_place), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

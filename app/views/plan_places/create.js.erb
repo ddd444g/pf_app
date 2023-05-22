@@ -1,0 +1,5 @@
+document.querySelector('#plan_place_name_field').value = '';
+document.querySelector('#memo_field').value = '';
+document.querySelector('#plan_place_start_time').value = '';
+document.querySelector('#exampleModal').style.display = 'none';
+document.querySelector('.plan_places').innerHTML = "<%= j render 'shared/plan_places', plan_places: @plan_places %>";
