@@ -1,8 +1,8 @@
 <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">予定詳細</h3>
 
-  <% if flash[:notice] %>
-    <p class="text-center bg-blue-100 text-blue-700 py-2 px-4 rounded-md mb-4"><%= flash[:notice] %></p>
-  <% end %>
+<div id="flash-message">
+  <%= render 'shared/flash' %>
+</div>
 
 <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
   <div class="mb-10 text-center mx-auto w-1/2">
@@ -31,8 +31,6 @@
             <%= link_to "行きたい場所一覧へ", place_and_once_again_place_path(@plan), class: "py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded" %>
           </div>
 
-          <%= render "shared/error", obj: @plan_place %>
-
           <%= form_with(model: @plan_place, local: false, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
             <div class="mb-10 text-center mx-auto w-1/2">
               <%= f.label :plan_place_name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
@@ -54,6 +52,11 @@
               <% end %>
               <%= f.datetime_field :start_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
             </div>
+
+            <div class="comments-error w-full">
+              <%= render "shared/error", obj: @plan_place %>
+            </div>
+
             <div class="mt-4">
               <ul>
                 <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
