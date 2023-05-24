@@ -8,12 +8,11 @@ class PlanPlacesController < ApplicationController
 :user_id, :plan_id, :start_time))
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
-      flash[:notice] = "行く場所を追加しました"
-      redirect_to plan_path(@plan)
+      @plan_places = @plan.plan_places
+      flash.now[:notice] = '訪問予定場所を追加しました'
     else
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
-      @plan_places = @plan.plan_places
-      render "plans/show"
+      render :error
     end
   end
 

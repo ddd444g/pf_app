@@ -1,8 +1,8 @@
 <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">予定詳細</h3>
 
-  <% if flash[:notice] %>
-    <p class="text-center bg-blue-100 text-blue-700 py-2 px-4 rounded-md mb-4"><%= flash[:notice] %></p>
-  <% end %>
+<div id="flash-message">
+  <%= render 'shared/flash' %>
+</div>
 
 <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
   <div class="mb-10 text-center mx-auto w-1/2">
@@ -14,63 +14,65 @@
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.start_time&.strftime("%-m月%-d日%H時%M分")%>~<%= @plan.end_time&.strftime("%-m月%-d日%H時%M分")%></p>
   </div>
 
-  <table class="mb-10 table-auto bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
-    <thead>
-      <tr>
-        <th class="border px-4 py-2">予定時刻</th>
-        <th class="px-4 py-2">plan_place_name</th>
-        <th class="border px-4 py-2">memo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @plan_places.each do |plan_place| %>
-        <tr>
-          <td class="border px-4 py-2"><%= plan_place.start_time&.strftime("%-m月%-d日%H時%M分")%>~</td>
-          <td class="border px-4 py-2"><%= link_to plan_place.plan_place_name, plan_place %></td>
-          <td class="border px-4 py-2"><%= plan_place.memo %></td>
-          <td class="border px-4 py-2"><%= link_to "edit", edit_plan_place_path(plan_place.id) %></td>
-          <td class="border px-4 py-2"><%= link_to "削除", plan_place_path(plan_place), method: :delete, data: { confirm: "本当に削除しますか？" } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
- <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">訪問予定場所新規登録</h3>
-
-  <div class="mb-10 text-center">
-    <p class="text-gray-700 font-bold mb-5">行きたい場所、もう一度行きたい場所から登録する</p>
-    <%= link_to "行きたい場所一覧へ", place_and_once_again_place_path(@plan), class: "py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded" %>
+  <div class="plan_places">
+    <%= render "shared/plan_places", plan_places: @plan_places %>
   </div>
-
-  <%= render "shared/error", obj: @plan_place %>
-
-  <%= form_with(model: @plan_place, local: true, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
-    <div class="mb-10 text-center mx-auto w-1/2">
-      <%= f.label :plan_place_name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
-      <%= f.text_field :plan_place_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-    </div>
-    <div class="mb-10 text-center mx-auto w-1/2">
-      <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
-      <%= f.text_field :memo, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-    </div>
-
-  <%= render "shared/register_place_map", plan_place: @plan_place %>
-
-    <div class="mb-10 mt-10 text-center mx-auto w-1/2">
-      <%= f.label :start_time,"訪問予定時刻", class: "block text-gray-700 font-bold mb-2" %>
-      <%= f.datetime_field :start_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-    </div>
-
-    <div class="mt-4">
-      <ul>
-        <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-        <li class="mt-20"><%= link_to "予定一覧", plans_path, class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-      </ul>
-    </div>
-      <%= f.hidden_field :latitude,:value => nil, id: :lat %>
-      <%= f.hidden_field :longitude,:value => nil, id: :lng %>
-      <%= f.hidden_field :user_id, value: @user.id %>
-      <%= f.hidden_field :plan_id, value: @plan.id %>
-    </div>
-  <% end %>
 </div>
+
+<div class="container mx-auto w-2/5 p-6 text-center">
+  <div id="modal" class="mt-6" x-data="{ open: false }">
+    <button class="header-btn" @click="open = true">訪問予定場所を追加する</button>  
+    <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
+      <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
+        <div class="justify-center mt-8">
+          <h3 class="text-2xl font-bold mt-10 mb-4 text-center text-blue-700">訪問予定場所新規登録</h3>
+          <div class="mb-10 text-center">
+            <p class="text-gray-700 font-bold mb-5">行きたい場所、もう一度行きたい場所から登録する</p>
+            <%= link_to "行きたい場所一覧へ", place_and_once_again_place_path(@plan), class: "py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded" %>
+          </div>
+
+          <%= form_with(model: @plan_place, local: false, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
+            <div class="mb-10 text-center mx-auto w-1/2">
+              <%= f.label :plan_place_name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.text_field :plan_place_name, id: "plan_place_name_field", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
+            <div class="mb-10 text-center mx-auto w-1/2">
+              <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.text_field :memo, id: "memo_field", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
+
+            <%= render "shared/register_place_map", plan_place: @plan_place %>
+
+            <div class="mb-10 mt-10 text-center mx-auto w-1/2">
+              <%= f.label :start_time, class: "block text-gray-700 font-bold mb-2" do %>
+                訪問予定時刻<br>
+                <span class="text-sm">
+                  (<%= @plan&.start_time&.strftime("%-m月%-d日%H時%M分") %>〜<%= @plan&.end_time&.strftime("%-m月%-d日%H時%M分") %>の間で設定して下さい)
+                </span>
+              <% end %>
+              <%= f.datetime_field :start_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
+
+            <div class="comments-error w-full">
+              <%= render "shared/error", obj: @plan_place %>
+            </div>
+
+            <div class="mt-4">
+              <ul>
+                <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+                <li class="mt-20"><%= link_to "予定一覧", plans_path, class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+              </ul>
+            </div>
+            <%= f.hidden_field :latitude,:value => nil, id: :lat %>
+            <%= f.hidden_field :longitude,:value => nil, id: :lng %>
+            <%= f.hidden_field :user_id, value: @user.id %>
+            <%= f.hidden_field :plan_id, value: @plan.id %>
+          <% end %>
+        </div>
+        <button class="bg-gray-700 text-white px-4 py-2 rounded no-outline focus:shadow-outline select-none" @click="open = false">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>

@@ -5,7 +5,7 @@ set :application, "pf_app"
 set :repo_url, "git@github.com:ddd444g/pf_app.git"
 
 # set :branch, 'main'
-set :branch, 'feature/register-from-once_again_place-to-plan_place'
+set :branch, 'feature/PlanPlace-create-implemented-with-ajax'
 
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads"
 
