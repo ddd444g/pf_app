@@ -20,7 +20,7 @@
 </div>
 
 <div class="container mx-auto w-2/5 p-6 text-center">
-  <div class="mt-6" x-data="{ open: false }">
+  <div id="modal" class="mt-6" x-data="{ open: false }">
     <button class="header-btn" @click="open = true">訪問予定場所を追加する</button>  
     <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
       <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
@@ -75,4 +75,4 @@
   </div>
 </div>
 
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>

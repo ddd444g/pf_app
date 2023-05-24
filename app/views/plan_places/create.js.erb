@@ -1,7 +1,16 @@
 document.querySelector('#plan_place_name_field').value = '';
 document.querySelector('#memo_field').value = '';
 document.querySelector('#plan_place_start_time').value = '';
-document.querySelector('#exampleModal').style.display = 'none';
+
+<%# 地図の初期化 %>
+document.querySelector('#address').value = '';
+document.querySelector('#lat').value = '';
+document.querySelector('#lng').value = '';
+
+document.querySelector('.comments-error').innerHTML = '';
+
+document.getElementById('modal').__x.$data.open = false;
+
 document.querySelector('.plan_places').innerHTML = "<%= j render 'shared/plan_places', plan_places: @plan_places %>";
 
 document.querySelector('#flash-message').innerHTML = "<%= j render 'shared/flash' %>";
