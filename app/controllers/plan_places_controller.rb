@@ -68,8 +68,7 @@ class PlanPlacesController < ApplicationController
   def destroy
     @plan_place = PlanPlace.find(params[:id])
     @plan_place.destroy
-    flash[:notice] = "行く予定場所を削除しました"
-    redirect_to plan_path(@plan_place.plan)
+    flash.now[:notice] = "#{@plan_place.plan_place_name}を削除しました"
   end
 
   def ensure_correct_user
