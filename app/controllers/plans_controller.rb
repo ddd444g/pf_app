@@ -51,8 +51,7 @@ only: [
   def destroy
     @plan = Plan.find(params[:id])
     @plan.destroy
-    flash[:notice] = "予定を削除しました"
-    redirect_to plans_path
+    flash.now[:notice] = "#{@plan.plan_name}を予定から削除しました"
   end
 
   # 行きたい場所ともう一度行きたい場所の一覧を表示
