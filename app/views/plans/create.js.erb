@@ -1,0 +1,13 @@
+document.querySelector('#plan_name_field').value = '';
+document.querySelector('#plan_start_time').value = '';
+document.querySelector('#plan_end_time').value = '';
+
+document.querySelector('.comments-error').innerHTML = '';
+
+document.getElementById('modal').__x.$data.open = false;
+
+document.querySelector('.plans').innerHTML = "<%= j render 'shared/plans', plans: @plans %>";
+
+document.querySelector('.calendar').innerHTML = "<%= j render 'shared/calendar', plans: @plans %>";
+
+document.querySelector('#flash-message').innerHTML = "<%= j render 'shared/flash' %>";

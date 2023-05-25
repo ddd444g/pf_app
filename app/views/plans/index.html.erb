@@ -5,43 +5,56 @@
     <%= render 'shared/flash' %>
   </div>
 
-  <div class="-mx-4 overflow-x-auto">
-    <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-      <table class="min-w-full">
-        <thead class="bg-gray-50">
-          <tr class="border-b border-gray-200">
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">タイトル</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">期間</th>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
-
-        <tbody class="bg-white divide-y divide-gray-200">
-          <% @plans.each do |plan| %>
-            <tr id="plan-<%=plan.id %>">
-              <td class="px-6 py-4 whitespace-nowrap"><div class="<%= plan_color_class(plan) %>"><%= plan.plan_name %></div></td>
-              <td class="px-6 py-4 whitespace-nowrap"><%= plan.start_time&.strftime("%m/%d %H:%M") %>~<%= plan.end_time&.strftime("%m/%d %H:%M") %></td>
-              <td class="px-6 py-4 whitespace-nowrap"><%= link_to 'Show', plan %></td>
-              <td class="px-6 py-4 whitespace-nowrap"><%= link_to 'Edit', edit_plan_path(plan.id) %></td>
-              <td class="px-6 py-4 whitespace-nowrap"><%= link_to "削除", plan_path(plan), method: :delete, data: { confirm: "本当に削除しますか？" }, remote: true %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="flex justify-center">
-    <%= link_to '予定作成', new_plan_path, class: "inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+  <div class="plans">
+    <%= render "shared/plans", plans: @plans %>
   </div>
 </div>
 
-<%= month_calendar events: @plans do |date, plans| %>
-  <%= date.day %>
+<div class="container mx-auto w-2/5 p-6 text-center">
+  <div id="modal" class="mt-6" x-data="{ open: false }">
+    <button class="header-btn" @click="open = true">予定を追加する</button>  
+    <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
+      <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
+        <div class="justify-center mt-8">
+          <h3 class="text-2xl font-bold mt-10 mb-4 text-center text-blue-700">予定新規登録</h3>
+          <%= form_with(model: @plan, local: false, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
+            <div class="mb-10 text-center mx-auto w-1/2">
+              <%= f.label :plan_name,"予定名", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.text_field :plan_name,id: "plan_name_field", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
+            <div class="mb-10 text-center mx-auto w-1/2">
+              <%= f.label :start_time,"開始日時", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.datetime_field :start_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
+            <div class="mb-10 text-center mx-auto w-1/2">
+              <%= f.label :end_time,"終了日時", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.datetime_field :end_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
+            <div class="mb-10 text-center mx-auto w-1/2">
+              <%= f.label :plan_color,"色分け", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.select :plan_color, [["赤", "red"], ["青", "blue"], ["緑", "green"], ["紫", "purple"], ["黄色", "yellow"]], class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
 
-  <% plans.each do |plan| %>
-    <div class="<%= plan_color_class(plan) %> plan-calendar-<%= plan.id %>">
-      <%= link_to plan.plan_name, plan, class: "text-gray-800 hover:opacity-75" %>
+            <div class="comments-error w-full">
+              <%= render "shared/error", obj: @plan %>
+            </div>
+
+            <div class="mt-4">
+              <ul>
+                <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+              </ul>
+            </div>
+           <%= f.hidden_field :user_id, value: @user.id %>
+          <% end %>
+        </div>
+        <button class="bg-gray-700 text-white px-4 py-2 rounded no-outline focus:shadow-outline select-none" @click="open = false">Close</button>
+      </div>
     </div>
-  <% end %>
-<% end %>
+  </div>
+</div>
+
+<div class="calendar">
+  <%= render "shared/calendar", plans: @plans %>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>

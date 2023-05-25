@@ -9,6 +9,7 @@ only: [
   def index
     @user = User.find_by(id: session[:user_id])
     @plans = @user.plans
+    @plan = @plan = Plan.new
   end
 
   def new
@@ -17,13 +18,14 @@ only: [
   end
 
   def create
+    @user = User.find_by(id: session[:user_id])
     @plan = Plan.new(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id, :plan_color))
     if @plan.save
-      flash[:notice] = "新規登録をしました"
-      redirect_to plan_path(@plan)
+      @plans = @user.plans
+      flash.now[:notice] = "予定を新規登録をしました"
     else
-      @user = User.find_by(id: session[:user_id])
-      render "plans/new"
+      @plans = @user.plans
+      render :error
     end
   end
 
