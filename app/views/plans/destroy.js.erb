@@ -1,0 +1,9 @@
+document.querySelector("#plan-<%= @plan.id %>").remove();
+
+<%# カレンダー内の予定の表示を削除 %>
+let plans = document.querySelectorAll(".plan-calendar-<%= @plan.id %>");
+plans.forEach(function(plan) {
+  plan.remove();
+});
+
+document.querySelector('#flash-message').innerHTML = "<%= j render 'shared/flash' %>";
