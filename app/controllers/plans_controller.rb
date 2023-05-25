@@ -12,11 +12,6 @@ only: [
     @plan = @plan = Plan.new
   end
 
-  def new
-    @plan = Plan.new
-    @user = User.find_by(id: session[:user_id])
-  end
-
   def create
     @user = User.find_by(id: session[:user_id])
     @plan = Plan.new(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id, :plan_color))
