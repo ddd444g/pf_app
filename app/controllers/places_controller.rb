@@ -2,6 +2,12 @@ class PlacesController < ApplicationController
   before_action :authenticate_user
   before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @user = User.find_by(id: session[:user_id])
+    @places = @user.places
+    @place = Place.new
+  end
+
   def new
     @place = Place.new
     @user = User.find_by(id: session[:user_id])

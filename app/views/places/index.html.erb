@@ -1,0 +1,40 @@
+<%= render "shared/places", places: @places %>
+
+<div class="container mx-auto w-2/5 p-6 text-center">
+  <div id="modal" class="mt-6" x-data="{ open: false }">
+    <button class="header-btn" @click="open = true">行きたい場所を追加する</button>  
+    <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
+      <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
+        <div class="justify-center mt-8">
+          <h3 class="text-2xl font-bold mt-10 mb-4 text-center text-blue-700">行きたい場所新規登録</h3>
+          <%= form_with(model: @place, local: false, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
+            <div class="mb-10 text-center mx-auto w-1/2">
+              <%= f.label :name,"予定名", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.text_field :name,id: "place_name_field", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
+            <div class="mb-10 text-center mx-auto w-1/2">
+              <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.text_field :memo, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
+
+            <%= render "shared/register_place_map", place: @place %>
+
+            <div class="comments-error w-full">
+              <%= render "shared/error", obj: @place %>
+            </div>
+
+            <div class="mt-4">
+              <ul>
+                <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+              </ul>
+            </div>
+            <%= f.hidden_field :latitude,:value => nil, id: :lat %>
+            <%= f.hidden_field :longitude,:value => nil, id: :lng %>
+            <%= f.hidden_field :user_id, value: @user.id %>
+          <% end %>
+        </div>
+        <button class="bg-gray-700 text-white px-4 py-2 rounded no-outline focus:shadow-outline select-none" @click="open = false">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
