@@ -1,0 +1,15 @@
+document.querySelector('#place_name_field').value = '';
+document.querySelector('#place_memo_field').value = '';
+
+<%# 地図の初期化 %>
+document.querySelector('#address').value = '';
+document.querySelector('#lat').value = '';
+document.querySelector('#lng').value = '';
+
+document.querySelector('.comments-error').innerHTML = '';
+
+document.getElementById('modal').__x.$data.open = false;
+
+document.querySelector('.places').innerHTML = "<%= j render 'shared/places', places: @places %>";
+
+document.querySelector('#flash-message').innerHTML = "<%= j render 'shared/flash' %>";

@@ -9,7 +9,7 @@ only: [
   def index
     @user = User.find_by(id: session[:user_id])
     @plans = @user.plans
-    @plan = @plan = Plan.new
+    @plan = Plan.new
   end
 
   def create

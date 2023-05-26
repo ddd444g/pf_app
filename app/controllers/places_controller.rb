@@ -14,13 +14,14 @@ class PlacesController < ApplicationController
   end
 
   def create
+    @user = User.find_by(id: session[:user_id])
     @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id))
     if @place.save
-      flash[:notice] = "新規登録をしました"
-      redirect_to user_path(@place.user)
+      @places = @user.places
+      flash.now[:notice] = "行きたい場所を追加しました"
     else
-      @user = User.find_by(id: session[:user_id])
-      render "places/new"
+      @places = @user.places
+      render :error
     end
   end
 
