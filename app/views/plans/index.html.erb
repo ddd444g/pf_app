@@ -20,7 +20,7 @@
           <%= form_with(model: @plan, local: false, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
             <div class="mb-10 text-center mx-auto w-1/2">
               <%= f.label :plan_name,"予定名", class: "block text-gray-700 font-bold mb-2" %>
-              <%= f.text_field :plan_name,id: "plan_name_field", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+              <%= f.text_field :plan_name, id: "plan_name_field", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
             </div>
             <div class="mb-10 text-center mx-auto w-1/2">
               <%= f.label :start_time,"開始日時", class: "block text-gray-700 font-bold mb-2" %>
@@ -56,5 +56,3 @@
 <div class="calendar">
   <%= render "shared/calendar", plans: @plans %>
 </div>
-
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>
