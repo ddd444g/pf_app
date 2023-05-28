@@ -8,11 +8,6 @@ class PlacesController < ApplicationController
     @place = Place.new
   end
 
-  def new
-    @place = Place.new
-    @user = User.find_by(id: session[:user_id])
-  end
-
   def create
     @user = User.find_by(id: session[:user_id])
     @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id))

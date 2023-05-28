@@ -3,11 +3,9 @@ class GonePlacesController < ApplicationController
   before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
 
   def index
-  end
-
-  def new
-    @gone_place = GonePlace.new
     @user = User.find_by(id: session[:user_id])
+    @gone_places = @user.gone_places
+    @gone_place = GonePlace.new
   end
 
   def create
@@ -29,10 +27,10 @@ class GonePlacesController < ApplicationController
     @gone_place = GonePlace.new(params.require(:gone_place).
     permit(:name, :user_id, :review, :score, :latitude, :longitude))
     if @gone_place.save
-      flash[:notice] = "訪問済みに登録しました"
-      redirect_to user_path(@user)
+      @gone_places = @user.gone_places
+      flash.now[:notice] = "訪問済みに登録しました"
     else
-      render "gone_places/new"
+      render :error
     end
   end
 
