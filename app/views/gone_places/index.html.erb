@@ -18,7 +18,7 @@
           <%= form_with(model: @gone_place, local: false, method: :post, url: not_from_place_create_path, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
             <div class="mb-10 text-center mx-auto w-1/2">
               <%= f.label :name,"訪問場所名", class: "block text-gray-700 font-bold mb-2" %>
-              <%= f.text_field :name,id: "place_name_field", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+              <%= f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
             </div>
             <div class="mb-10 text-center mx-auto w-1/2">
               <%= f.label :review,"レビュー", class: "block text-gray-700 font-bold mb-2" %>

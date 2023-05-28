@@ -32,10 +32,10 @@ class GonePlacesController < ApplicationController
     @gone_place = GonePlace.new(params.require(:gone_place).
     permit(:name, :user_id, :review, :score, :latitude, :longitude))
     if @gone_place.save
+      @gone_places = @user.gone_places
       flash[:notice] = "訪問済みに登録しました"
-      redirect_to user_path(@user)
     else
-      render "gone_places/new"
+      render :error
     end
   end
 
