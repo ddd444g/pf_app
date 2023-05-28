@@ -8,11 +8,6 @@ class GonePlacesController < ApplicationController
     @gone_place = GonePlace.new
   end
 
-  def new
-    @gone_place = GonePlace.new
-    @user = User.find_by(id: session[:user_id])
-  end
-
   def create
     @gone_place = GonePlace.new(params.require(:gone_place).
     permit(:name, :user_id, :place_id, :review, :score, :latitude, :longitude))
@@ -33,7 +28,7 @@ class GonePlacesController < ApplicationController
     permit(:name, :user_id, :review, :score, :latitude, :longitude))
     if @gone_place.save
       @gone_places = @user.gone_places
-      flash[:notice] = "訪問済みに登録しました"
+      flash.now[:notice] = "訪問済みに登録しました"
     else
       render :error
     end
