@@ -1,34 +1,38 @@
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">行きたい場所一覧</h3>
+<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">訪問場所一覧</h3>
 
 <div id="flash-message">
   <%= render 'shared/flash' %>
 </div>
 
-<div class="places">
-  <%= render "shared/places", places: @places %>
+<div class="gone-places">
+  <%= render "shared/gone_places", gone_places: @gone_places %>
 </div>
 
 <div class="container mx-auto w-2/5 p-6 text-center">
   <div id="modal" class="mt-6" x-data="{ open: false }">
-    <button class="header-btn" @click="open = true">行きたい場所を追加する</button>  
+    <button class="header-btn" @click="open = true">訪問済み場所を追加する</button>  
     <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
       <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
         <div class="justify-center mt-8">
-          <h3 class="text-2xl font-bold mt-10 mb-4 text-center text-blue-700">行きたい場所新規登録</h3>
-          <%= form_with(model: @place, local: false, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
+          <h3 class="text-2xl font-bold mt-10 mb-4 text-center text-blue-700">訪問済み場所新規登録</h3>
+          <%= form_with(model: @gone_place, local: false, method: :post, url: not_from_place_create_path, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
             <div class="mb-10 text-center mx-auto w-1/2">
-              <%= f.label :name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.label :name,"訪問場所名", class: "block text-gray-700 font-bold mb-2" %>
               <%= f.text_field :name,id: "place_name_field", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
             </div>
             <div class="mb-10 text-center mx-auto w-1/2">
-              <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
-              <%= f.text_field :memo, id: "place_memo_field", class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+              <%= f.label :review,"レビュー", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.text_field :review, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            </div>
+            <div class="mb-10 text-center mx-auto w-1/2">
+              <%= f.label :score, "スコア", class: "block text-gray-700 font-bold mb-2" %>
+              <%= f.number_field :score, in: 1..10, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
             </div>
 
-            <%= render "shared/register_place_map", place: @place %>
+            <%= render "shared/register_place_map", gone_place: @gone_place %>
 
             <div class="comments-error w-full">
-              <%= render "shared/error", obj: @place %>
+              <%= render "shared/error", obj: @gone_place %>
             </div>
 
             <div class="mt-4">

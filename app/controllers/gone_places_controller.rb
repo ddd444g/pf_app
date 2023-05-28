@@ -3,6 +3,9 @@ class GonePlacesController < ApplicationController
   before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
 
   def index
+    @user = User.find_by(id: session[:user_id])
+    @gone_places = @user.gone_places
+    @gone_place = GonePlace.new
   end
 
   def new
