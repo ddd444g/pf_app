@@ -42,8 +42,7 @@ class PlacesController < ApplicationController
   def destroy
     @place = Place.find(params[:id])
     @place.destroy
-    flash[:notice] = "行きたい場所を削除しました"
-    redirect_to user_path(@place.user)
+    flash.now[:notice] = "#{@place.name}を削除しました"
   end
 
   def new_from_recommend_places
