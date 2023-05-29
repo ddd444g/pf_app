@@ -56,8 +56,7 @@ class GonePlacesController < ApplicationController
   def destroy
     @gone_place = GonePlace.find(params[:id])
     @gone_place.destroy
-    flash[:notice] = "訪問済み場所を削除しました"
-    redirect_to user_path(@gone_place.user)
+    flash.now[:notice] = "#{@gone_place.name}を削除しました"
   end
 
   def once_again
