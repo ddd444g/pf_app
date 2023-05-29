@@ -30,7 +30,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @places = @user.places
     @gone_places = @user.gone_places
     @once_again_places = @user.gone_places.where(once_again: true)
     @recommend_places = @user.recommend_places
