@@ -88,9 +88,10 @@
             const rating = place.rating;
 
             if (name) {
-              console.log('場所の名前:', name);
+              // フォームのhiddenフィールドに値を設定
+              document.getElementById('name').value = place.name;
             } else {
-              console.log('場所の名前はありません。');
+              document.getElementById('name').value = "取得できませんでした";
             }
 
             if (addressComponents) {
