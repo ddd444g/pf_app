@@ -2,6 +2,11 @@ document.querySelector('#plan_place_plan_place_name').value = '';
 document.querySelector('#plan_place_memo').value = '';
 document.querySelector('#plan_place_start_time').value = '';
 
+<%# 検索結果の初期化 %>
+document.querySelector('#name-display').innerHTML = '名前：';
+document.querySelector('#address-display').innerHTML = '住所：';
+document.querySelector('#rating-display').innerHTML = 'googlemapでの評価：';
+
 <%# 地図の初期化 %>
 document.querySelector('#address').value = '';
 document.querySelector('#lat').value = '';

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_16_083617) do
+ActiveRecord::Schema.define(version: 2023_06_01_081739) do
   create_table "gone_places", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
     t.float "latitude"
@@ -24,6 +24,9 @@ ActiveRecord::Schema.define(version: 2023_05_16_083617) do
     t.boolean "once_again", default: false, null: false
     t.integer "recommend_place_id"
     t.boolean "recommend", default: false, null: false
+    t.string "googlemap_name"
+    t.string "address"
+    t.float "rating"
     t.index ["recommend_place_id"], name: "index_gone_places_on_recommend_place_id"
   end
 
@@ -36,6 +39,9 @@ ActiveRecord::Schema.define(version: 2023_05_16_083617) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "memo"
     t.integer "recommend_place_id"
+    t.string "googlemap_name"
+    t.string "address"
+    t.float "rating"
   end
 
   create_table "plan_places", charset: "utf8mb4", force: :cascade do |t|
@@ -50,6 +56,9 @@ ActiveRecord::Schema.define(version: 2023_05_16_083617) do
     t.datetime "start_time"
     t.integer "place_id"
     t.integer "gone_place_id"
+    t.string "googlemap_name"
+    t.string "address"
+    t.float "rating"
   end
 
   create_table "plans", charset: "utf8mb4", force: :cascade do |t|

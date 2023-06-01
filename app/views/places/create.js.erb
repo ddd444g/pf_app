@@ -8,6 +8,12 @@ document.querySelector('#lng').value = '';
 
 document.querySelector('.comments-error').innerHTML = '';
 
+<%# 検索結果の初期化 %>
+document.querySelector('#name-display').innerHTML = '名前：';
+document.querySelector('#address-display').innerHTML = '住所：';
+document.querySelector('#rating-display').innerHTML = 'googlemapでの評価：';
+
+
 document.getElementById('modal').__x.$data.open = false;
 
 document.querySelector('.places').innerHTML = "<%= j render 'shared/places', places: @places %>";

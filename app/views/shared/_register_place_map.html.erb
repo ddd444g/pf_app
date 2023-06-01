@@ -3,7 +3,13 @@
 <input id="address" type="textbox" value="">
 <input type="button" value="検索" onclick="codeAddress()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600">
 
-<p class="block text-gray-700 font-bold mb-2">ピンをドラック＆ドロップで位置の調整ができます。</p>
+<p class="block text-gray-700 font-bold mb-2">検索結果</p>
+<ul>
+  <li id="name-display">名前：</li>
+  <li id="address-display">住所：</li>
+  <li id="rating-display">googlemapでの評価：</li>
+</ul>
+
 <div class="flex items-center justify-center">
   <div id='map' class="w-1/2 h-64"></div>
 </div>
@@ -19,30 +25,36 @@
   let map;
   let marker;
   let geocoder;
+  let service; // Places APIのサービス
+  const nameDisplay = document.getElementById('name-display');
+  const addressDisplay = document.getElementById('address-display');
+  const ratingDisplay = document.getElementById('rating-display');
 
   function initMap() {
     geocoder = new google.maps.Geocoder();
 
     map = new google.maps.Map(document.getElementById('map'), {
-      center:  {lat: 35.6803997, lng:139.7690174},
+      center: { lat: 35.6803997, lng: 139.7690174 },
       zoom: 15,
     });
 
     marker = new google.maps.Marker({
       map: map,
-      position: {lat: 1, lng: 1}, //デフォルトでは見えない位置に指定するためこの数字
-      draggable: true
+      position: { lat: 1, lng: 1 }, //デフォルトでは見えない位置に指定するためこの数字
+      draggable: true,
     });
 
-    google.maps.event.addListener(marker, 'dragend', function(ev){
+    google.maps.event.addListener(marker, 'dragend', function (ev) {
       document.getElementById('lat').value = ev.latLng.lat();
       document.getElementById('lng').value = ev.latLng.lng();
     });
+
+    service = new google.maps.places.PlacesService(map);
   }
 
   function codeAddress() {
     let inputAddress = document.getElementById('address').value;
-    geocoder.geocode({'address': inputAddress}, function(results, status) {
+    geocoder.geocode({ address: inputAddress }, function (results, status) {
       if (status == 'OK') {
         if (marker) {
           marker.setMap(null);
@@ -52,15 +64,56 @@
         marker = new google.maps.Marker({
           map: map,
           position: results[0].geometry.location,
-          draggable: true
+          draggable: true,
         });
 
         document.getElementById('lat').value = results[0].geometry.location.lat();
         document.getElementById('lng').value = results[0].geometry.location.lng();
 
-        google.maps.event.addListener(marker, 'dragend', function(ev){
+        google.maps.event.addListener(marker, 'dragend', function (ev) {
           document.getElementById('lat').value = ev.latLng.lat();
           document.getElementById('lng').value = ev.latLng.lng();
+        });
+
+        // 場所の詳細情報を取得
+        const request = {
+          placeId: results[0].place_id,
+          fields: ['name', 'formatted_address', 'rating'],
+        };
+
+        service.getDetails(request, function (place, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            const name = place.name;
+            const addressComponents = place.formatted_address;
+            const rating = place.rating;
+
+            if (name) {
+              // フォームのhiddenフィールドに値を設定
+              document.getElementById('name').value = place.name;
+            } else {
+              document.getElementById('name').value = "取得できませんでした";
+            }
+
+            if (addressComponents) {
+              document.getElementById('formatted_address').value = place.formatted_address;
+            } else {
+              document.getElementById('formatted_address').value = "住所データ詳細はありません";
+            }
+
+            if (rating) {
+              document.getElementById('rating').value = place.rating;
+            } else {
+              document.getElementById('rating').value = "評価はありません";
+            }
+
+            // 検索結果を表示
+            nameDisplay.textContent = "名前：" + name;
+            addressDisplay.textContent = "住所：" + addressComponents;
+            ratingDisplay.textContent = "googlemapでの評価：" + rating;
+
+          } else {
+            alert('該当する結果がありませんでした：' + status);
+          }
         });
       } else {
         alert('該当する結果がありませんでした：' + status);
@@ -69,6 +122,5 @@
   }
 </script>
 
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&libraries=places&callback=initMap" async defer></script>
+

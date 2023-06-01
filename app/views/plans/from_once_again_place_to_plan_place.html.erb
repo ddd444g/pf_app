@@ -49,6 +49,9 @@
     <%= f.hidden_field :latitude, value: @once_again_place.latitude %>
     <%= f.hidden_field :longitude, value: @once_again_place.longitude %>
     <%= f.hidden_field :gone_place_id, value: @once_again_place.id %>
+    <%= f.hidden_field :googlemap_name, value: @once_again_place.googlemap_name %>
+    <%= f.hidden_field :address, value: @once_again_place.address %>
+    <%= f.hidden_field :rating, value: @once_again_place.rating %>
     <%= f.hidden_field :plan_id, value: @plan.id %>
     <%= f.hidden_field :user_id, value: @user.id %>
   <% end %>
