@@ -4,6 +4,9 @@
       <th class="px-4 py-2 border border-blue-500">登録名</th>
       <th class="px-4 py-2 border border-blue-500">レビュー</th>
       <th class="px-4 py-2 border border-blue-500">スコア</th>
+      <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
+      <th class="px-4 py-2 border border-blue-500">住所</th>
+      <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
       <th class="px-4 py-2 border border-blue-500">もう一度行きたい</th>
       <th class="px-4 py-2 border border-blue-500">参照</th>
       <th class="px-4 py-2 border border-blue-500">編集</th>
@@ -16,6 +19,9 @@
         <td class="px-4 py-2 border border-blue-500"><%= gone_place.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= gone_place.review %></td>
         <td class="px-4 py-2 border border-blue-500"><%= gone_place.score %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= gone_place.googlemap_name %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= gone_place.address %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= gone_place.rating %></td>
         <td class="px-4 py-2 border border-blue-500"><%= button_to "もう一度行きたい", once_again_path(gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800" %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", gone_place, class: "text-blue-500 hover:text-blue-700" %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "編集", [:edit, gone_place], class: "text-blue-500 hover:text-blue-700" %></td>
