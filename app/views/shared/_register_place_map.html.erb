@@ -101,9 +101,9 @@
             }
 
             if (rating) {
-              console.log('評価:', rating);
+              document.getElementById('rating').value = place.rating;
             } else {
-              console.log('評価はありません。');
+              document.getElementById('rating').value = "評価はありません";
             }
 
             // 検索結果を表示

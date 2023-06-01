@@ -11,7 +11,7 @@ class PlacesController < ApplicationController
   def create
     @user = User.find_by(id: session[:user_id])
     @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id, :googlemap_name,
-:address))
+:address, :rating))
     if @place.save
       @places = @user.places
       flash.now[:notice] = "行きたい場所を追加しました"
