@@ -45,6 +45,9 @@
     <%= f.hidden_field :latitude, value: @place.latitude %>
     <%= f.hidden_field :longitude, value: @place.longitude %>
     <%= f.hidden_field :place_id, value: @place.id %>
+    <%= f.hidden_field :googlemap_name, value: @place.googlemap_name %>
+    <%= f.hidden_field :address, value: @place.address %>
+    <%= f.hidden_field :rating, value: @place.rating %>
     <%= f.hidden_field :plan_id, value: @plan.id %>
     <%= f.hidden_field :user_id, value: @user.id %>
   <% end %>
