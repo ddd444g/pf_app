@@ -95,9 +95,9 @@
             }
 
             if (addressComponents) {
-              console.log('住所データ詳細:', addressComponents);
+              document.getElementById('formatted_address').value = place.formatted_address;
             } else {
-              console.log('住所データ詳細はありません。');
+              document.getElementById('formatted_address').value = "住所データ詳細はありません";
             }
 
             if (rating) {

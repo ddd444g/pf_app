@@ -4,6 +4,7 @@
       <th class="px-4 py-2 border border-blue-500">登録名</th>
       <th class="px-4 py-2 border border-blue-500">memo</th>
       <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
+      <th class="px-4 py-2 border border-blue-500">住所</th>
       <th class="px-4 py-2 border border-blue-500">参照</th>
       <th class="px-4 py-2 border border-blue-500">編集</th>
       <th class="px-4 py-2 border border-blue-500">削除</th>
@@ -16,6 +17,7 @@
         <td class="px-4 py-2 border border-blue-500"><%= place.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= place.memo %></td>
         <td class="px-4 py-2 border border-blue-500"><%= place.googlemap_name %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= place.address %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", place, class: "text-blue-500 hover:text-blue-700" %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "編集", [:edit, place], class: "text-blue-500 hover:text-blue-700" %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "削除", place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
