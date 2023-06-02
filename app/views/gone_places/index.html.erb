@@ -8,6 +8,8 @@
   <%= render "shared/gone_places", gone_places: @gone_places %>
 </div>
 
+<%= render "shared/once_again_places", once_again_places: @once_again_places %>
+
 <div class="container mx-auto w-2/5 p-6 text-center">
   <div id="modal" class="mt-6" x-data="{ open: false }">
     <button class="header-btn" @click="open = true">訪問済み場所を追加する</button>  

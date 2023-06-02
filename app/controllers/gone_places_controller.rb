@@ -5,6 +5,7 @@ class GonePlacesController < ApplicationController
   def index
     @user = User.find_by(id: session[:user_id])
     @gone_places = @user.gone_places
+    @once_again_places = @user.gone_places.where(once_again: true)
     @gone_place = GonePlace.new
   end
 
@@ -14,8 +15,8 @@ class GonePlacesController < ApplicationController
     if @gone_place.save
       @place = Place.find_by(id: params[:gone_place][:place_id])
       @place.destroy
-      flash[:notice] = "訪問済みに登録し、行きたい場所から削除しました"
-      redirect_to user_path(@gone_place.user)
+      flash[:notice] = "訪問済みに#{@gone_place.name}を登録し、行きたい場所から削除しました"
+      redirect_to gone_places_path
     else
       @place = Place.find_by(id: params[:gone_place][:place_id])
       render "places/show"
@@ -48,7 +49,7 @@ class GonePlacesController < ApplicationController
     @gone_place = GonePlace.find(params[:id])
     if @gone_place.update(params.require(:gone_place).permit(:name, :review, :score, :latitude, :longitude))
       flash[:notice] = "訪問済み場所の情報を更新しました"
-      redirect_to user_path(@gone_place.user)
+      redirect_to gone_place_path(@gone_place)
     else
       render "gone_places/edit"
     end
@@ -68,7 +69,7 @@ class GonePlacesController < ApplicationController
       @gone_place.update(once_again: true)
       flash[:notice] = "もう一度行きたいに登録しました"
     end
-    redirect_to user_path(@current_user)
+    redirect_to gone_places_path
   end
 
   def cancel_once_again
@@ -79,7 +80,7 @@ class GonePlacesController < ApplicationController
     else
       flash[:notice] = "まだもう一度行きたいに登録されていません"
     end
-    redirect_to user_path(@current_user)
+    redirect_to gone_places_path
   end
 
   def ensure_correct_user
