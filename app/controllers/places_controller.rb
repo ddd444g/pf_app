@@ -34,7 +34,7 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:id])
     if @place.update(params.require(:place).permit(:name, :memo, :latitude, :longitude))
       flash[:notice] = "登録内容を更新しました"
-      redirect_to user_path(@place.user)
+      redirect_to place_path(@place)
     else
       render "edit"
     end
@@ -51,7 +51,7 @@ class PlacesController < ApplicationController
     permit(:name, :memo, :latitude, :longitude, :user_id, :recommend_place_id))
     if @place.save
       flash[:notice] = "おすすめ場所から行きたい場所に登録をしました"
-      redirect_to user_path(@place.user)
+      redirect_to places_path
     else
       @user = User.find_by(id: session[:user_id])
       @recommend_place = RecommendPlace.find_by(id: params[:gone_place][:recommend_place_id])
