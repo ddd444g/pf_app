@@ -13,7 +13,7 @@
 
   <tbody>
     <% once_again_places.each do |once_again_place| %>
-      <tr class="border-t border-blue-500">
+      <tr id="once-again-place-<%= once_again_place.id %>" class="border-t border-blue-500">
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.review %></td>
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.score %></td>

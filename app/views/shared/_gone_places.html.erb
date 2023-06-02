@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% gone_places.each do |gone_place| %>
-      <tr id="gone-place-<%=gone_place.id %>"  class="border-t border-blue-500">
+      <tr id="gone-place-<%= gone_place.id %>"  class="border-t border-blue-500">
         <td class="px-4 py-2 border border-blue-500"><%= gone_place.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= gone_place.review %></td>
         <td class="px-4 py-2 border border-blue-500"><%= gone_place.score %></td>

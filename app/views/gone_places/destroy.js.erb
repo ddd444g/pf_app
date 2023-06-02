@@ -1,2 +1,9 @@
 document.querySelector("#gone-place-<%= @gone_place.id %>").remove();
+
+<%# もう一度行きたいに登録している場合、もう一度行きたい一覧からも削除 %>
+<% if @once_again_place %>
+  document.querySelector("#once-again-place-<%= @once_again_place.id %>").remove();
+<% end %>
+
+
 document.querySelector('#flash-message').innerHTML = "<%= j render 'shared/flash' %>";

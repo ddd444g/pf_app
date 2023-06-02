@@ -57,6 +57,10 @@ class GonePlacesController < ApplicationController
 
   def destroy
     @gone_place = GonePlace.find(params[:id])
+    if @gone_place.once_again
+      @once_again_place = @gone_place
+      @once_again_place.destroy
+    end
     @gone_place.destroy
     flash.now[:notice] = "#{@gone_place.name}を削除しました"
   end
