@@ -47,7 +47,8 @@ class GonePlacesController < ApplicationController
 
   def update
     @gone_place = GonePlace.find(params[:id])
-    if @gone_place.update(params.require(:gone_place).permit(:name, :review, :score, :latitude, :longitude))
+    if @gone_place.update(params.require(:gone_place).permit(:name, :review, :score, :latitude, :longitude,
+:googlemap_name, :address, :rating))
       flash[:notice] = "訪問済み場所の情報を更新しました"
       redirect_to gone_place_path(@gone_place)
     else
