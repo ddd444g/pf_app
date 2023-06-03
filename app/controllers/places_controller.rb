@@ -32,7 +32,8 @@ class PlacesController < ApplicationController
 
   def update
     @place = Place.find(params[:id])
-    if @place.update(params.require(:place).permit(:name, :memo, :latitude, :longitude))
+    if @place.update(params.require(:place).permit(:name, :memo, :latitude, :longitude, :googlemap_name, :address,
+:rating))
       flash[:notice] = "登録内容を更新しました"
       redirect_to place_path(@place)
     else
