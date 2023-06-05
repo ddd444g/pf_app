@@ -8,9 +8,11 @@
 
     let transitLayer = new google.maps.TransitLayer();
         transitLayer.setMap(map);
-    let contentString = '登録名：<%= place.name %>';
+    let contentString = '名前：<%= place.googlemap_name %>';
+    let contentAddress = '住所：<%= place.address %>';
+    let contentRating = '評価：<%= place.rating %>';
     let infowindow = new google.maps.InfoWindow({
-      content: contentString
+      content: contentString + '<br>' + contentAddress + '<br>' + contentRating
     });
 
     let marker = new google.maps.Marker({
