@@ -18,30 +18,59 @@
 
   <%= render "shared/place_map", place: @place %>
 
+  <div class="mb-10 mt-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @place.googlemap_name %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @place.address %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @place.rating %></p>
+  </div>
+
+  <div class="container mx-auto w-2/5 p-6 text-center">
+    <div id="modal" class="mt-6" x-data="{ open: false }">
+      <button class="header-btn" @click="open = true">訪問済みに登録</button> 
+      <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
+        <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
+          <div class="justify-center mt-8">
+            <h3 class="text-2xl font-bold mt-10 mb-4 text-center text-blue-700">訪問済みに登録</h3>
+            <div class="mb-10 mt-10 text-center mx-auto w-1/2">
+              <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
+              <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @place.googlemap_name %></p>
+              <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @place.address %></p>
+              <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @place.rating %></p>
+            </div> 
+            <%= form_with model: @gone_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
+              <div class="mb-10 text-center mx-auto w-1/2">
+                <%= f.label :review,"レビュー", class: "block text-gray-700 font-bold mb-2" %>
+                <%= f.text_field :review, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+              </div>
+              <div class="mb-10 text-center mx-auto w-1/2">
+                <%= f.label :score, "スコア", class: "block text-gray-700 font-bold mb-2" %>
+                <%= f.number_field :score, in: 1..10, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+              </div>
+              <%= f.hidden_field :user_id, value: @place.user_id %>
+              <%= f.hidden_field :place_id, value: @place.id %>
+              <%= f.hidden_field :name, value: @place.name %>
+              <%= f.hidden_field :latitude, value: @place.latitude %>
+              <%= f.hidden_field :longitude, value: @place.longitude %>
+              <%= f.hidden_field :googlemap_name, value: @place.googlemap_name %>
+              <%= f.hidden_field :address, value: @place.address %>
+              <%= f.hidden_field :rating, value: @place.rating %>
+              <div class="mt-4">
+                <ul>
+                  <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+                </ul>
+              </div>
+            <% end %>
+          </div>
+          <button class="bg-gray-700 text-white px-4 py-2 rounded no-outline focus:shadow-outline select-none" @click="open = false">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所を訪問済みに登録する</h3>
-
-<%= form_with model: @gone_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :review,"レビュー", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.text_field :review, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :score, "スコア", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.number_field :score, in: 1..10, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <%= f.hidden_field :user_id, value: @place.user_id %>
-  <%= f.hidden_field :place_id, value: @place.id %>
-  <%= f.hidden_field :name, value: @place.name %>
-  <%= f.hidden_field :latitude, value: @place.latitude %>
-  <%= f.hidden_field :longitude, value: @place.longitude %>
-  <%= f.hidden_field :googlemap_name, value: @place.googlemap_name %>
-  <%= f.hidden_field :address, value: @place.address %>
-  <%= f.hidden_field :rating, value: @place.rating %>
-  <div class="mt-4">
-    <ul>
-      <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-    </ul>
-  </div>
-<% end %>
+<div class="mt-10 mb-10 text-center">
+  <ul>
+    <li><%= link_to "一覧に戻る", places_path, class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+  </ul>
+</div>
