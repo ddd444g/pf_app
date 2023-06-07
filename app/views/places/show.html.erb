@@ -70,7 +70,8 @@
 </div>
 
 <div class="mt-10 mb-10 text-center">
-  <ul>
-    <li><%= link_to "一覧に戻る", places_path, class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+  <ul class="flex justify-center">
+    <li class="mr-5"><%= link_to "一覧に戻る", places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li><%= link_to "編集する", [:edit, @place], class: "header-btn" %></li>
   </ul>
 </div>

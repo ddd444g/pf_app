@@ -25,3 +25,10 @@
   <%= f.hidden_field :address, :value => @place.address, id: :formatted_address %>
   <%= f.hidden_field :rating, :value => @place.rating, id: :rating %>
 <% end %>
+
+<div class="mt-10 mb-10 text-center">
+  <ul class="flex justify-center">
+    <li class="mr-5"><%= link_to "一覧に戻る", places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li><%= link_to "詳細ページへ", @place, class: "header-btn" %></li>
+  </ul>
+</div>
