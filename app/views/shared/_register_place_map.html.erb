@@ -33,14 +33,20 @@
   function initMap() {
     geocoder = new google.maps.Geocoder();
 
+    let centerCoords = { lat: 35.6803997, lng: 139.7690174 };
+
+    <% if place.latitude && place.longitude %>
+      centerCoords = { lat: <%= place.latitude %>, lng: <%= place.longitude %> };
+    <% end %>
+
     map = new google.maps.Map(document.getElementById('map'), {
-      center: { lat: 35.6803997, lng: 139.7690174 },
+      center: centerCoords,
       zoom: 15,
     });
 
     marker = new google.maps.Marker({
       map: map,
-      position: { lat: 1, lng: 1 }, //デフォルトでは見えない位置に指定するためこの数字
+      position: centerCoords,
       draggable: true,
     });
 
@@ -123,4 +129,3 @@
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&libraries=places&callback=initMap" async defer></script>
-
