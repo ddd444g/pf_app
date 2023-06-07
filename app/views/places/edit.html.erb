@@ -12,6 +12,13 @@
     <%= f.text_field :memo, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
   </div>
 
+  <div class="mb-10 mt-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @place.googlemap_name %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @place.address %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @place.rating %></p>
+  </div>
+
   <%= render "shared/register_place_map", place: @place %>
 
   <div class="mt-4">
