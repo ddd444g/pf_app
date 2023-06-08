@@ -20,37 +20,68 @@
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @gone_place.score %></p>
   </div>
 
-  <%= render "shared/gone_place_map", gone_place: @gone_place %>
+  <%= render "shared/place_map", place: @gone_place %>
+
+  <div class="mb-10 mt-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @gone_place.googlemap_name %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @gone_place.address %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
+  </div>
 
   <div class="mt-3 mb-10 text-center mx-auto w-1/2">
     <p class="block text-gray-700 font-bold mb-2">もう一度行きたい</p>
     <%= button_to '登録する', once_again_path(@gone_place), method: :post, class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></p>
   </div>
-</div>
 
-<% if @gone_place.recommend == true %>
+  <% if @gone_place.recommend == true %>
 
-  <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所はおすすめに公開済みです</h3>
+    <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所はおすすめに公開済みです</h3>
 
-<% else %>
+  <% else %>
 
-  <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所をおススメ場所として公開する</h3>
-
-  <%= form_with model: @recommend_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
-    <div class="mb-10 text-center mx-auto w-1/2">
-      <%= f.label :recommend_place_name,"おすすめ場所の名前", class: "block text-gray-700 font-bold mb-2" %>
-      <%= f.text_field :recommend_place_name, value: @gone_place.name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-    </div>
-    <div class="mb-10 text-center mx-auto w-1/2">
-      <%= f.label :recommend_comment, "おススメコメント", class: "block text-gray-700 font-bold mb-2" %>
-      <%= f.text_field :recommend_comment, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-    </div>
-    <%= f.hidden_field :user_id, value: @gone_place.user_id %>
-    <%= f.hidden_field :gone_place_id, value: @gone_place.id %>
-    <div class="mt-4">
-      <ul>
-        <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-      </ul>
+    <div class="container mx-auto w-2/5 p-6 text-center">
+      <div id="modal" class="mt-6" x-data="{ open: false }">
+        <button class="header-btn" @click="open = true">おすすめ場所として公開する</button> 
+        <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
+          <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
+            <div class="justify-center mt-8">
+              <h3 class="text-2xl font-bold mt-10 mb-4 text-center text-blue-700">おすすめ場所として公開</h3>
+              <div class="mb-10 mt-10 text-center mx-auto w-1/2">
+                <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
+                <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @gone_place.googlemap_name %></p>
+                <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @gone_place.address %></p>
+                <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
+              </div> 
+              <%= form_with model: @recommend_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
+                <div class="mb-10 text-center mx-auto w-1/2">
+                  <%= f.label :recommend_place_name,"おすすめ場所の名前", class: "block text-gray-700 font-bold mb-2" %>
+                  <%= f.text_field :recommend_place_name, value: @gone_place.googlemap_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+                </div>
+                <div class="mb-10 text-center mx-auto w-1/2">
+                  <%= f.label :recommend_comment, "おススメコメント", class: "block text-gray-700 font-bold mb-2" %>
+                  <%= f.text_field :recommend_comment, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+                </div>
+                <%= f.hidden_field :user_id, value: @gone_place.user_id %>
+                <%= f.hidden_field :gone_place_id, value: @gone_place.id %>
+                <div class="mt-4">
+                  <ul>
+                    <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
+                  </ul>
+                </div>
+              <% end %>
+            </div>
+            <button class="bg-gray-700 text-white px-4 py-2 rounded no-outline focus:shadow-outline select-none" @click="open = false">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
-<% end %>
+</div>
+
+<div class="mt-10 mb-10 text-center">
+  <ul class="flex justify-center">
+    <li class="mr-5"><%= link_to "一覧に戻る", gone_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li><%= link_to "編集する", [:edit, @gone_place], class: "header-btn" %></li>
+  </ul>
+</div>

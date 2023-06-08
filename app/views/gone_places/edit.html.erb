@@ -18,6 +18,13 @@
 
   <%= render "shared/register_place_map", place: @gone_place %>
 
+  <div class="mb-10 mt-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @gone_place.googlemap_name %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @gone_place.address %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
+  </div>
+
   <div class="mt-4">
     <ul>
       <li><%= f.submit "編集を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
@@ -29,3 +36,10 @@
   <%= f.hidden_field :address, :value => @gone_place.address, id: :formatted_address %>
   <%= f.hidden_field :rating, :value => @gone_place.rating, id: :rating %>
 <% end %>
+
+<div class="mt-10 mb-10 text-center">
+  <ul class="flex justify-center">
+    <li class="mr-5"><%= link_to "一覧に戻る", gone_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li><%= link_to "詳細ページへ", @gone_place, class: "header-btn" %></li>
+  </ul>
+</div>
