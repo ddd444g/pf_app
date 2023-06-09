@@ -13,9 +13,8 @@ class RecommendPlacesController < ApplicationController
     if @recommend_place.save
       @gone_place.update(recommend_place_id: @recommend_place.id, recommend: true)
       flash[:notice] = "おすすめ場所として公開しました"
-      redirect_to recommend_place_path(@recommend_place)
     else
-      render "gone_places/show"
+      render :error
     end
   end
 

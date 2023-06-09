@@ -16,10 +16,8 @@ class GonePlacesController < ApplicationController
       @place = Place.find_by(id: params[:gone_place][:place_id])
       @place.destroy
       flash[:notice] = "訪問済みに#{@gone_place.name}を登録し、行きたい場所から削除しました"
-      redirect_to gone_places_path
     else
-      @place = Place.find_by(id: params[:gone_place][:place_id])
-      render "places/show"
+      render :error
     end
   end
 
