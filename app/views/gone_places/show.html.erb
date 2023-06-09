@@ -53,7 +53,7 @@
                 <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @gone_place.address %></p>
                 <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
               </div> 
-              <%= form_with model: @recommend_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
+              <%= form_with model: @recommend_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2", local: false do |f| %>
                 <div class="mb-10 text-center mx-auto w-1/2">
                   <%= f.label :recommend_place_name,"おすすめ場所の名前", class: "block text-gray-700 font-bold mb-2" %>
                   <%= f.text_field :recommend_place_name, value: @gone_place.googlemap_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
@@ -64,6 +64,9 @@
                 </div>
                 <%= f.hidden_field :user_id, value: @gone_place.user_id %>
                 <%= f.hidden_field :gone_place_id, value: @gone_place.id %>
+                <div class="comments-error w-full">
+                  <%= render "shared/error", obj: @recommend_place %>
+                </div>
                 <div class="mt-4">
                   <ul>
                     <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
