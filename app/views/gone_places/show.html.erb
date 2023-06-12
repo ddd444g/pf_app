@@ -50,7 +50,7 @@
                 <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @gone_place.googlemap_name %></p>
                 <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @gone_place.address %></p>
                 <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
-              </div> 
+              </div>
               <%= form_with model: @recommend_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2", local: false do |f| %>
                 <div class="mb-10 text-center mx-auto w-1/2">
                   <%= f.label :recommend_place_name,"おすすめ場所の名前", class: "block text-gray-700 font-bold mb-2" %>
