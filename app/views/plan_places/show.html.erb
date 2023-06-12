@@ -23,3 +23,10 @@
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @plan_place.rating %></p>
   </div>
 </div>
+
+<div class="mt-10 mb-10 text-center">
+  <ul class="flex justify-center">
+    <li class="mr-5"><%= link_to "予定ページへ", plan_path(@plan_place.plan), class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li><%= link_to "編集する", [:edit, @plan_place], class: "header-btn" %></li>
+  </ul>
+</div>
