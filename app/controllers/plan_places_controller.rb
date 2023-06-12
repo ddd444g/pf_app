@@ -59,7 +59,7 @@ class PlanPlacesController < ApplicationController
     if @plan_place.update(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
 :start_time, :googlemap_name, :address, :rating))
       flash[:notice] = "登録内容を更新しました"
-      redirect_to plan_path(@plan_place.plan)
+      redirect_to plan_place_path(@plan_place)
     else
       render "edit"
     end
