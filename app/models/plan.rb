@@ -6,14 +6,8 @@ class Plan < ApplicationRecord
   validates :start_time, presence: true
   validates :end_time, presence: true
   validates :plan_color, presence: true
-  validate :date_before_start
   validate :date_before_end
   validate :start_same_end
-
-  def date_before_start
-    return if start_time.blank?
-    errors.add(:start_time, "は過去の日付は選択できません") if start_time < Date.today
-  end
 
   def date_before_end
     if end_time.blank? || start_time.blank?
