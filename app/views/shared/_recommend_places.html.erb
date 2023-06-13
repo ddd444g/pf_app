@@ -1,4 +1,11 @@
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">おススメ場所一覧</h3>
+<div class="flex justify-center items-center">
+  <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">投稿したおすすめ場所一覧</h3>
+  <%= link_to "他の人のおすすめ一覧へ", recommend_places_path, class: "ml-4 text-blue-700 underline" %>
+</div>
+
+<div id="flash-message">
+  <%= render 'shared/flash' %>
+</div>
 
 <table class="w-full border-collapse border border-blue-500">
   <thead>
