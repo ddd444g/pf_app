@@ -1,4 +1,7 @@
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">おススメ場所一覧</h3>
+<div class="flex justify-center items-center">
+  <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">おすすめ一覧</h3>
+  <%= link_to "自分の投稿したおすすめ一覧へ", my_post_recommend_places_path, class: "ml-4 text-blue-700 underline" %>
+</div>
 
 <div id="flash-message">
   <%= render 'shared/flash' %>
@@ -9,6 +12,9 @@
     <tr class="bg-blue-100">
       <th class="px-4 py-2 border border-blue-500">登録名</th>
       <th class="px-4 py-2 border border-blue-500">おススメコメント</th>
+      <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
+      <th class="px-4 py-2 border border-blue-500">住所</th>
+      <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
       <th class="px-4 py-2 border border-blue-500">参照</th>
       <th class="px-4 py-2 border border-blue-500">投稿ユーザー名</th>
     </tr>
@@ -18,10 +24,12 @@
       <tr class="border-t border-blue-500">
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_place_name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_comment %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.gone_place.googlemap_name %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.gone_place.address %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.gone_place.rating %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", recommend_place, class: "text-blue-500 hover:text-blue-700" %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.user.name %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-

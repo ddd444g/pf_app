@@ -45,8 +45,11 @@ class RecommendPlacesController < ApplicationController
     @recommend_place.destroy
     @gone_place = @recommend_place.gone_place
     @gone_place.update(recommend: false)
-    flash[:notice] = "おススメの場所を削除しました"
-    redirect_to user_path(@recommend_place.user)
+    flash.now[:notice] = "#{@recommend_place.recommend_place_name}をおすすめから削除しました"
+  end
+
+  def my_post_index
+    @recommend_places = @current_user.recommend_places
   end
 
   def ensure_correct_user
