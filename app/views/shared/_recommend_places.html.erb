@@ -12,6 +12,9 @@
     <tr class="bg-blue-100">
       <th class="px-4 py-2 border border-blue-500">登録名</th>
       <th class="px-4 py-2 border border-blue-500">おススメコメント</th>
+      <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
+      <th class="px-4 py-2 border border-blue-500">住所</th>
+      <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
       <th class="px-4 py-2 border border-blue-500">参照</th>
       <th class="px-4 py-2 border border-blue-500">編集</th>
       <th class="px-4 py-2 border border-blue-500">削除</th>
@@ -19,12 +22,15 @@
   </thead>
   <tbody>
     <% recommend_places.each do |recommend_place| %>
-      <tr class="border-t border-blue-500">
+      <tr id="recommend_place-<%=recommend_place.id %>" class="border-t border-blue-500">
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_place_name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_comment %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.gone_place.googlemap_name %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.gone_place.address %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.gone_place.rating %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", recommend_place, class: "text-blue-500 hover:text-blue-700" %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "編集", [:edit, recommend_place], class: "text-blue-500 hover:text-blue-700" %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "削除", recommend_place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700" %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= link_to "削除", recommend_place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
       </tr>
     <% end %>
   </tbody>
