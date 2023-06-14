@@ -27,9 +27,19 @@
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
   </div>
 
+  <div id="show-page-flash-message">
+    <%= render 'shared/flash' %>
+  </div>
+
   <div class="mt-3 mb-10 text-center mx-auto w-1/2">
     <p class="block text-gray-700 font-bold mb-2">もう一度行きたい</p>
-    <%= button_to '登録する', once_again_path(@gone_place), method: :post, class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></p>
+    <div id="show-page-once-<%= @gone_place.id %>">
+      <% if @gone_place.once_again %>
+        <%= button_to "解除する", cancel_once_again_path(@gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true %>
+      <% else %>
+        <%= button_to("登録する", once_again_path(@gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true) %>
+      <% end %>
+    </div>
   </div>
 
   <% if @gone_place.recommend == true %>

@@ -1,0 +1,19 @@
+<%# indexページ用 %>
+if (document.querySelector("#once-again-place-<%= @gone_place.id %>")) {
+  document.querySelector("#once-again-place-<%= @gone_place.id %>").remove();
+}
+
+if (document.getElementById("once-<%= @gone_place.id %>")) {
+  document.getElementById("once-<%= @gone_place.id %>").innerHTML = "<%=j button_to("もう一度行きたい", once_again_path(@gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true) %>";
+}
+
+document.querySelector('#flash-message').innerHTML = "<%= j render 'shared/flash' %>";
+
+<%# showページ用 %>
+if (document.getElementById("show-page-once-<%= @gone_place.id %>")) {
+  document.getElementById("show-page-once-<%= @gone_place.id %>").innerHTML = "<%=j button_to("登録する", once_again_path(@gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true) %>";
+}
+
+if (document.querySelector('#show-page-flash-message')) {
+  document.querySelector('#show-page-flash-message').innerHTML = "<%= j render 'shared/flash' %>";
+}

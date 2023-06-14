@@ -66,24 +66,23 @@ class GonePlacesController < ApplicationController
 
   def once_again
     @gone_place = GonePlace.find(params[:id])
+    @once_again_places = @current_user.gone_places.where(once_again: true)
     if @gone_place.once_again
-      flash[:notice] = "すでに登録されています"
+      flash.now[:notice] = "#{@gone_place.name}はすでに登録されています"
     else
       @gone_place.update(once_again: true)
-      flash[:notice] = "もう一度行きたいに登録しました"
+      flash.now[:notice] = "#{@gone_place.name}をもう一度行きたいに登録しました"
     end
-    redirect_to gone_places_path
   end
 
   def cancel_once_again
     @gone_place = GonePlace.find(params[:id])
     if @gone_place.once_again
       @gone_place.update(once_again: false)
-      flash[:notice] = "もう一度行きたいを解除しました"
+      flash.now[:notice] = "#{@gone_place.name}のもう一度行きたいを解除しました"
     else
-      flash[:notice] = "まだもう一度行きたいに登録されていません"
+      flash.now[:notice] = "まだもう一度行きたいに登録されていません"
     end
-    redirect_to gone_places_path
   end
 
   def ensure_correct_user
