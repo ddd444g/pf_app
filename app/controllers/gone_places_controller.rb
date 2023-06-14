@@ -79,11 +79,10 @@ class GonePlacesController < ApplicationController
     @gone_place = GonePlace.find(params[:id])
     if @gone_place.once_again
       @gone_place.update(once_again: false)
-      flash[:notice] = "もう一度行きたいを解除しました"
+      flash.now[:notice] = "#{@gone_place.name}のもう一度行きたいを解除しました"
     else
-      flash[:notice] = "まだもう一度行きたいに登録されていません"
+      flash.now[:notice] = "まだもう一度行きたいに登録されていません"
     end
-    redirect_to gone_places_path
   end
 
   def ensure_correct_user
