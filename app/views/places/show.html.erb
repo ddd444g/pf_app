@@ -25,6 +25,9 @@
 
   <div class="container mx-auto w-2/5 p-6 text-center">
     <div id="modal" class="mt-6" x-data="{ open: false }">
+      <% if @place.visited %>
+        <p class="mb-10 text-center mx-auto bg-yellow-200 block text-gray-700 font-bold mb-2">この場所はすでに訪問済み場所へ登録しています</p>
+      <% end %>
       <button class="header-btn" @click="open = true">訪問済みに登録</button> 
       <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
         <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
