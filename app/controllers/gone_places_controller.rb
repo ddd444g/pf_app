@@ -14,8 +14,8 @@ class GonePlacesController < ApplicationController
     permit(:name, :user_id, :place_id, :review, :score, :latitude, :longitude, :googlemap_name, :address, :rating))
     if @gone_place.save
       @place = Place.find_by(id: params[:gone_place][:place_id])
-      @place.destroy
-      flash[:notice] = "訪問済みに#{@gone_place.name}を登録し、行きたい場所から削除しました"
+      @place.update(visited: true)
+      flash[:notice] = "#{@gone_place.name}を訪問済みに登録しました。"
     else
       render :error
     end
