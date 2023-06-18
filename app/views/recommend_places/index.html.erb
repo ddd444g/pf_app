@@ -7,6 +7,26 @@
   <%= render 'shared/flash' %>
 </div>
 
+<div class="m-5">
+  <% if params[:sort_param] == 'latest' %>
+    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">新しい順</span>
+  <% else %>
+    <%= link_to "新しい順", recommend_places_path(sort_param: 'latest'), class: "header-btn" %>
+  <% end %>
+
+  <% if params[:sort_param] == 'old' %>
+    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">古い順</span>
+  <% else %>
+    <%= link_to "古い順", recommend_places_path(sort_param: 'old'), class: "header-btn" %>
+  <% end %>
+
+  <% if params[:sort_param] == 'rating' %>
+    <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
+  <% else %>
+    <%= link_to "評価が高い順", recommend_places_path(sort_param: 'rating'), class: "header-btn" %>
+  <% end %>
+</div>
+
 <table class="w-full border-collapse border border-blue-500">
   <thead>
     <tr class="bg-blue-100">

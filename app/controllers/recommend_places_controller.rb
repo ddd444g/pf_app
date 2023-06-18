@@ -3,7 +3,7 @@ class RecommendPlacesController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
-    @recommend_places = RecommendPlace.all
+    @recommend_places = RecommendPlace.all.sort_recommend_places(params[:sort_param])
   end
 
   def create
@@ -49,7 +49,7 @@ class RecommendPlacesController < ApplicationController
   end
 
   def my_post_index
-    @recommend_places = @current_user.recommend_places
+    @recommend_places = @current_user.recommend_places.sort_recommend_places(params[:sort_param])
   end
 
   def ensure_correct_user
