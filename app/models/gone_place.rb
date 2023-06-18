@@ -17,4 +17,25 @@ class GonePlace < ApplicationRecord
 
   geocoded_by :name
   after_validation :geocode, if: :name_changed?
+
+  # 並び替え機能
+  scope :latest, -> { order(created_at: :desc) }
+  scope :old, -> { order(created_at: :asc) }
+  scope :score, -> { order(score: :desc) }
+  scope :rating, -> { order(rating: :desc) }
+
+  def self.sort_gone_places(sort_param)
+    case sort_param
+    when "latest"
+      latest
+    when "old"
+      old
+    when "score"
+      score
+    when "rating"
+      rating
+    else
+      all
+    end
+  end
 end
