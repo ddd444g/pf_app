@@ -4,7 +4,7 @@ class GonePlacesController < ApplicationController
 
   def index
     @user = User.find_by(id: session[:user_id])
-    @gone_places = @user.gone_places.sort_gone_places(params[:sort_param])
+    @gone_places = @user.gone_places.sort_gone_places(params[:sort_param]).search(params[:search])
     @once_again_places = @user.gone_places.where(once_again: true)
     @gone_place = GonePlace.new
   end
