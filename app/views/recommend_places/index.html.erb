@@ -8,22 +8,30 @@
 </div>
 
 <div class="m-5">
+  <%= form_with(url: recommend_places_path, method: :get) do |form| %>
+    <%= form.label :search, "フリーワード検索:" %>
+    <%= form.text_field :search, placeholder: "キーワードを入力" %>
+    <%= form.submit "検索" %>
+  <% end %>
+</div>
+
+<div class="m-5">
   <% if params[:sort_param] == 'latest' %>
     <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">新しい順</span>
   <% else %>
-    <%= link_to "新しい順", recommend_places_path(sort_param: 'latest'), class: "header-btn" %>
+    <%= link_to "新しい順", recommend_places_path(sort_param: 'latest', search: params[:search]), class: "header-btn" %>
   <% end %>
 
   <% if params[:sort_param] == 'old' %>
     <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">古い順</span>
   <% else %>
-    <%= link_to "古い順", recommend_places_path(sort_param: 'old'), class: "header-btn" %>
+    <%= link_to "古い順", recommend_places_path(sort_param: 'old', search: params[:search]), class: "header-btn" %>
   <% end %>
 
   <% if params[:sort_param] == 'rating' %>
     <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
   <% else %>
-    <%= link_to "評価が高い順", recommend_places_path(sort_param: 'rating'), class: "header-btn" %>
+    <%= link_to "評価が高い順", recommend_places_path(sort_param: 'rating', search: params[:search]), class: "header-btn" %>
   <% end %>
 </div>
 
@@ -44,9 +52,9 @@
       <tr class="border-t border-blue-500">
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_place_name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_comment %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.gone_place.googlemap_name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.gone_place.address %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.gone_place.rating %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.googlemap_name %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.address %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.rating %></td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", recommend_place, class: "text-blue-500 hover:text-blue-700" %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.user.name %></td>
       </tr>

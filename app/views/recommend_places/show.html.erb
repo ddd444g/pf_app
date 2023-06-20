@@ -18,9 +18,9 @@
 
   <div class="mb-10 mt-10 text-center mx-auto w-1/2">
     <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @recommend_place.gone_place.googlemap_name %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @recommend_place.gone_place.address %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @recommend_place.gone_place.rating %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @recommend_place.googlemap_name %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @recommend_place.address %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @recommend_place.rating %></p>
   </div>
 
   <% if @recommend_place.user_id != @current_user.id %>
@@ -33,9 +33,9 @@
               <h3 class="text-2xl font-bold mt-10 mb-4 text-center text-blue-700">行きたい場所に登録</h3>
               <div class="mb-10 mt-10 text-center mx-auto w-1/2">
                 <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
-                <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @recommend_place.gone_place.googlemap_name %></p>
-                <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @recommend_place.gone_place.address %></p>
-                <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @recommend_place.gone_place.rating %></p>
+                <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @recommend_place.googlemap_name %></p>
+                <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @recommend_place.address %></p>
+                <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @recommend_place.rating %></p>
               </div>
               <%= form_with(model: @place, local: true, url: new_from_recommend_places_path, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
                 <% if @current_user.places.exists?(recommend_place_id: @recommend_place.id) %>

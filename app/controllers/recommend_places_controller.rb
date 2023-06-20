@@ -3,12 +3,12 @@ class RecommendPlacesController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
-    @recommend_places = RecommendPlace.all.sort_recommend_places(params[:sort_param])
+    @recommend_places = RecommendPlace.all.sort_recommend_places(params[:sort_param]).search(params[:search])
   end
 
   def create
     @recommend_place = RecommendPlace.new(params.require(:recommend_place).permit(:recommend_place_name,
-      :recommend_comment, :gone_place_id, :user_id))
+      :recommend_comment, :gone_place_id, :user_id, :googlemap_name, :address, :rating))
     @gone_place = GonePlace.find_by(id: params[:recommend_place][:gone_place_id])
     if @recommend_place.save
       @gone_place.update(recommend_place_id: @recommend_place.id, recommend: true)
@@ -49,7 +49,9 @@ class RecommendPlacesController < ApplicationController
   end
 
   def my_post_index
-    @recommend_places = @current_user.recommend_places.sort_recommend_places(params[:sort_param])
+    @recommend_places = @current_user.recommend_places.
+      sort_recommend_places(params[:sort_param]).
+      search(params[:search])
   end
 
   def ensure_correct_user

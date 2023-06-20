@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_15_121858) do
+ActiveRecord::Schema.define(version: 2023_06_20_122556) do
   create_table "gone_places", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
     t.float "latitude"
@@ -79,6 +79,9 @@ ActiveRecord::Schema.define(version: 2023_06_15_121858) do
     t.integer "gone_place_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "googlemap_name"
+    t.string "address"
+    t.float "rating"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|

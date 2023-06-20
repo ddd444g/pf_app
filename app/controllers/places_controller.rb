@@ -4,7 +4,7 @@ class PlacesController < ApplicationController
 
   def index
     @user = User.find_by(id: session[:user_id])
-    @places = @user.places.sort_places(params[:sort_param])
+    @places = @user.places.sort_places(params[:sort_param]).search(params[:search])
     @place = Place.new
   end
 
