@@ -30,6 +30,8 @@
               <%= link_to "行きたい場所一覧へ", place_and_once_again_place_path(@plan), class: "py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded" %>
             </div>
 
+            <%= render "shared/register_place_map", place: @plan_place %>
+
             <%= form_with(model: @plan_place, local: false, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
               <div class="mb-10 text-center mx-auto w-1/2">
                 <%= f.label :plan_place_name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
@@ -39,9 +41,6 @@
                 <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.text_field :memo, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
-
-              <%= render "shared/register_place_map", place: @plan_place %>
-
               <div class="mb-10 mt-10 text-center mx-auto w-1/2">
                 <%= f.label :start_time, class: "block text-gray-700 font-bold mb-2" do %>
                   訪問予定時刻<br>
@@ -54,7 +53,7 @@
 
               <div class="comments-error w-full">
                 <%= render "shared/error", obj: @plan_place %>
-             </div>
+              </div>
 
               <div class="mt-4">
                 <ul>

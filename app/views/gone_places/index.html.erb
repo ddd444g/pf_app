@@ -53,6 +53,9 @@
       <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
         <div class="justify-center mt-8">
           <h3 class="text-2xl font-bold mt-10 mb-4 text-center text-blue-700">訪問済み場所新規登録</h3>
+
+          <%= render "shared/register_place_map", place: @gone_place %>
+
           <%= form_with(model: @gone_place, local: false, method: :post, url: not_from_place_create_path, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
             <div class="mb-10 text-center mx-auto w-1/2">
               <%= f.label :name,"訪問場所名", class: "block text-gray-700 font-bold mb-2" %>
@@ -66,8 +69,6 @@
               <%= f.label :score, "スコア", class: "block text-gray-700 font-bold mb-2" %>
               <%= f.number_field :score, in: 1..10, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
             </div>
-
-            <%= render "shared/register_place_map", place: @gone_place %>
 
             <div class="comments-error w-full">
               <%= render "shared/error", obj: @gone_place %>

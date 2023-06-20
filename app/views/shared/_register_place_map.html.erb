@@ -96,6 +96,19 @@
             if (name) {
               // フォームのhiddenフィールドに値を設定
               document.getElementById('name').value = place.name;
+
+              // 登録名にgoogleでの名前を自動で設定
+              switch (true) {
+                case document.getElementById('place_name') !== null:
+                  document.getElementById('place_name').value = place.name;
+                  break;
+                case document.getElementById('gone_place_name') !== null:
+                  document.getElementById('gone_place_name').value = place.name;
+                  break;
+                case document.getElementById('plan_place_plan_place_name') !== null:
+                document.getElementById('plan_place_plan_place_name').value = place.name;
+                  break;
+              }
             } else {
               document.getElementById('name').value = "取得できませんでした";
             }
