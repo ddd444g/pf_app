@@ -44,7 +44,7 @@ class RecommendPlacesController < ApplicationController
     @recommend_place = RecommendPlace.find(params[:id])
     @recommend_place.destroy
     @gone_place = @recommend_place.gone_place
-    @gone_place.update(recommend: false)
+    @gone_place.update(recommend: false, recommend_place_id: nil)
     flash.now[:notice] = "#{@recommend_place.recommend_place_name}をおすすめから削除しました"
   end
 
