@@ -5,7 +5,7 @@ class PlanPlacesController < ApplicationController
   def create
     @user = User.find_by(id: session[:user_id])
     @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
-:user_id, :plan_id, :start_time, :googlemap_name, :address, :rating))
+:user_id, :plan_id, :start_time, :googlemap_name, :address, :rating, :category_id))
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       @plan_places = @plan.plan_places

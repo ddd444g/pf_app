@@ -4,6 +4,7 @@
       <th class="border px-4 py-2">予定時刻</th>
       <th class="border px-4 py-2">登録名</th>
       <th class="border px-4 py-2">memo</th>
+      <th class="border px-4 py-2">カテゴリー</th>
       <th class="border px-4 py-2">googlemapでの正式名称</th>
       <th class="border px-4 py-2">住所</th>
       <th class="border px-4 py-2">googlemapでの評価</th>
@@ -15,6 +16,7 @@
         <td class="border px-4 py-2"><%= plan_place.start_time&.strftime("%-m月%-d日%H時%M分")%>~</td>
         <td class="border px-4 py-2"><%= link_to plan_place.plan_place_name, plan_place %></td>
         <td class="border px-4 py-2"><%= plan_place.memo %></td>
+        <td class="border px-4 py-2"><%= plan_place.category.name %></td>
         <td class="border px-4 py-2"><%= plan_place.googlemap_name %></td>
         <td class="border px-4 py-2"><%= plan_place.address %></td>
         <td class="border px-4 py-2"><%= plan_place.rating %></td>
