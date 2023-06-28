@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_23_233625) do
+ActiveRecord::Schema.define(version: 2023_06_28_101854) do
   create_table "categories", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2023_06_23_233625) do
     t.string "googlemap_name"
     t.string "address"
     t.float "rating"
+    t.integer "category_id"
     t.index ["recommend_place_id"], name: "index_gone_places_on_recommend_place_id"
   end
 

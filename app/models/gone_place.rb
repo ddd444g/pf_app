@@ -1,6 +1,7 @@
 class GonePlace < ApplicationRecord
   belongs_to :user
   belongs_to :recommend_place, optional: true, dependent: :destroy
+  belongs_to :category
 
   has_one :place
 
