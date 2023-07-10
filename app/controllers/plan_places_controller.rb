@@ -19,7 +19,7 @@ class PlanPlacesController < ApplicationController
   def from_place_place_to_plan_place_create
     @user = User.find_by(id: session[:user_id])
     @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
-:user_id, :plan_id, :place_id, :start_time, :googlemap_name, :address, :rating))
+:user_id, :plan_id, :place_id, :start_time, :googlemap_name, :address, :rating, :category_id))
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       flash[:notice] = "行く場所を追加しました"
@@ -34,7 +34,7 @@ class PlanPlacesController < ApplicationController
   def from_once_again_place_to_plan_place_create
     @user = User.find_by(id: session[:user_id])
     @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
-:user_id, :plan_id, :gone_place_id, :start_time, :googlemap_name, :address, :rating))
+:user_id, :plan_id, :gone_place_id, :start_time, :googlemap_name, :address, :rating, :category_id))
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       flash[:notice] = "行く場所を追加しました"
