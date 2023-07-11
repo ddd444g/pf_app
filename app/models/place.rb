@@ -2,6 +2,7 @@ class Place < ApplicationRecord
   belongs_to :user
   belongs_to :gone_place, optional: true
   belongs_to :recommend_place, optional: true
+  belongs_to :category
 
   has_many :plan_places
 

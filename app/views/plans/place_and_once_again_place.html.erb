@@ -36,6 +36,7 @@
     <tr class="bg-blue-100">
       <th class="px-4 py-2 border border-blue-500">登録名</th>
       <th class="px-4 py-2 border border-blue-500">memo</th>
+      <th class="px-4 py-2 border border-blue-500">カテゴリー</th>
       <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
       <th class="px-4 py-2 border border-blue-500">住所</th>
       <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
@@ -48,6 +49,7 @@
       <tr class="border-t border-blue-500">
         <td class="px-4 py-2 border border-blue-500"><%= place.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= place.memo %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= place.category.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= place.googlemap_name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= place.address %></td>
         <td class="px-4 py-2 border border-blue-500"><%= place.rating %></td>
@@ -91,6 +93,7 @@
       <th class="px-4 py-2 border border-blue-500">登録名</th>
       <th class="px-4 py-2 border border-blue-500">レビュー</th>
       <th class="px-4 py-2 border border-blue-500">スコア</th>
+      <th class="px-4 py-2 border border-blue-500">カテゴリー</th>
       <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
       <th class="px-4 py-2 border border-blue-500">住所</th>
       <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
@@ -104,6 +107,7 @@
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.review %></td>
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.score %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.category.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.googlemap_name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.address %></td>
         <td class="px-4 py-2 border border-blue-500"><%= once_again_place.rating %></td>

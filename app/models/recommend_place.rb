@@ -1,5 +1,6 @@
 class RecommendPlace < ApplicationRecord
   belongs_to :user
+  belongs_to :category
   has_one :gone_place
   has_many :places
 

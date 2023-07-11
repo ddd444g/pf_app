@@ -13,6 +13,10 @@
     <p class="block text-gray-700 font-bold mb-2">memo</p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @place.memo %></p>
   </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @place.category.name %></p>
+  </div>
 
   <%= render "shared/place_map", place: @place %>
 
@@ -49,6 +53,10 @@
                 <%= f.label :score, "スコア", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.number_field :score, in: 1..10, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
+              <div class="mb-10 text-center mx-auto w-1/2">
+                <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
+                <%= f.select :category_id, Category.all.map{|o| [o.name, o.id]}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+              </div>
               <%= f.hidden_field :user_id, value: @place.user_id %>
               <%= f.hidden_field :place_id, value: @place.id %>
               <%= f.hidden_field :name, value: @place.name %>
@@ -57,6 +65,7 @@
               <%= f.hidden_field :googlemap_name, value: @place.googlemap_name %>
               <%= f.hidden_field :address, value: @place.address %>
               <%= f.hidden_field :rating, value: @place.rating %>
+              <%= f.hidden_field :rating, value: @place.category_id %>
               <div class="comments-error w-full">
                 <%= render "shared/error", obj: @gone_place %>
               </div>

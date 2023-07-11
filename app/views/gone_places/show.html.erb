@@ -17,6 +17,10 @@
     <p class="block text-gray-700 font-bold mb-2">スコア</p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @gone_place.score %></p>
   </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @gone_place.category.name %></p>
+  </div>
 
   <%= render "shared/place_map", place: @gone_place %>
 
@@ -75,6 +79,7 @@
                 <%= f.hidden_field :googlemap_name, value: @gone_place.googlemap_name %>
                 <%= f.hidden_field :address, value: @gone_place.address %>
                 <%= f.hidden_field :rating, value: @gone_place.rating %>
+                <%= f.hidden_field :category_id, value: @gone_place.category_id %>
                 <div class="comments-error w-full">
                   <%= render "shared/error", obj: @recommend_place %>
                 </div>

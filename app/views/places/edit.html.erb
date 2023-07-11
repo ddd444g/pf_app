@@ -7,9 +7,13 @@
     <%= f.label :name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
     <%= f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
   </div>
-    <div class="mb-10 text-center mx-auto w-1/2">
+  <div class="mb-10 text-center mx-auto w-1/2">
     <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
     <%= f.text_field :memo, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+  </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.select :category_id, Category.all.map{|o| [o.name, o.id]}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
   </div>
 
   <%= render "shared/register_place_map", place: @place %>

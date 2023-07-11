@@ -8,7 +8,7 @@ class RecommendPlacesController < ApplicationController
 
   def create
     @recommend_place = RecommendPlace.new(params.require(:recommend_place).permit(:recommend_place_name,
-      :recommend_comment, :gone_place_id, :user_id, :googlemap_name, :address, :rating))
+      :recommend_comment, :gone_place_id, :user_id, :googlemap_name, :address, :rating, :category_id))
     @gone_place = GonePlace.find_by(id: params[:recommend_place][:gone_place_id])
     if @recommend_place.save
       @gone_place.update(recommend_place_id: @recommend_place.id, recommend: true)
@@ -31,7 +31,8 @@ class RecommendPlacesController < ApplicationController
 
   def update
     @recommend_place = RecommendPlace.find(params[:id])
-    if @recommend_place.update(params.require(:recommend_place).permit(:recommend_place_name, :recommend_comment))
+    if @recommend_place.update(params.require(:recommend_place).permit(:recommend_place_name, :recommend_comment,
+:category_id))
       flash[:notice] = "おススメの場所の情報を更新しました"
       redirect_to recommend_place_path(@recommend_place)
     else
@@ -44,7 +45,7 @@ class RecommendPlacesController < ApplicationController
     @recommend_place = RecommendPlace.find(params[:id])
     @recommend_place.destroy
     @gone_place = @recommend_place.gone_place
-    @gone_place.update(recommend: false)
+    @gone_place.update(recommend: false, recommend_place_id: nil)
     flash.now[:notice] = "#{@recommend_place.recommend_place_name}をおすすめから削除しました"
   end
 
