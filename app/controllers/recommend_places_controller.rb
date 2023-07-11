@@ -31,7 +31,8 @@ class RecommendPlacesController < ApplicationController
 
   def update
     @recommend_place = RecommendPlace.find(params[:id])
-    if @recommend_place.update(params.require(:recommend_place).permit(:recommend_place_name, :recommend_comment))
+    if @recommend_place.update(params.require(:recommend_place).permit(:recommend_place_name, :recommend_comment,
+:category_id))
       flash[:notice] = "おススメの場所の情報を更新しました"
       redirect_to recommend_place_path(@recommend_place)
     else

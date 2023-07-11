@@ -11,6 +11,10 @@
     <%= f.label :recommend_comment,"おススメコメント", class: "block text-gray-700 font-bold mb-2" %>
     <%= f.text_field :recommend_comment, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
   </div>
+  <div class="mb-10 text-center mx-auto w-1/2">
+    <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
+    <%= f.select :category_id, Category.all.map{|o| [o.name, o.id]}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+  </div>
 
   <%= render "shared/place_map", place: @gone_place %>
 
