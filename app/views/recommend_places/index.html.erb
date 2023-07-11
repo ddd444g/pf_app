@@ -40,6 +40,7 @@
     <tr class="bg-blue-100">
       <th class="px-4 py-2 border border-blue-500">登録名</th>
       <th class="px-4 py-2 border border-blue-500">おススメコメント</th>
+      <th class="px-4 py-2 border border-blue-500">カテゴリー</th>
       <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
       <th class="px-4 py-2 border border-blue-500">住所</th>
       <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
@@ -52,6 +53,7 @@
       <tr class="border-t border-blue-500">
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_place_name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_comment %></td>
+        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.category.name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.googlemap_name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.address %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.rating %></td>
