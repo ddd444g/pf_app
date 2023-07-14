@@ -72,7 +72,8 @@
               <%= f.hidden_field :googlemap_name, value: @place.googlemap_name %>
               <%= f.hidden_field :address, value: @place.address %>
               <%= f.hidden_field :rating, value: @place.rating %>
-              <%= f.hidden_field :rating, value: @place.category_id %>
+              <%= f.hidden_field :category_id, value: @place.category_id %>
+              <%= f.hidden_field :website, value: @place.website%>
               <div class="comments-error w-full">
                 <%= render "shared/error", obj: @gone_place %>
               </div>
