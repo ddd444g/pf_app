@@ -27,6 +27,13 @@
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @gone_place.googlemap_name %></p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @gone_place.address %></p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">公式サイト：</span>
+      <% if @gone_place.website == "websiteはありません" %>
+        websiteはありません
+      <% else %>
+        <%= link_to @gone_place.website, @gone_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+      <% end %>
+    </p>
   </div>
 
   <div class="mt-4">
@@ -39,6 +46,7 @@
   <%= f.hidden_field :googlemap_name, :value => @gone_place.googlemap_name, id: :name %>
   <%= f.hidden_field :address, :value => @gone_place.address, id: :formatted_address %>
   <%= f.hidden_field :rating, :value => @gone_place.rating, id: :rating %>
+  <%= f.hidden_field :website, :value => @gone_place.website, id: :website %>
 <% end %>
 
 <div class="mt-10 mb-10 text-center">
