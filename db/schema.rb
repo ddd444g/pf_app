@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_19_060650) do
+ActiveRecord::Schema.define(version: 2023_07_19_093104) do
   create_table "categories", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2023_07_19_060650) do
     t.string "address"
     t.float "rating"
     t.integer "category_id"
+    t.string "website"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
