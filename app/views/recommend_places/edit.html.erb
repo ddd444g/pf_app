@@ -23,6 +23,13 @@
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @recommend_place.googlemap_name %></p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @recommend_place.address %></p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @recommend_place.rating %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">公式サイト：</span>
+      <% if @recommend_place.website == "websiteはありません" %>
+        websiteはありません
+      <% else %>
+        <%= link_to @recommend_place.website, @recommend_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+      <% end %>
+    </p>
   </div>
 
   <div class="mt-4">
