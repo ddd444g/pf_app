@@ -50,7 +50,7 @@ class PlacesController < ApplicationController
   def new_from_recommend_places
     @place = Place.new(params.require(:place).
     permit(:name, :memo, :latitude, :longitude, :user_id, :recommend_place_id, :googlemap_name, :address,
-:rating, :category_id))
+:rating, :category_id, :website))
     if @place.save
       flash[:notice] = "おすすめ場所から行きたい場所に登録をしました"
       redirect_to places_path
