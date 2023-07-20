@@ -6,6 +6,7 @@ class RecommendPlace < ApplicationRecord
 
   validates :recommend_place_name, presence: true
   validates :recommend_comment, presence: true
+  validates :website, presence: true
 
   # 絞り込み検索機能
   scope :search, -> (keyword) {

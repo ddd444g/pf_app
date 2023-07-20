@@ -8,7 +8,7 @@ class RecommendPlacesController < ApplicationController
 
   def create
     @recommend_place = RecommendPlace.new(params.require(:recommend_place).permit(:recommend_place_name,
-      :recommend_comment, :gone_place_id, :user_id, :googlemap_name, :address, :rating, :category_id))
+      :recommend_comment, :gone_place_id, :user_id, :googlemap_name, :address, :rating, :category_id, :website))
     @gone_place = GonePlace.find_by(id: params[:recommend_place][:gone_place_id])
     if @recommend_place.save
       @gone_place.update(recommend_place_id: @recommend_place.id, recommend: true)

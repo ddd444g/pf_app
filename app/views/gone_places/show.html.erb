@@ -29,6 +29,13 @@
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @gone_place.googlemap_name %></p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @gone_place.address %></p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">公式サイト：</span>
+      <% if @gone_place.website == "websiteはありません" %>
+        websiteはありません
+      <% else %>
+        <%= link_to @gone_place.website, @gone_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+      <% end %>
+    </p>
   </div>
 
   <div id="show-page-flash-message">
@@ -80,6 +87,7 @@
                 <%= f.hidden_field :address, value: @gone_place.address %>
                 <%= f.hidden_field :rating, value: @gone_place.rating %>
                 <%= f.hidden_field :category_id, value: @gone_place.category_id %>
+                <%= f.hidden_field :website, value: @gone_place.website %>
                 <div class="comments-error w-full">
                   <%= render "shared/error", obj: @recommend_place %>
                 </div>

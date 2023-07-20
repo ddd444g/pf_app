@@ -8,6 +8,7 @@
       <th class="border px-4 py-2">googlemapでの正式名称</th>
       <th class="border px-4 py-2">住所</th>
       <th class="border px-4 py-2">googlemapでの評価</th>
+      <th class="border px-4 py-2">公式サイト</th>
     </tr>
   </thead>
   <tbody>
@@ -20,6 +21,13 @@
         <td class="border px-4 py-2"><%= plan_place.googlemap_name %></td>
         <td class="border px-4 py-2"><%= plan_place.address %></td>
         <td class="border px-4 py-2"><%= plan_place.rating %></td>
+        <td class="border px-4 py-2">
+          <% if plan_place.website == "websiteはありません" %>
+            websiteはありません
+          <% else %>
+            <%= link_to plan_place.website, plan_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+          <% end %>
+        </td>
         <td class="border px-4 py-2"><%= link_to "edit", edit_plan_place_path(plan_place.id) %></td>
         <td class="border px-4 py-2"><%= link_to "削除", plan_place_path(plan_place), method: :delete, data: { confirm: "本当に削除しますか？" }, remote: true %></td>
       </tr>

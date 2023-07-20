@@ -30,6 +30,13 @@
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @plan_place.googlemap_name %></p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @plan_place.address %></p>
     <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @plan_place.rating %></p>
+    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">公式サイト：</span>
+      <% if @plan_place.website == "websiteはありません" %>
+        websiteはありません
+      <% else %>
+        <%= link_to @plan_place.website, @plan_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+      <% end %>
+    </p>
   </div>
 
   <div class="mt-4">
@@ -42,6 +49,7 @@
   <%= f.hidden_field :googlemap_name, :value => @plan_place.googlemap_name, id: :name %>
   <%= f.hidden_field :address, :value => @plan_place.address, id: :formatted_address %>
   <%= f.hidden_field :rating, :value => @plan_place.rating, id: :rating %>
+  <%= f.hidden_field :website, :value => @plan_place.website, id: :website %>
 <% end %>
 
 <div class="mt-10 mb-10 text-center">

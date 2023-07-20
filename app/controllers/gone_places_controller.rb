@@ -12,7 +12,7 @@ class GonePlacesController < ApplicationController
   def create
     @gone_place = GonePlace.new(params.require(:gone_place).
     permit(:name, :user_id, :place_id, :review, :score, :latitude, :longitude,
-:googlemap_name, :address, :rating, :category_id))
+:googlemap_name, :address, :rating, :category_id, :website))
     if @gone_place.save
       @place = Place.find_by(id: params[:gone_place][:place_id])
       @place.update(visited: true)
@@ -26,7 +26,7 @@ class GonePlacesController < ApplicationController
     @user = User.find_by(id: session[:user_id])
     @gone_place = GonePlace.new(params.require(:gone_place).
     permit(:name, :user_id, :review, :score, :latitude, :longitude, :googlemap_name,
-:address, :rating, :category_id))
+:address, :rating, :category_id, :website))
     if @gone_place.save
       @gone_places = @user.gone_places
       flash.now[:notice] = "訪問済みに登録しました"
@@ -47,7 +47,7 @@ class GonePlacesController < ApplicationController
   def update
     @gone_place = GonePlace.find(params[:id])
     if @gone_place.update(params.require(:gone_place).permit(:name, :review, :score, :latitude, :longitude,
-:googlemap_name, :address, :rating, :category_id))
+:googlemap_name, :address, :rating, :category_id, :website))
       flash[:notice] = "訪問済み場所の情報を更新しました"
       redirect_to gone_place_path(@gone_place)
     else

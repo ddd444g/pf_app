@@ -44,6 +44,7 @@
       <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
       <th class="px-4 py-2 border border-blue-500">住所</th>
       <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
+      <th class="px-4 py-2 border border-blue-500">公式サイト</th>
       <th class="px-4 py-2 border border-blue-500">参照</th>
       <th class="px-4 py-2 border border-blue-500">投稿ユーザー名</th>
     </tr>
@@ -57,6 +58,13 @@
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.googlemap_name %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.address %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.rating %></td>
+        <td class="px-4 py-2 border border-blue-500">
+          <% if recommend_place.website == "websiteはありません" %>
+            websiteはありません
+          <% else %>
+            <%= link_to recommend_place.website, recommend_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+          <% end %>
+        </td>
         <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", recommend_place, class: "text-blue-500 hover:text-blue-700" %></td>
         <td class="px-4 py-2 border border-blue-500"><%= recommend_place.user.name %></td>
       </tr>

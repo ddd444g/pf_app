@@ -8,6 +8,7 @@
   <li id="name-display">名前：</li>
   <li id="address-display">住所：</li>
   <li id="rating-display">googlemapでの評価：</li>
+  <li id="website-display">website：</li>
 </ul>
 
 <div class="flex items-center justify-center">
@@ -29,6 +30,7 @@
   const nameDisplay = document.getElementById('name-display');
   const addressDisplay = document.getElementById('address-display');
   const ratingDisplay = document.getElementById('rating-display');
+  const websiteDisplay = document.getElementById('website-display');
 
   function initMap() {
     geocoder = new google.maps.Geocoder();
@@ -84,7 +86,7 @@
         // 場所の詳細情報を取得
         const request = {
           placeId: results[0].place_id,
-          fields: ['name', 'formatted_address', 'rating'],
+          fields: ['name', 'formatted_address', 'rating', 'website'],
         };
 
         service.getDetails(request, function (place, status) {
@@ -92,6 +94,7 @@
             const name = place.name;
             const addressComponents = place.formatted_address;
             const rating = place.rating;
+            const website = place.website;
 
             if (name) {
               // フォームのhiddenフィールドに値を設定
@@ -125,10 +128,22 @@
               document.getElementById('rating').value = "評価はありません";
             }
 
+            if (website) {
+              document.getElementById('website').value = place.website;
+            } else {
+              document.getElementById('website').value = "websiteはありません";
+            }
+
             // 検索結果を表示
             nameDisplay.textContent = "名前：" + name;
             addressDisplay.textContent = "住所：" + addressComponents;
             ratingDisplay.textContent = "googlemapでの評価：" + rating;
+            if (website) {
+              const websiteLink = "<a class='hover:text-blue-500 hover:underline' href='" + website + "' target='_blank'>公式サイトへ</a>";
+              websiteDisplay.innerHTML = "website：" + websiteLink;
+            } else {
+              websiteDisplay.textContent = "website：情報なし";
+            }
 
           } else {
             alert('該当する結果がありませんでした：' + status);

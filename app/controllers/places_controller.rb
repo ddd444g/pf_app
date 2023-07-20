@@ -11,7 +11,7 @@ class PlacesController < ApplicationController
   def create
     @user = User.find_by(id: session[:user_id])
     @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id, :googlemap_name,
-:address, :rating, :category_id))
+:address, :rating, :category_id, :website))
     if @place.save
       @places = @user.places
       flash.now[:notice] = "行きたい場所を追加しました"
@@ -33,7 +33,7 @@ class PlacesController < ApplicationController
   def update
     @place = Place.find(params[:id])
     if @place.update(params.require(:place).permit(:name, :memo, :latitude, :longitude, :googlemap_name, :address,
-:rating, :category_id))
+:rating, :category_id, :website))
       flash[:notice] = "登録内容を更新しました"
       redirect_to place_path(@place)
     else
@@ -50,7 +50,7 @@ class PlacesController < ApplicationController
   def new_from_recommend_places
     @place = Place.new(params.require(:place).
     permit(:name, :memo, :latitude, :longitude, :user_id, :recommend_place_id, :googlemap_name, :address,
-:rating, :category_id))
+:rating, :category_id, :website))
     if @place.save
       flash[:notice] = "おすすめ場所から行きたい場所に登録をしました"
       redirect_to places_path

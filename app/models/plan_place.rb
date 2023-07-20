@@ -11,6 +11,7 @@ class PlanPlace < ApplicationRecord
   validates :plan_place_name, presence: true
   validates :latitude, presence: { message: "で検索し位置を指定してください" }
   validates :longitude, presence: { message: "したい位置にピンを刺してください" }
+  validates :website, presence: true
 
   validate :plan_place_start_time_within_plan
 
