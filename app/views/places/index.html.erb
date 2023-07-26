@@ -15,19 +15,19 @@
     <h1 class="text-3xl font-bold text-gray-600">行きたい場所一覧</h1>
     <div class="flex">
       <% if params[:sort_param] == 'latest' %>
-        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4">新しい順</span>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">新しい順</span>
       <% else %>
         <%= link_to "新しい順", places_path(sort_param: 'latest', search: params[:search]), class: "header-btn" %>
       <% end %>
 
       <% if params[:sort_param] == 'old' %>
-        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4">古い順</span>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">古い順</span>
       <% else %>
         <%= link_to "古い順", places_path(sort_param: 'old', search: params[:search]), class: "header-btn" %>
       <% end %>
 
       <% if params[:sort_param] == 'rating' %>
-        <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
+        <span class="bg-blue-100 rounded-lg py-2 px-4 text-gray-700">評価の高い順</span>
       <% else %>
         <%= link_to "評価が高い順", places_path(sort_param: 'rating', search: params[:search]), class: "header-btn" %>
       <% end %>
