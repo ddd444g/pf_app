@@ -1,10 +1,8 @@
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">行きたい場所一覧</h3>
-
 <div id="flash-message">
   <%= render 'shared/flash' %>
 </div>
 
-<div class="m-5">
+<div class="m-8 pr-32 flex justify-end">
   <%= form_with(url: places_path, method: :get) do |form| %>
     <%= form.label :search, "フリーワード検索:" %>
     <%= form.text_field :search, placeholder: "キーワードを入力" %>
@@ -12,28 +10,33 @@
   <% end %>
 </div>
 
-<div class="m-5">
-  <% if params[:sort_param] == 'latest' %>
-    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">新しい順</span>
-  <% else %>
-    <%= link_to "新しい順", places_path(sort_param: 'latest', search: params[:search]), class: "header-btn" %>
-  <% end %>
+<div class="mx-auto max-w-7xl">
+  <div class="m-8 flex justify-between items-center">
+    <h1 class="text-3xl font-bold">行きたい場所一覧</h1>
+    <div class="flex">
+      <% if params[:sort_param] == 'latest' %>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4">新しい順</span>
+      <% else %>
+        <%= link_to "新しい順", places_path(sort_param: 'latest', search: params[:search]), class: "header-btn" %>
+      <% end %>
 
-  <% if params[:sort_param] == 'old' %>
-    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">古い順</span>
-  <% else %>
-    <%= link_to "古い順", places_path(sort_param: 'old', search: params[:search]), class: "header-btn" %>
-  <% end %>
+      <% if params[:sort_param] == 'old' %>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4">古い順</span>
+      <% else %>
+        <%= link_to "古い順", places_path(sort_param: 'old', search: params[:search]), class: "header-btn" %>
+      <% end %>
 
-  <% if params[:sort_param] == 'rating' %>
-    <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
-  <% else %>
-    <%= link_to "評価が高い順", places_path(sort_param: 'rating', search: params[:search]), class: "header-btn" %>
-  <% end %>
-</div>
+      <% if params[:sort_param] == 'rating' %>
+        <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
+      <% else %>
+        <%= link_to "評価が高い順", places_path(sort_param: 'rating', search: params[:search]), class: "header-btn" %>
+      <% end %>
+    </div>
+  </div>
 
-<div class="places">
-  <%= render "shared/places", places: @places %>
+  <div class="places">
+    <%= render "shared/places", places: @places %>
+  </div>
 </div>
 
 <div class="container mx-auto w-2/5 p-6 text-center">
