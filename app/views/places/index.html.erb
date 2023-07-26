@@ -12,7 +12,7 @@
 
 <div class="mx-auto max-w-7xl">
   <div class="m-8 mb-0 flex justify-between items-center">
-    <h1 class="text-3xl font-bold text-gray-700">行きたい場所一覧</h1>
+    <h1 class="text-3xl font-bold text-gray-600">行きたい場所一覧</h1>
     <div class="flex">
       <% if params[:sort_param] == 'latest' %>
         <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4">新しい順</span>
@@ -36,7 +36,7 @@
 
   <div id="modal" x-data="{ open: false }">
     <div class="text-center">
-      <button class="header-btn ml-8 mt-2 mb-2" @click="open = true">行きたい場所を追加する</button>
+      <button class="create-btn mt-2 mb-2" @click="open = true">行きたい場所を追加する</button>
     </div>
     <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
       <div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2 h-full overflow-y-auto" @click.away="open = false">
@@ -82,7 +82,7 @@
     </div>
   </div>
 
-  <div class="places text-gray-800">
+  <div class="places text-gray-800 mb-16">
     <%= render "shared/places", places: @places %>
   </div>
 </div>

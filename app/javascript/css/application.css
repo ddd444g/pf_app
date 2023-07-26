@@ -5,4 +5,7 @@
   .header-btn {
     @apply py-2 px-4 bg-blue-500 text-gray-200 font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 mr-8 hover:text-gray-400 text-base;
   }
+  .create-btn {
+    @apply py-2 px-4 bg-yellow-300 text-gray-600 font-semibold rounded-lg shadow-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75 mr-8 ml-8 hover:text-gray-700 text-base;
+  }
 }
