@@ -42,28 +42,26 @@
               <%= render "shared/register_place_map", place: @place %>
             </div>
 
-            <%= form_with(model: @place, local: false, class: "bg-blue-100 m-8 rounded text-center") do |f| %>
-              <div class="mb-10 text-center mx-auto w-1/2">
-                <%= f.label :name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
-                <%= f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+            <%= form_with(model: @place, local: false, class: "bg-blue-100 m-8 mb-0 rounded text-center") do |f| %>
+              <div class="mb-10 ml-40 mr-40 text-center mx-auto">
+                <%= f.label :name,"登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+                <%= f.text_field :name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
-              <div class="mb-10 text-center mx-auto w-1/2">
+              <div class="mb-10 ml-40 mr-40 text-center mx-auto">
                 <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
-                <%= f.text_field :memo, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+                <%= f.text_field :memo, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
-              <div class="mb-10 text-center mx-auto w-1/2">
+              <div class="mb-10 ml-40 mr-40 text-center mx-auto">
                 <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
-                <%= f.select :category_id, Category.all.map{|o| [o.name, o.id]}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+                <%= f.select :category_id, Category.all.map { |o| [o.name, o.id] }, {}, { class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" } %>
               </div>
 
               <div class="comments-error w-full">
                 <%= render "shared/error", obj: @place %>
               </div>
 
-              <div class="mt-4">
-                <ul>
-                  <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-                </ul>
+              <div class="ml-40 mr-40 pb-8 text-center">
+                <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
               </div>
               <%= f.hidden_field :latitude,:value => nil, id: :lat %>
               <%= f.hidden_field :longitude,:value => nil, id: :lng %>
