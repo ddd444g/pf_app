@@ -34,13 +34,15 @@
     <div id="modal" x-data="{ open: false }">
       <button class="create-btn mt-2 mb-2" @click="open = true">行きたい場所を追加する</button>
       <div id="exampleModal" class="absolute top-0 left-0 w-full h-full items-center justify-center bg-black bg-opacity-50" x-show="open">
-        <div class="bg-blue-100 p-8 rounded text-center mx-auto w-1/2 max-h-full overflow-y-auto" @click.away="open = false">
+        <div class="mt-12 rounded text-center mx-auto w-1/2 max-h-full overflow-y-auto" @click.away="open = false">
           <div class="bg-gray-100 justify-center">
             <h3 class="text-2xl font-bold pt-8 pb-8 text-center text-gray-600">行きたい場所新規登録</h3>
 
-            <%= render "shared/register_place_map", place: @place %>
+            <div class="bg-blue-100 m-8 mt-0">
+              <%= render "shared/register_place_map", place: @place %>
+            </div>
 
-            <%= form_with(model: @place, local: false, class: "p-4 rounded text-center mx-auto w-1/2") do |f| %>
+            <%= form_with(model: @place, local: false, class: "bg-blue-100 m-8 rounded text-center") do |f| %>
               <div class="mb-10 text-center mx-auto w-1/2">
                 <%= f.label :name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
@@ -71,8 +73,8 @@
               <%= f.hidden_field :rating, value: '', id: :rating %>
               <%= f.hidden_field :website, value: '', id: :website %>
             <% end %>
+            <button class="mt-8 mb-8 bg-gray-600 text-gray-100 px-4 py-2 rounded no-outline focus:shadow-outline select-none hover:bg-gray-800 hover:text-gray-300" @click="open = false">Close</button>
           </div>
-          <button class="bg-gray-700 text-white px-4 py-2 rounded no-outline focus:shadow-outline select-none" @click="open = false">Close</button>
         </div>
       </div>
     </div>
