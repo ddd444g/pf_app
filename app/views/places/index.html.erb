@@ -4,11 +4,11 @@
 </div>
 
 <div class="mx-auto max-w-7xl">
-  <div class="ml-8 text-gray-800">
+  <div class="ml-8">
     <%= form_with(url: places_path, method: :get) do |form| %>
-      <%= form.label :search, "フリーワード検索:" %>
-      <%= form.text_field :search, placeholder: "キーワードを入力" %>
-      <%= form.submit "検索" %>
+      <%= form.label :search, "フリーワード検索:", class:"text-gray-700" %>
+      <%= form.text_field :search, placeholder: "キーワードを入力", class: "bg-gray-100 shadow appearance-none border rounded py-2 px-4 mr-2 ml-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      <%= form.submit "検索", class:"text-gray-100 bg-gray-400 hover:bg-gray-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue" %>
     <% end %>
   </div>
   <div class="mt-4 ml-8 mb-4 flex justify-between items-center">
