@@ -10,6 +10,16 @@
       <%= form.text_field :search, placeholder: "キーワードを入力", class: "bg-gray-100 shadow appearance-none border rounded py-2 px-4 mr-2 ml-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
       <%= form.submit "検索", class:"text-gray-100 bg-gray-400 hover:bg-gray-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue" %>
     <% end %>
+
+    <% if @search_keyword.present? %>
+      <p class="search_keyword text-gray-700 mt-2">入力された検索ワード: <%= @search_keyword %></p>
+    <% end %>
+
+    <% if @places_count > 0 %>
+      <p class="places_count text-gray-700 mt-2">表示件数: <%= @places_count %>件</p>
+    <% else %>
+      <p class="places_count text-gray-700 mt-2">該当する結果はありませんでした。</p>
+    <% end %>
   </div>
   <div class="mt-4 ml-8 mb-4 flex justify-between items-center">
     <div class="flex">
@@ -26,10 +36,12 @@
       <% end %>
 
       <% if params[:sort_param] == 'rating' %>
-        <span class="bg-blue-100 rounded-lg py-2 px-4 text-gray-700">評価の高い順</span>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">評価の高い順</span>
       <% else %>
         <%= link_to "評価が高い順", places_path(sort_param: 'rating', search: params[:search]), class: "header-btn" %>
       <% end %>
+
+      <%= link_to "全て表示", places_path, class: "header-btn" %>
     </div>
     <div id="modal" x-data="{ open: false }">
       <button class="create-btn mt-2 mb-2" @click="open = true">行きたい場所を追加する</button>

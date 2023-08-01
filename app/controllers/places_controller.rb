@@ -6,6 +6,8 @@ class PlacesController < ApplicationController
     @user = User.find_by(id: session[:user_id])
     @places = @user.places.sort_places(params[:sort_param]).search(params[:search])
     @place = Place.new
+    @search_keyword = params[:search]
+    @places_count = @places.count
   end
 
   def create
@@ -13,10 +15,8 @@ class PlacesController < ApplicationController
     @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id, :googlemap_name,
 :address, :rating, :category_id, :website))
     if @place.save
-      @places = @user.places
-      flash.now[:notice] = "行きたい場所を追加しました"
+      flash[:notice] = "#{@place.name}を追加しました"
     else
-      @places = @user.places
       render :error
     end
   end
