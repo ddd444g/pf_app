@@ -1,2 +1,13 @@
 document.querySelector("#place-<%= @place.id %>").remove();
 document.querySelector('#flash-message').innerHTML = "<%= j render 'shared/flash' %>";
+
+<%# 削除と同時に件数の表示も-1する処理 %>
+if (document.querySelector('.places_count')) {
+  let currentPlacesCount = parseInt(document.querySelector('.places_count').innerText.match(/\d+/)[0]);
+
+  if (currentPlacesCount > 1) {
+    document.querySelector('.places_count').innerText = "表示件数: " + (currentPlacesCount - 1) + "件";
+  } else {
+    document.querySelector('.places_count').innerText = "該当する結果はありませんでした。";
+  }
+}
