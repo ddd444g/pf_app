@@ -1,75 +1,94 @@
-<div class="flex justify-center items-center">
-  <h3 class="text-2xl font-bold mb-4 text-center text-blue-700">投稿したおすすめ場所一覧</h3>
-  <%= link_to "他の人のおすすめ一覧へ", recommend_places_path, class: "ml-4 text-blue-700 underline" %>
-</div>
-
+<h1 class="m-4 text-3xl font-bold text-gray-600 text-center">投稿したおすすめ場所一覧</h1>
 <div id="flash-message">
   <%= render 'shared/flash' %>
 </div>
 
-<div class="m-5">
-  <%= form_with(url: my_post_recommend_places_path, method: :get) do |form| %>
-    <%= form.label :search, "フリーワード検索:" %>
-    <%= form.text_field :search, placeholder: "キーワードを入力" %>
-    <%= form.submit "検索" %>
-  <% end %>
-</div>
-
-<div class="m-5">
-  <% if params[:sort_param] == 'latest' %>
-    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">新しい順</span>
-  <% else %>
-    <%= link_to "新しい順", my_post_recommend_places_path(sort_param: 'latest', search: params[:search]), class: "header-btn" %>
-  <% end %>
-
-  <% if params[:sort_param] == 'old' %>
-    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">古い順</span>
-  <% else %>
-    <%= link_to "古い順", my_post_recommend_places_path(sort_param: 'old', search: params[:search]), class: "header-btn" %>
-  <% end %>
-
-  <% if params[:sort_param] == 'rating' %>
-    <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
-  <% else %>
-    <%= link_to "評価が高い順", my_post_recommend_places_path(sort_param: 'rating', search: params[:search]), class: "header-btn" %>
-  <% end %>
-</div>
-
-<table class="w-full border-collapse border border-blue-500">
-  <thead>
-    <tr class="bg-blue-100">
-      <th class="px-4 py-2 border border-blue-500">登録名</th>
-      <th class="px-4 py-2 border border-blue-500">おススメコメント</th>
-      <th class="px-4 py-2 border border-blue-500">カテゴリー</th>
-      <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
-      <th class="px-4 py-2 border border-blue-500">住所</th>
-      <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
-      <th class="px-4 py-2 border border-blue-500">公式サイト</th>
-      <th class="px-4 py-2 border border-blue-500">参照</th>
-      <th class="px-4 py-2 border border-blue-500">編集</th>
-      <th class="px-4 py-2 border border-blue-500">削除</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @recommend_places.each do |recommend_place| %>
-      <tr id="recommend_place-<%=recommend_place.id %>" class="border-t border-blue-500">
-        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_place_name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.recommend_comment %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.category.name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.googlemap_name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.address %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= recommend_place.rating %></td>
-        <td class="px-4 py-2 border border-blue-500">
-          <% if recommend_place.website == "websiteはありません" %>
-            websiteはありません
-          <% else %>
-            <%= link_to recommend_place.website, recommend_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-          <% end %>
-        </td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", recommend_place, class: "text-blue-500 hover:text-blue-700" %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "編集", [:edit, recommend_place], class: "text-blue-500 hover:text-blue-700" %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "削除", recommend_place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
-      </tr>
+<div class="mx-auto max-w-7xl">
+  <div class="ml-8">
+    <%= form_with(url: my_post_recommend_places_path, method: :get) do |form| %>
+      <%= form.label :search, "フリーワード検索:", class:"text-gray-700" %>
+      <%= form.text_field :search, placeholder: "キーワードを入力", class: "bg-gray-100 shadow appearance-none border rounded py-2 px-4 mr-2 ml-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      <%= form.submit "検索", class:"text-gray-100 bg-gray-400 hover:bg-gray-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue" %>
     <% end %>
-  </tbody>
-</table>
+
+    <% if @search_keyword.present? %>
+      <p class="search_keyword text-gray-700 mt-2">入力された検索ワード: <%= @search_keyword %></p>
+    <% end %>
+
+    <% if @recommend_places_count > 0 %>
+      <p class="places_count text-gray-700 mt-2">表示件数: <%= @recommend_places_count %>件</p>
+    <% else %>
+      <p class="places_count text-gray-700 mt-2">該当する結果はありませんでした。</p>
+    <% end %>
+  </div>
+  <div class="mt-4 ml-8 mb-4 flex justify-between items-center">
+    <div class="flex">
+      <% if params[:sort_param] == 'latest' %>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">新しい順</span>
+      <% else %>
+        <%= link_to "新しい順", my_post_recommend_places_path(sort_param: 'latest', search: params[:search]), class: "header-btn" %>
+      <% end %>
+
+      <% if params[:sort_param] == 'old' %>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">古い順</span>
+      <% else %>
+        <%= link_to "古い順", my_post_recommend_places_path(sort_param: 'old', search: params[:search]), class: "header-btn" %>
+      <% end %>
+
+      <% if params[:sort_param] == 'rating' %>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
+      <% else %>
+        <%= link_to "評価が高い順", my_post_recommend_places_path(sort_param: 'rating', search: params[:search]), class: "header-btn" %>
+      <% end %>
+
+      <%= link_to "全て表示", my_post_recommend_places_path, class: "header-btn" %>
+    </div>
+    <%= link_to "他の人のおすすめ一覧へ", recommend_places_path, class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+  </div>
+
+  <div class="text-gray-800 mb-16">
+    <div class="-mx-4 overflow-x-auto">
+      <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+        <table class="min-w-full">
+          <thead class="bg-gray-50">
+            <tr class="border-b border-gray-200">
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">おススメコメント</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの正式名称</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">住所</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">参照</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">編集</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">削除</th>
+            </tr>
+          </thead>
+
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @recommend_places.each do |recommend_place| %>
+              <tr id="recommend_place-<%= recommend_place.id %>">
+                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.recommend_place_name %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.recommend_comment %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.category.name %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.googlemap_name %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.address %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.rating %></td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <% if recommend_place.website == "websiteはありません" %>
+                    websiteはありません
+                  <% else %>
+                    <%= link_to recommend_place.website, recommend_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+                  <% end %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "参照", recommend_place, class: "text-blue-500 hover:text-blue-700" %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "編集", [:edit, recommend_place], class: "text-blue-500 hover:text-blue-700" %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "削除", recommend_place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

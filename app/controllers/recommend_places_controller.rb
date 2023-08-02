@@ -53,9 +53,10 @@ class RecommendPlacesController < ApplicationController
   end
 
   def my_post_index
-    @recommend_places = @current_user.recommend_places.
-      sort_recommend_places(params[:sort_param]).
-      search(params[:search])
+    @recommend_places = RecommendPlace.includes(:user,
+:category).where(user_id: @current_user.id).sort_recommend_places(params[:sort_param]).search(params[:search])
+    @search_keyword = params[:search]
+    @recommend_places_count = @recommend_places.count
   end
 
   def ensure_correct_user
