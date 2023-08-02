@@ -3,7 +3,10 @@ class RecommendPlacesController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
-    @recommend_places = RecommendPlace.all.sort_recommend_places(params[:sort_param]).search(params[:search])
+    @recommend_places = RecommendPlace.includes(:user,
+:category).all.sort_recommend_places(params[:sort_param]).search(params[:search])
+    @search_keyword = params[:search]
+    @recommend_places_count = @recommend_places.count
   end
 
   def create
