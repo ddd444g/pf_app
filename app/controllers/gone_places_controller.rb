@@ -30,8 +30,7 @@ class GonePlacesController < ApplicationController
     permit(:name, :user_id, :review, :score, :latitude, :longitude, :googlemap_name,
 :address, :rating, :category_id, :website))
     if @gone_place.save
-      @gone_places = @user.gone_places
-      flash.now[:notice] = "訪問済みに登録しました"
+      flash[:notice] = "#{@gone_place.name}を追加しました"
     else
       render :error
     end
