@@ -1,49 +1,49 @@
 <div class="-mx-4 overflow-x-auto">
-<div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-<table class="min-w-full">
-  <thead class="bg-gray-50">
-    <tr class="border-b border-gray-200">
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">memo</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの正式名称</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">住所</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
-      <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">visited</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+    <table class="min-w-full">
+      <thead class="bg-gray-50">
+        <tr class="border-b border-gray-200">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">memo</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの正式名称</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">住所</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">visited</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-  <tbody class="bg-white divide-y divide-gray-200">
-    <% places.each do |place| %>
-      <tr id="place-<%=place.id %>">
-        <td class="px-6 py-4 whitespace-nowrap"><%= place.name %></td>
-        <td class="px-6 py-4 whitespace-nowrap"><%= place.memo %></td>
-        <td class="px-6 py-4 whitespace-nowrap"><%= place.category.name %></td>
-        <td class="px-6 py-4 whitespace-nowrap"><%= place.googlemap_name %></td>
-        <td class="px-6 py-4 whitespace-nowrap"><%= place.address %></td>
-        <td class="px-6 py-4 whitespace-nowrap"><%= place.rating %></td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <% if place.website == "websiteはありません" %>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% places.each do |place| %>
+          <tr id="place-<%=place.id %>">
+            <td class="px-6 py-4 whitespace-nowrap"><%= place.name %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= place.memo %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= place.category.name %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= place.googlemap_name %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= place.address %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= place.rating %></td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <% if place.website == "websiteはありません" %>
             websiteはありません
-          <% else %>
-            <%= link_to place.website, place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-          <% end %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <% if place.visited %>
-            訪問済みです
-          <% else %>
-            <%= link_to "訪問済みにする", place, class: "header-btn" %>
-          <% end %>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap"><%= link_to "参照", place, class: "text-blue-500 hover:text-blue-700" %></td>
-        <td class="px-6 py-4 whitespace-nowrap"><%= link_to "編集", [:edit, place], class: "text-blue-500 hover:text-blue-700" %></td>
-        <td class="px-6 py-4 whitespace-nowrap"><%= link_to "削除", place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
+              <% else %>
+                <%= link_to place.website, place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+              <% end %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <% if place.visited %>
+                訪問済みです
+              <% else %>
+                <%= link_to "訪問済みにする", place, class: "header-btn" %>
+              <% end %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= link_to "参照", place, class: "text-blue-500 hover:text-blue-700" %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= link_to "編集", [:edit, place], class: "text-blue-500 hover:text-blue-700" %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= link_to "削除", place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
