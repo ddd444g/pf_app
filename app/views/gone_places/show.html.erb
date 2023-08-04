@@ -1,4 +1,4 @@
-<h3 class="m-6 text-2xl text-gray-600 font-bold text-center">訪問済み場所詳細</h3>
+<h1 class="m-6 text-2xl text-gray-600 font-bold text-center">訪問済み場所詳細</h1>
 
 <div id="flash-message">
   <%= render 'shared/flash' %>
@@ -77,7 +77,7 @@
             <%= render "shared/google_map_info", place: @gone_place %>
           </div>
           <h3 class="text-2xl pb-2 font-bold text-center text-gray-600">入力フォーム</h3>
-          <%= form_with model: @recommend_place, class: "bg-blue-100 m-8 mb-0 rounded text-center", local: false do |f| %>
+          <%= form_with model: @recommend_place, class: "bg-blue-100 mr-8 ml-8 mb-0 rounded text-center", local: false do |f| %>
             <div class="mb-10 ml-40 mr-40 text-center mx-auto">
               <%= f.label :recommend_place_name,"おすすめ場所の名前", class: "pt-2 block text-gray-700 font-bold mb-2" %>
               <%= f.text_field :recommend_place_name, value: @gone_place.googlemap_name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>

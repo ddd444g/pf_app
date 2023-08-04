@@ -52,12 +52,9 @@ class PlacesController < ApplicationController
     permit(:name, :memo, :latitude, :longitude, :user_id, :recommend_place_id, :googlemap_name, :address,
 :rating, :category_id, :website))
     if @place.save
-      flash[:notice] = "おすすめ場所から行きたい場所に登録をしました"
-      redirect_to places_path
+      flash[:notice] = "#{@place.name}を追加しました"
     else
-      @user = User.find_by(id: session[:user_id])
-      @recommend_place = RecommendPlace.find_by(id: params[:gone_place][:recommend_place_id])
-      render "recommend_places/show"
+      render :error
     end
   end
 
