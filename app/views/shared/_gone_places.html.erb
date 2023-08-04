@@ -39,7 +39,7 @@
               <% if gone_place.once_again %>
                 登録済みです
               <% else %>
-                <%= button_to("もう一度行きたい", once_again_path(gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true) %>
+                <%= button_to("もう一度行きたい", once_again_path(gone_place), method: :post, class: "bg-blue-500 text-gray-100 px-4 py-2 rounded hover:bg-blue-700 hover:text-gray-300 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true) %>
               <% end %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap"><%= link_to "参照", gone_place, class: "text-blue-500 hover:text-blue-700" %></td>

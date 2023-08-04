@@ -36,9 +36,9 @@
   <p class="block text-gray-700 font-bold mb-2">もう一度行きたい</p>
   <div id="show-page-once-<%= @gone_place.id %>">
     <% if @gone_place.once_again %>
-      <%= button_to "解除する", cancel_once_again_path(@gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus: outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true %>
+      <%= button_to "解除する", cancel_once_again_path(@gone_place), method: :post, class: "header-btn mr-0", remote: true %>
     <% else %>
-      <%= button_to("登録する", once_again_path(@gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true) %>
+      <%= button_to("登録する", once_again_path(@gone_place), method: :post, class: "header-btn mr-0", remote: true) %>
     <% end %>
   </div>
 
