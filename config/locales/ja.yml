@@ -14,17 +14,17 @@ ja:
          password: パスワード
          password_confirmation: 確認用パスワード
        place:
-        name: 名前
+        name: 登録名
         latitude: map
         longitude: 登録
        gone_place:
-        name: 名前
+        name: 登録名
         review: レビュー  
         score: スコア
         latitude: map
         longitude: 登録
        recommend_place:
-        recommend_place_name: おススメ場所の名前
+        recommend_place_name: 登録名
         recommend_comment: おススメコメント
        plan:
         plan_name: 予定名
