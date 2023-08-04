@@ -25,19 +25,7 @@
   </div>
 
   <div class="bg-blue-100 m-8 mt-0 pt-8 pb-8">
-    <div class="mb-10 text-center mx-auto ml-20 mr-20">
-      <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
-      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @gone_place.googlemap_name %></p>
-      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @gone_place.address %></p>
-      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
-      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">公式サイト：</span>
-        <% if @gone_place.website == "websiteはありません" %>
-          websiteはありません
-        <% else %>
-          <%= link_to @gone_place.website, @gone_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-        <% end %>
-      </p>
-    </div>
+    <%= render "shared/google_map_info", place: @gone_place %>
     <%= render "shared/place_map", place: @gone_place %>
   </div>
 
@@ -85,6 +73,10 @@
               <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @gone_place.category.name %></p>
             </div>
           </div>
+          <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
+            <%= render "shared/google_map_info", place: @gone_place %>
+          </div>
+          <h3 class="text-2xl pb-2 font-bold text-center text-gray-600">入力フォーム</h3>
           <%= form_with model: @recommend_place, class: "bg-blue-100 m-8 mb-0 rounded text-center", local: false do |f| %>
             <div class="mb-10 ml-40 mr-40 text-center mx-auto">
               <%= f.label :recommend_place_name,"おすすめ場所の名前", class: "pt-2 block text-gray-700 font-bold mb-2" %>
