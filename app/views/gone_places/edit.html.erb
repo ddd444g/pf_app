@@ -27,7 +27,7 @@
       <%= render "shared/google_map_info", place: @gone_place %>
     </div>
     <div class="ml-40 mr-40 text-center">
-      <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
+      <%= f.submit "編集を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
     </div>
     <%= f.hidden_field :latitude,:value => @gone_place.latitude, id: :lat %>
     <%= f.hidden_field :longitude,:value => @gone_place.longitude, id: :lng %>
