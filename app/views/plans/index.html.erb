@@ -11,21 +11,21 @@
         <div class="mt-12 rounded text-center mx-auto w-1/2" @click.away="open = false">
           <div class="bg-gray-100 justify-center mb-32">
             <h3 class="text-2xl font-bold pt-8 pb-8 text-center text-gray-600">予定新規登録</h3>
-            <%= form_with(model: @plan, local: false, class: "bg-blue-100 m-8 mb-0 rounded text-center") do |f| %>
+            <%= form_with(model: @plan, local: false, class: "bg-blue-100 m-8 mt-0 mb-0 rounded text-center") do |f| %>
               <div class="mb-10 ml-40 mr-40 text-center mx-auto">
-                <%= f.label :plan_name,"予定名", class: "pt-2 pt-2 block text-gray-700 font-bold mb-2" %>
+                <%= f.label :plan_name,"予定名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
                 <%= f.text_field :plan_name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
               <div class="mb-10 ml-40 mr-40 text-center mx-auto">
-                <%= f.label :start_time,"開始日時", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+                <%= f.label :start_time,"開始日時", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.datetime_field :start_time, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
               <div class="mb-10 ml-40 mr-40 text-center mx-auto">
-                <%= f.label :end_time,"終了日時", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+                <%= f.label :end_time,"終了日時", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.datetime_field :end_time, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
               <div class="mb-10 ml-40 mr-40 text-center mx-auto">
-                <%= f.label :plan_color,"色分け", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+                <%= f.label :plan_color,"色分け", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.select :plan_color, [["赤", "red"], ["青", "blue"], ["緑", "green"], ["紫", "purple"], ["黄色", "yellow"]], class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
 
