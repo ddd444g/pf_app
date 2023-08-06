@@ -1,57 +1,46 @@
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">訪問済み場所編集</h3>
+<h1 class="m-6 text-2xl text-gray-600 font-bold text-center">訪問済み場所編集</h1>
 
 <%= render "shared/error", obj: @gone_place %>
 
-<%= form_with model: @gone_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :review,"レビュー", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.text_field :review, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :score, "スコア", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.number_field :score, in: 1..10, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.select :category_id, Category.all.map{|o| [o.name, o.id]}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
+<div class="bg-blue-200 rounded p-8 text-center mx-auto w-1/2">
+  <%= form_with model: @gone_place do |f| %>
+    <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :name,"登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :name, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :review,"レビュー", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :review, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :score, "スコア (1~10点)", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+        <%= f.number_field :score, in: 1..10, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.select :category_id, Category.all.map { |o| [o.name, o.id] }, {}, { class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" } %>
+      </div>
+    </div>
+    <div class="bg-blue-100 m-8 mt-0 pt-8 pb-8">
+      <%= render "shared/register_place_map", place: @gone_place %>
+      <%= render "shared/google_map_info", place: @gone_place %>
+    </div>
+    <div class="ml-40 mr-40 text-center">
+      <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
+    </div>
+    <%= f.hidden_field :latitude,:value => @gone_place.latitude, id: :lat %>
+    <%= f.hidden_field :longitude,:value => @gone_place.longitude, id: :lng %>
+    <%= f.hidden_field :googlemap_name, :value => @gone_place.googlemap_name, id: :name %>
+    <%= f.hidden_field :address, :value => @gone_place.address, id: :formatted_address %>
+    <%= f.hidden_field :rating, :value => @gone_place.rating, id: :rating %>
+    <%= f.hidden_field :website, :value => @gone_place.website, id: :website %>
+  <% end %>
+</div>
 
-  <%= render "shared/register_place_map", place: @gone_place %>
-
-  <div class="mb-10 mt-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @gone_place.googlemap_name %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @gone_place.address %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @gone_place.rating %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">公式サイト：</span>
-      <% if @gone_place.website == "websiteはありません" %>
-        websiteはありません
-      <% else %>
-        <%= link_to @gone_place.website, @gone_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-      <% end %>
-    </p>
-  </div>
-
-  <div class="mt-4">
-    <ul>
-      <li><%= f.submit "編集を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-    </ul>
-  </div>
-  <%= f.hidden_field :latitude,:value => @gone_place.latitude, id: :lat %>
-  <%= f.hidden_field :longitude,:value => @gone_place.longitude, id: :lng %>
-  <%= f.hidden_field :googlemap_name, :value => @gone_place.googlemap_name, id: :name %>
-  <%= f.hidden_field :address, :value => @gone_place.address, id: :formatted_address %>
-  <%= f.hidden_field :rating, :value => @gone_place.rating, id: :rating %>
-  <%= f.hidden_field :website, :value => @gone_place.website, id: :website %>
-<% end %>
-
-<div class="mt-10 mb-10 text-center">
+<div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
-    <li class="mr-5"><%= link_to "一覧に戻る", gone_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
-    <li><%= link_to "詳細ページへ", @gone_place, class: "header-btn" %></li>
+    <li class="mr-8"><%= link_to "一覧に戻る", gone_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li><%= link_to "詳細ページへ", @gone_place, class: "header-btn mr-0" %></li>
   </ul>
 </div>

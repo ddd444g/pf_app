@@ -20,7 +20,7 @@ ja:
        gone_place:
         name: 登録名
         review: レビュー  
-        score: スコア
+        score: スコア (1~10点)
         latitude: map
         longitude: 登録
        recommend_place:
