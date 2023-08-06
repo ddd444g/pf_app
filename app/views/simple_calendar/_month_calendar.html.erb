@@ -1,8 +1,8 @@
 <div class="simple-calendar text-gray-800">
   <div class="calendar-heading mb-4">
     <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view, class: "header-btn" %>
-    <span class="calendar-title text-gray-600 text-lg font-bold"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
-    <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view, class: "header-btn" %>
+    <span class="calendar-title text-gray-600 text-lg font-bold"><%= start_date.year %>年 <%= t('date.month_names')[start_date.month] %></span>
+    <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view, class: "header-btn ml-8" %>
   </div>
 
   <table class="table table-striped w-full">

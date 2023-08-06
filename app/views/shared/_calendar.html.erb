@@ -2,7 +2,7 @@
   <%= date.day %>
 
   <% plans.each do |plan| %>
-    <div class="<%= plan_color_class(plan) %> plan-calendar-<%= plan.id %>">
+    <div class="<%= plan_color_class(plan) %> plan-calendar-<%= plan.id %> rounded-lg p-2 mb-2">
       <%= link_to plan.plan_name, plan, class: "text-gray-800 hover:opacity-75" %>
     </div>
   <% end %>
