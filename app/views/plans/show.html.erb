@@ -7,13 +7,13 @@
   <div class="mt-4 ml-8 mb-4 flex justify-between items-center">
     <div class="flex">
       <div class="flex flex-col  mr-8">
-        <p class="text-gray-600">タイトル</p>
+        <p class="text-gray-600 text-center">タイトル</p>
         <p class="text-xl font-bold text-gray-600"><%= @plan.plan_name %></p>
       </div>
 
       <div class="flex flex-col">
-        <p class="text-gray-600">期間</p>
-        <p class="text-lg font-bold text-gray-600"><%= @plan&.start_time&.strftime("%-m月%-d , %H:%M") %> 〜 <%= @plan&.end_time&.strftime("%-m月%-d , %H:%M") %></p>
+        <p class="text-gray-600 text-center">期間</p>
+        <p class="text-lg font-bold text-gray-600"><%= @plan&.start_time&.strftime("%-m月%-d日 %H:%M") %> 〜 <%= @plan&.end_time&.strftime("%-m月%-d日 %H:%M") %></p>
       </div>
     </div>
 
