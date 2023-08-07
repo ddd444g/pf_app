@@ -18,7 +18,13 @@
       <tbody class="bg-white divide-y divide-gray-200">
         <% plan_places.each do |plan_place| %>
           <tr id="plan_place-<%=plan_place.id %>">
-            <td class="px-6 py-4 whitespace-nowrap"><%= plan_place.start_time&.strftime("%-m月%-d日%H時%M分")%>~</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <% if plan_place.start_time %>
+                <%= plan_place.start_time.strftime("%-m月%-d日%H時%M分") %>
+              <% else %>
+                未定
+              <% end %>
+            </td>
             <td class="px-6 py-4 whitespace-nowrap"><%= plan_place.plan_place_name %></td>
             <td class="px-6 py-4 whitespace-nowrap"><%= plan_place.memo %></td>
             <td class="px-6 py-4 whitespace-nowrap"><%= plan_place.category.name %></td>
