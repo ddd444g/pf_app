@@ -1,53 +1,48 @@
-<div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">予定名</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.plan_name %></p>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">予定期間</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.start_time&.strftime("%-m月%-d日%H時%M分")%>~<%= @plan.end_time&.strftime("%-m月%-d日%H時%M分")%></p>
-  </div>
-</div>
-
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">この場所を予定に追加する</h3>
+<h3 class="text-2xl font-bold pt-8 pb-8 text-center text-gray-600">この場所を予定に追加する</h3>
 
 <%= render "shared/error", obj: @plan_place %>
 
-<div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">登録名</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.name %></p>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">レビュー</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.review %></p>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">スコア (1~10点)</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.score %></p>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.category.name %></p>
-  </div>
-
-  <%= render "shared/place_map", place: @once_again_place %>
-
-  <%= form_with(model: @plan_place, local: true, method: :post, url: from_once_again_place_to_plan_place_create_path, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
-    <div class="mb-10 text-center mx-auto w-1/2">
-      <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
-      <%= f.text_field :memo, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+<div class="bg-blue-200 rounded p-8 text-center mx-auto w-1/2">
+  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
+    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">登録名</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.name %></p>
     </div>
-    <div class="mb-10 mt-10 text-center mx-auto w-1/2">
-      <%= f.label :start_time,"訪問予定時刻", class: "block text-gray-700 font-bold mb-2" %>
-      <%= f.datetime_field :start_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">レビュー</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.review %></p>
+    </div>
+    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">スコア (1~10点)</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.score %></p>
+    </div>
+    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.category.name %></p>
+    </div>
+  </div>
+
+  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-8">
+    <%= render "shared/google_map_info", place: @once_again_place %>
+    <%= render "shared/place_map", place: @once_again_place %>
+  </div>
+
+  <h3 class="text-2xl pb-2 font-bold text-center text-gray-600">入力フォーム</h3>
+  <%= form_with(model: @plan_place, local: true, method: :post, url: from_once_again_place_to_plan_place_create_path, class: "bg-blue-100 mr-8 ml-8 mb-0 rounded text-center") do |f| %>
+    <div class="mb-10 ml-40 mr-40 text-center mx-auto">
+      <%= f.label :memo,"memo", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+      <%= f.text_field :memo, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+    </div>
+    <div class="mb-10 ml-40 mr-40 text-center mx-auto">
+      <%= f.label :start_time, class: "block text-gray-700 font-bold mb-2" do %>
+        訪問予定時刻<br>
+        <span class="text-sm">(<%= @plan&.start_time&.strftime("%-m月%-d日%H時%M分") %>〜<%= @plan&.end_time&.strftime("%-m月%-d日%H時%M分") %>の間で設定して下さい)(空白でも可能です)</span>
+      <% end %>
+      <%= f.datetime_field :start_time, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
     </div>
 
-    <div class="mt-4">
-      <ul>
-        <li><%= f.submit "登録を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-        <li class="mt-20"><%= link_to "予定一覧", plans_path, class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-      </ul>
+    <div class="ml-40 mr-40 pb-8 text-center">
+      <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
     </div>
     <%= f.hidden_field :plan_place_name, value: @once_again_place.name %>
     <%= f.hidden_field :latitude, value: @once_again_place.latitude %>
@@ -61,4 +56,10 @@
     <%= f.hidden_field :category_id, value: @once_again_place.category_id %>
     <%= f.hidden_field :website, value: @once_again_place.website %>
   <% end %>
+</div>
+
+<div class="mt-12 mb-8 text-center">
+  <ul class="flex justify-center">
+    <li><%= link_to "前のページへ戻る", place_and_once_again_place_path, class: "text-center mx-auto w-1/2 header-btn mr-0" %></li>
+  </ul>
 </div>
