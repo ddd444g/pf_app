@@ -30,6 +30,10 @@
   <h3 class="text-2xl pb-2 font-bold text-center text-gray-600">入力フォーム</h3>
   <%= form_with(model: @plan_place, local: true, method: :post, url: from_once_again_place_to_plan_place_create_path, class: "bg-blue-100 mr-8 ml-8 mb-0 rounded text-center") do |f| %>
     <div class="mb-10 ml-40 mr-40 text-center mx-auto">
+      <%= f.label :plan_place_name,"登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+      <%= f.text_field :plan_place_name, value: @once_again_place.name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+    </div>
+    <div class="mb-10 ml-40 mr-40 text-center mx-auto">
       <%= f.label :memo,"memo", class: "pt-2 block text-gray-700 font-bold mb-2" %>
       <%= f.text_field :memo, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
     </div>
@@ -44,7 +48,6 @@
     <div class="ml-40 mr-40 pb-8 text-center">
       <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
     </div>
-    <%= f.hidden_field :plan_place_name, value: @once_again_place.name %>
     <%= f.hidden_field :latitude, value: @once_again_place.latitude %>
     <%= f.hidden_field :longitude, value: @once_again_place.longitude %>
     <%= f.hidden_field :gone_place_id, value: @once_again_place.id %>
