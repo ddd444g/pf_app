@@ -4,7 +4,7 @@ ja:
        user: ユーザー
        place: 行きたい場所
        gone_place: 訪問済みの場所
-       recommend_place: おススメの場所
+       recommend_place: おすすめの場所
        plan: 予定
        plan_place: 行く予定の場所
      attributes:
@@ -25,7 +25,7 @@ ja:
         longitude: 登録
        recommend_place:
         recommend_place_name: 登録名
-        recommend_comment: おススメコメント
+        recommend_comment: おすすめコメント
        plan:
         plan_name: 予定名
         start_time: 開始日時
