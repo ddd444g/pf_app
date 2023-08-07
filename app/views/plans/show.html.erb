@@ -6,9 +6,17 @@
 <div class="mx-auto max-w-7xl">
   <div class="mt-4 ml-8 mb-4 flex justify-between items-center">
     <div class="flex">
-      <p class="mr-8">タイトルを表示する予定</p>
-      <p>期間を表示する予定</p>
+      <div class="flex flex-col  mr-8">
+        <p class="text-gray-600">タイトル</p>
+        <p class="text-xl font-bold text-gray-600"><%= @plan.plan_name %></p>
+      </div>
+
+      <div class="flex flex-col">
+        <p class="text-gray-600">期間</p>
+        <p class="text-lg font-bold text-gray-600"><%= @plan&.start_time&.strftime("%-m月%-d , %H:%M") %> 〜 <%= @plan&.end_time&.strftime("%-m月%-d , %H:%M") %></p>
+      </div>
     </div>
+
     <div id="modal" x-data="{ open: false }">
       <button class="create-btn mt-2 mb-2" @click="open = true">訪問予定場所を追加する</button>
       <div id="exampleModal" class="absolute top-0 left-0 w-full min-h-screen items-center justify-center bg-black bg-opacity-50 z-50" x-show="open">
@@ -16,9 +24,9 @@
           <div class="bg-gray-100 justify-center mb-32">
             <h3 class="text-2xl font-bold pt-8 pb-8 text-center text-gray-600">訪問予定場所新規登録</h3>
             <div class="mb-10 text-center">
-              <p class="text-gray-700 font-bold mb-5">行きたい場所、もう一度行きたい場所から登録する</p>
-              <%= link_to "行きたい場所一覧へ", place_and_once_again_place_path(@plan), class: "py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded" %>
-              <div class="bg-blue-100 m-8 mt-0">
+              <p class="text-gray-700 font-bold mb-4">行きたい場所,もう一度行きたい場所から登録する</p>
+              <%= link_to "一覧ページへ", place_and_once_again_place_path(@plan), class: "py-2 px-4 bg-blue-500 text-gray-100 hover:bg-blue-600 hover:text-gray-300 rounded" %>
+              <div class="bg-blue-100 m-8">
                 <%= render "shared/register_place_map", place: @plan_place %>
               </div>
 
