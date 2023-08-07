@@ -1,4 +1,4 @@
-<h1 class="m-6 text-2xl text-gray-600 font-bold text-center">おすすめ場所詳細</h1>
+<h1 class="m-6 text-3xl text-gray-600 font-bold text-center">おすすめ場所詳細</h1>
 
 <div id="flash-message">
   <%= render 'shared/flash' %>
@@ -87,10 +87,10 @@
 <div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
     <% if @recommend_place.user_id == @current_user.id %>
-      <li class="mr-8"><%= link_to "一覧に戻る", recommend_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
+      <li class="mr-8"><%= link_to "おすすめ一覧ページへ", recommend_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
       <li><%= link_to "編集する", [:edit, @recommend_place], class: "header-btn mr-0" %></li>
     <% else %>
-      <li><%= link_to "一覧に戻る", recommend_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
+      <li><%= link_to "おすすめ一覧ページへ", recommend_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
     <% end %>
   </ul>
 </div>

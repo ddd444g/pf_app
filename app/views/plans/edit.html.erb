@@ -1,35 +1,36 @@
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">行きたい場所編集</h3>
+<h1 class="m-6 text-3xl text-gray-600 font-bold text-center">予定編集</h1>
 
 <%= render "shared/error", obj: @plan %>
 
-<%= form_with(model: @plan, local: true, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2") do |f| %>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :plan_name,"plan_name", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.text_field :plan_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :start_time,"開始日時", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.datetime_field :start_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :end_time,"終了日時", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.datetime_field :end_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :plan_color,"色分け", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.select :plan_color, [["赤", "red"], ["青", "blue"], ["緑", "green"], ["紫", "purple"], ["黄色", "yellow"]], class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
+<div class="bg-blue-200 rounded p-8 text-center mx-auto w-1/2">
+  <%= form_with model: @plan do |f| %>
+    <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :plan_name,"予定名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :plan_name, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :start_time,"開始日時", class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.datetime_field :start_time, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :end_time,"終了日時", class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.datetime_field :end_time, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :plan_color,"色分け", class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.select :plan_color, [["赤", "red"], ["青", "blue"], ["緑", "green"], ["紫", "purple"], ["黄色", "yellow"]], class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+    </div>
+    <div class="ml-40 mr-40 text-center">
+      <%= f.submit "編集を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
+    </div>
+  <% end %>
+</div>
 
-  <div class="mt-4">
-    <ul>
-      <li><%= f.submit "編集を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-    </ul>
-  </div>
-<% end %>
-
-<div class="mt-10 mb-10 text-center">
+<div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
-    <li class="mr-5"><%= link_to "予定一覧に戻る", plans_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
-    <li><%= link_to "予定詳細ページへ", @plan, class: "header-btn" %></li>
+    <li class="mr-8"><%= link_to "予定一覧ページへ", plans_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li><%= link_to "予定詳細ページへ", @plan, class: "header-btn mr-0" %></li>
   </ul>
 </div>

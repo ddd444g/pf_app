@@ -1,4 +1,4 @@
-<h1 class="m-6 text-2xl text-gray-600 font-bold text-center">訪問済み場所編集</h1>
+<h1 class="m-6 text-3xl text-gray-600 font-bold text-center">訪問済み場所編集</h1>
 
 <%= render "shared/error", obj: @gone_place %>
 
@@ -40,7 +40,7 @@
 
 <div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
-    <li class="mr-8"><%= link_to "一覧に戻る", gone_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li class="mr-8"><%= link_to "訪問済み一覧ページへ", gone_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
     <li><%= link_to "詳細ページへ", @gone_place, class: "header-btn mr-0" %></li>
   </ul>
 </div>
