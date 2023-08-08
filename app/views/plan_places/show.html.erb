@@ -1,47 +1,44 @@
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">行く予定の場所詳細</h3>
+<h1 class="m-6 text-3xl text-gray-600 font-bold text-center">訪問予定場所詳細</h1>
 
 <div id="flash-message">
   <%= render 'shared/flash' %>
 </div>
 
-<div class="bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">登録名</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan_place.plan_place_name %></p>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">memo</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan_place.memo %></p>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">予定時刻</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan_place.start_time&.strftime("%-m月%-d日%H時%M分")%>~</p>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan_place.category.name %></p>
+<div class="bg-blue-200 rounded p-8 text-center mx-auto w-1/2">
+  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
+    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">登録名</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan_place.plan_place_name %></p>
+    </div>
+    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">memo</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan_place.memo %></p>
+    </div>
+    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">予定時刻</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
+        <% if @plan_place.start_time %>
+          <%= @plan_place.start_time.strftime("%-m月%-d日%H時%M分") %>~
+        <% else %>
+          未定
+        <% end %>
+      </p>
+    </div>
+    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan_place.category.name %></p>
+    </div>
   </div>
 
-  <%= render "shared/place_map", place: @plan_place %>
-
-  <div class="mb-10 mt-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @plan_place.googlemap_name %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @plan_place.address %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @plan_place.rating %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">公式サイト：</span>
-      <% if @plan_place.website == "websiteはありません" %>
-        websiteはありません
-      <% else %>
-        <%= link_to @plan_place.website, @plan_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-      <% end %>
-    </p>
+  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-8">
+    <%= render "shared/google_map_info", place: @plan_place %>
+    <%= render "shared/place_map", place: @plan_place %>
   </div>
 </div>
 
-<div class="mt-10 mb-10 text-center">
+<div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
-    <li class="mr-5"><%= link_to "予定ページへ", plan_path(@plan_place.plan), class: "text-center mx-auto w-1/2 header-btn" %></li>
-    <li><%= link_to "編集する", [:edit, @plan_place], class: "header-btn" %></li>
+    <li class="mr-8"><%= link_to "予定ページへ", plan_path(@plan_place.plan), class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li><%= link_to "編集する", [:edit, @plan_place], class: "header-btn mr-0" %></li>
   </ul>
 </div>
