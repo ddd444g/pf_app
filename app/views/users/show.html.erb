@@ -1,16 +1,24 @@
-<h3 class="text-3xl font-bold mb-4 text-center text-blue-700">ユーザー詳細</h3>
+<h1 class="m-6 text-3xl text-gray-600 font-bold text-center">ユーザー詳細</h1>
 
 <% if flash[:notice] %>
   <p class="text-center mx-auto w-1/2 text-blue-700 bg-blue-100 p-4 rounded"><%= flash[:notice] %></p>
 <% end %>
 
-<table class="w-full border-collapse border border-blue-500">
-  <tr>
-    <th class="px-4 py-2 border border-blue-500 bg-blue-100">名前</th>
-    <td><%= @user.name %></td>
-    <th class="px-4 py-2 border border-blue-500 bg-blue-100">email</th>
-    <td><%= @user.email %></td>
-    <th class="px-4 py-2 border border-blue-500 bg-blue-100">編集</th>
-    <td><%= link_to("編集", "/users/#{@user.id}/edit", class: "text-blue-500 hover:text-blue-700") %></td>
-  </tr>
-</table>
+<div class="bg-blue-200 rounded p-12 text-center mx-auto w-1/2">
+  <div class="bg-blue-100 pt-8 pb-10">
+    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">登録名</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @user.name %></p>
+    </div>
+    <div class="text-center mx-auto ml-20 mr-20">
+      <p class="block text-gray-700 font-bold mb-2">email</p>
+      <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @user.email %></p>
+    </div>
+  </div>
+</div>
+
+<div class="mt-12 mb-8 text-center">
+  <ul class="flex justify-center">
+    <li><%= link_to "編集する", [:edit, @user], class: "header-btn mr-0" %></li>
+  </ul>
+</div>
