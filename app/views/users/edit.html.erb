@@ -1,5 +1,13 @@
-<h3 class="text-3xl font-bold mb-4 text-center text-blue-700">ユーザー編集</h3>
+<h3 class="m-6 text-3xl text-gray-600 font-bold text-center">ユーザー編集</h3>
 
 <%= render "shared/error", obj: @user %>
 
-<%= render "shared/user_form", user: @user %>
+<div class="bg-blue-200 rounded pr-8 pb-8 pl-8 pt-16 text-center mx-auto w-1/2">
+  <%= render "shared/user_form", user: @user %>
+</div>
+
+<div class="mt-12 mb-8 text-center">
+  <ul class="flex justify-center">
+    <li><%= link_to "詳細ページへ", @user, class: "header-btn mr-0" %></li>
+  </ul>
+</div>

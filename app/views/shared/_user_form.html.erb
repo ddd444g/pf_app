@@ -1,39 +1,41 @@
 <%= form_with model: user do |f| %>
-  <table class="w-full max-w-md mx-auto">
-    <tr>
-      <th class="text-left pb-2">
-        <%= f.label :name, "名前", class: "block text-gray-700 font-bold mb-2" %>
-      </th>
-      <td class="pb-2">
-        <%= f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
-      </td>
-    </tr>
-    <tr>
-      <th class="text-left pb-2">
-        <%= f.label :email, "メールアドレス", class: "block text-gray-700 font-bold mb-2" %>
-      </th>
-      <td class="pb-2">
-        <%= f.text_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
-      </td>
-    </tr>
-    <tr>
-      <th class="text-left pb-2">
-        <%= f.label :password, "パスワード(6文字以上)", class: "block text-gray-700 font-bold mb-2" %>
-      </th>
-      <td class="pb-2">
-        <%= f.password_field :password, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
-      </td>
-    </tr>
-    <tr>
-      <th class="text-left pb-2">
-        <%= f.label :password_confirmation, "確認用パスワード", class: "block text-gray-700 font-bold mb-2" %>
-      </th>
-      <td class="pb-2">
-        <%= f.password_field :password_confirmation, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
-      </td>
-    </tr>
-  </table>
-  <div class="text-center">
-    <%= f.submit "完了する", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
+    <table class="w-full max-w-md mx-auto">
+      <tr>
+        <th class="text-left pb-4">
+          <%= f.label :name, "名前", class: "block text-gray-700 font-bold" %>
+        </th>
+        <td class="pb-4">
+          <%= f.text_field :name, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+        </td>
+      </tr>
+      <tr>
+        <th class="text-left pb-4">
+          <%= f.label :email, "メールアドレス", class: "block text-gray-700 font-bold" %>
+        </th>
+        <td class="pb-4">
+          <%= f.text_field :email, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+        </td>
+      </tr>
+      <tr>
+        <th class="text-left pb-4">
+          <%= f.label :password, "パスワード(6文字以上)", class: "block text-gray-700 font-bold" %>
+        </th>
+        <td class="pb-4">
+          <%= f.password_field :password, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+        </td>
+      </tr>
+      <tr>
+        <th class="text-left pb-4">
+          <%= f.label :password_confirmation, "確認用パスワード", class: "block text-gray-700 font-bold" %>
+        </th>
+        <td class="pb-4">
+          <%= f.password_field :password_confirmation, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="ml-40 mr-40 text-center">
+    <%= f.submit "編集を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
   </div>
 <% end %>
