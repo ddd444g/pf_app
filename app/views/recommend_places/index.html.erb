@@ -55,23 +55,17 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">おすすめコメント</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの正式名称</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">住所</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">参照</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">投稿ユーザー名</th>
             </tr>
           </thead>
 
           <tbody class="bg-white divide-y divide-gray-200">
             <% @recommend_places.each do |recommend_place| %>
               <tr>
-                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.recommend_place_name %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= link_to recommend_place.recommend_place_name, recommend_place_path(recommend_place), class: "text-gray-800 underline hover:no-underline" %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.recommend_comment %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.category.name %></td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.googlemap_name %></td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.address %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.rating %></td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <% if recommend_place.website == "websiteはありません" %>
@@ -80,8 +74,6 @@
                     <%= link_to recommend_place.website, recommend_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
                   <% end %>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "参照", recommend_place, class: "text-blue-500 hover:text-blue-700" %></td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.user.name %></td>
               </tr>
             <% end %>
           </tbody>

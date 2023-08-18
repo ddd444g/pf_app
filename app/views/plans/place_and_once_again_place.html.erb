@@ -41,11 +41,9 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">memo</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの正式名称</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">住所</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">予定に登録する</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
             </tr>
           </thead>
 
@@ -55,9 +53,8 @@
                 <td class="px-6 py-4 whitespace-nowrap"><%= place.name %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= place.memo %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= place.category.name %></td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= place.googlemap_name %></td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= place.address %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= place.rating %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "登録する", from_place_to_plan_place_path(place_id: place.id), class: "header-btn" %></td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <% if place.website == "websiteはありません" %>
                     websiteはありません
@@ -65,7 +62,6 @@
                     <%= link_to place.website, place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
                   <% end %>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "登録する", from_place_to_plan_place_path(place_id: place.id), class: "header-btn" %></td>
               </tr>
             <% end %>
           </tbody>
@@ -125,11 +121,9 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">レビュー</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">スコア</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの正式名称</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">住所</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">予定に登録する</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
             </tr>
           </thead>
 
@@ -140,9 +134,8 @@
                 <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.review %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.score %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.category.name %></td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.googlemap_name %></td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.address %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.rating %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "登録する", from_once_again_place_to_plan_place_path(gone_place_id: once_again_place.id), class: "header-btn" %></td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <% if once_again_place.website == "websiteはありません" %>
                     websiteはありません
@@ -150,7 +143,6 @@
                     <%= link_to once_again_place.website, once_again_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
                   <% end %>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "登録する", from_once_again_place_to_plan_place_path(gone_place_id: once_again_place.id), class: "header-btn" %></td>
               </tr>
             <% end %>
           </tbody>

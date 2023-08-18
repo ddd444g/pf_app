@@ -4,25 +4,21 @@
       <thead class="bg-gray-50">
         <tr class="border-b border-gray-200">
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">memo</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの正式名称</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">住所</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">visited</th>
-          <th colspan="3"></th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody class="bg-white divide-y divide-gray-200">
         <% places.each do |place| %>
           <tr id="place-<%=place.id %>">
-            <td class="px-6 py-4 whitespace-nowrap"><%= place.name %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= place.memo %></td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <%= link_to place.name, place_path(place), class: "text-gray-800 underline hover:no-underline" %>
+            </td>
             <td class="px-6 py-4 whitespace-nowrap"><%= place.category.name %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= place.googlemap_name %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= place.address %></td>
             <td class="px-6 py-4 whitespace-nowrap"><%= place.rating %></td>
             <td class="px-6 py-4 whitespace-nowrap">
               <% if place.website == "websiteはありません" %>
@@ -38,8 +34,6 @@
                 <%= link_to "訪問済みにする", place, class: "header-btn" %>
               <% end %>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= link_to "参照", place, class: "text-blue-500 hover:text-blue-700" %></td>
-            <td class="px-6 py-4 whitespace-nowrap"><%= link_to "編集", [:edit, place], class: "text-blue-500 hover:text-blue-700" %></td>
             <td class="px-6 py-4 whitespace-nowrap"><%= link_to "削除", place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
           </tr>
         <% end %>
