@@ -4,8 +4,10 @@ class PlacesController < ApplicationController
 
   def index
     @user = User.find_by(id: session[:user_id])
-    @places = @user.places.sort_places(params[:sort_param]).search(params[:search])
+    @places = @user.places.includes(:category).sort_places(params[:sort_param]).search(params[:search])
     @place = Place.new
+    @search_keyword = params[:search]
+    @places_count = @places.count
   end
 
   def create
@@ -13,10 +15,8 @@ class PlacesController < ApplicationController
     @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id, :googlemap_name,
 :address, :rating, :category_id, :website))
     if @place.save
-      @places = @user.places
-      flash.now[:notice] = "行きたい場所を追加しました"
+      flash[:notice] = "#{@place.name}を追加しました"
     else
-      @places = @user.places
       render :error
     end
   end
@@ -52,12 +52,9 @@ class PlacesController < ApplicationController
     permit(:name, :memo, :latitude, :longitude, :user_id, :recommend_place_id, :googlemap_name, :address,
 :rating, :category_id, :website))
     if @place.save
-      flash[:notice] = "おすすめ場所から行きたい場所に登録をしました"
-      redirect_to places_path
+      flash[:notice] = "#{@place.name}を追加しました"
     else
-      @user = User.find_by(id: session[:user_id])
-      @recommend_place = RecommendPlace.find_by(id: params[:gone_place][:recommend_place_id])
-      render "recommend_places/show"
+      render :error
     end
   end
 

@@ -1,25 +1,29 @@
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">もう一度行きたい一覧</h3>
+<h1 class="m-4 mb-8 text-3xl font-bold text-gray-600 text-center">もう一度行きたい場所一覧</h1>
 
-<table class="w-full border-collapse border border-blue-500">
-  <thead>
-    <tr class="bg-blue-100">
-      <th viewportclass="px-4 py-2 border border-blue-500">登録名</th>
-      <th class="px-4 py-2 border border-blue-500">レビュー</th>
-      <th class="px-4 py-2 border border-blue-500">スコア</th>
-      <th class="px-4 py-2 border border-blue-500">もう一度行きたい</th>
-      <th class="px-4 py-2 border border-blue-500">参照</th>
-    </tr>
-  </thead>
+<div class="-mx-4 overflow-x-auto">
+  <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+    <table class="min-w-full">
+      <thead class="bg-gray-50">
+        <tr class="border-b border-gray-200">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">レビュー</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">myスコア (1~10点)</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">もう一度行きたい</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">参照</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% once_again_places.each do |once_again_place| %>
-      <tr id="once-again-place-<%= once_again_place.id %>" class="border-t border-blue-500">
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.review %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.score %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= button_to "解除する", cancel_once_again_path(once_again_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", once_again_place, class: "text-blue-500 hover:text-blue-700" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% once_again_places.each do |once_again_place| %>
+          <tr id="once-again-place-<%= once_again_place.id %>">
+            <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.name %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.review %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.score %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= button_to "解除する", cancel_once_again_path(once_again_place), method: :post, class: "bg-blue-500 text-gray-100 px-4 py-2 rounded hover:bg-blue-700 hover:text-gray-300 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= link_to "参照", once_again_place, class: "text-blue-500 hover:text-blue-700" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

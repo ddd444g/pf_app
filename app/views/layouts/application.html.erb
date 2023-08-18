@@ -8,10 +8,12 @@
     <%= stylesheet_link_tag 'application' %>
   </head>
   <body>
-    <%= render "shared/header", current_user: @current_user %>
-    <%= yield %>
-    <%= render "shared/footer" %>
-    <%= javascript_pack_tag 'application' %>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>
+    <div class="bg-gray-100 min-h-screen relative pb-32">
+      <%= render "shared/header", current_user: @current_user %>
+      <%= yield %>
+      <%= render "shared/footer" %>
+      <%= javascript_pack_tag 'application' %>
+      <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>
+    </div>
   </body>
 </html>

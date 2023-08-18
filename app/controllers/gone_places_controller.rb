@@ -4,9 +4,11 @@ class GonePlacesController < ApplicationController
 
   def index
     @user = User.find_by(id: session[:user_id])
-    @gone_places = @user.gone_places.sort_gone_places(params[:sort_param]).search(params[:search])
+    @gone_places = @user.gone_places.includes(:category).sort_gone_places(params[:sort_param]).search(params[:search])
     @once_again_places = @user.gone_places.where(once_again: true)
     @gone_place = GonePlace.new
+    @search_keyword = params[:search]
+    @gone_places_count = @gone_places.count
   end
 
   def create
@@ -28,8 +30,7 @@ class GonePlacesController < ApplicationController
     permit(:name, :user_id, :review, :score, :latitude, :longitude, :googlemap_name,
 :address, :rating, :category_id, :website))
     if @gone_place.save
-      @gone_places = @user.gone_places
-      flash.now[:notice] = "訪問済みに登録しました"
+      flash[:notice] = "#{@gone_place.name}を追加しました"
     else
       render :error
     end

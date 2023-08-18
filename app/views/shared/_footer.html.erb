@@ -1,5 +1,8 @@
-<footer class="bg-gray-800 text-gray-300 py-4">
-  <div class="container mx-auto px-4">
-    <p class="text-sm text-center">&copy; 2023 GO TO place</p>
-  </div>
+<footer class="bg-blue-200 p-8 absolute bottom-0 w-full text-center flex justify-center x-40">
+  <%= link_to root_path, class: "ml-4 bg-blue-100 py-2 px-4 text-gray-600 rounded-lg shadow-xl hover:bg-blue-300" do %>
+    &copy; 2023 GO TO place
+  <% end %>
+  <%= link_to "#", class: "ml-4 bg-blue-100 py-2 px-4 text-gray-600 rounded-lg shadow-xl hover:bg-blue-300" do %>
+    ページ上部へ
+  <% end %>
 </footer>

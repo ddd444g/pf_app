@@ -1,48 +1,44 @@
-<table class="w-full border-collapse border border-blue-500">
-  <thead>
-    <tr class="bg-blue-100">
-      <th class="px-4 py-2 border border-blue-500">登録名</th>
-      <th class="px-4 py-2 border border-blue-500">レビュー</th>
-      <th class="px-4 py-2 border border-blue-500">スコア</th>
-      <th class="px-4 py-2 border border-blue-500">カテゴリー</th>
-      <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
-      <th class="px-4 py-2 border border-blue-500">住所</th>
-      <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
-      <th class="px-4 py-2 border border-blue-500">公式サイト</th>
-      <th class="px-4 py-2 border border-blue-500">もう一度行きたい</th>
-      <th class="px-4 py-2 border border-blue-500">参照</th>
-      <th class="px-4 py-2 border border-blue-500">編集</th>
-      <th class="px-4 py-2 border border-blue-500">削除</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% gone_places.each do |gone_place| %>
-      <tr id="gone-place-<%= gone_place.id %>"  class="border-t border-blue-500">
-        <td class="px-4 py-2 border border-blue-500"><%= gone_place.name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= gone_place.review %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= gone_place.score %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= gone_place.category.name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= gone_place.googlemap_name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= gone_place.address %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= gone_place.rating %></td>
-        <td class="px-4 py-2 border border-blue-500">
-          <% if gone_place.website == "websiteはありません" %>
-            websiteはありません
-          <% else %>
-            <%= link_to gone_place.website, gone_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-          <% end %>
-        </td>
-        <td class="px-4 py-2 border border-blue-500" id="once-<%= gone_place.id %>">
-          <% if gone_place.once_again %>
-            登録済みです
-          <% else %>
-            <%= button_to("もう一度行きたい", once_again_path(gone_place), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true) %>
-          <% end %>
-        </td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "参照", gone_place, class: "text-blue-500 hover:text-blue-700" %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "編集", [:edit, gone_place], class: "text-blue-500 hover:text-blue-700" %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "削除", gone_place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="-mx-4 overflow-x-auto">
+  <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+    <table class="min-w-full">
+      <thead class="bg-gray-50">
+        <tr class="border-b border-gray-200">
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">myスコア (1~10点)</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">もう一度行きたい</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% gone_places.each do |gone_place| %>
+          <tr id="gone-place-<%= gone_place.id %>">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <%= link_to gone_place.name, gone_place_path(gone_place), class: "text-gray-800 underline hover:no-underline" %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= gone_place.score %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= gone_place.category.name %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= gone_place.rating %></td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <% if gone_place.website == "websiteはありません" %>
+                websiteはありません
+              <% else %>
+                <%= link_to gone_place.website, gone_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+              <% end %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap" id="once-<%= gone_place.id %>">
+              <% if gone_place.once_again %>
+                登録済みです
+              <% else %>
+                <%= button_to("もう一度行きたい", once_again_path(gone_place), method: :post, class: "bg-blue-500 text-gray-100 px-4 py-2 rounded hover:bg-blue-700 hover:text-gray-300 focus:outline-none focus:shadow-outline-blue active:bg-blue-800", remote: true) %>
+              <% end %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= link_to "削除", gone_place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

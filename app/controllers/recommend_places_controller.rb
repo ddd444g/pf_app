@@ -3,7 +3,10 @@ class RecommendPlacesController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
-    @recommend_places = RecommendPlace.all.sort_recommend_places(params[:sort_param]).search(params[:search])
+    @recommend_places = RecommendPlace.includes(:user,
+:category).all.sort_recommend_places(params[:sort_param]).search(params[:search])
+    @search_keyword = params[:search]
+    @recommend_places_count = @recommend_places.count
   end
 
   def create
@@ -33,7 +36,7 @@ class RecommendPlacesController < ApplicationController
     @recommend_place = RecommendPlace.find(params[:id])
     if @recommend_place.update(params.require(:recommend_place).permit(:recommend_place_name, :recommend_comment,
 :category_id))
-      flash[:notice] = "おススメの場所の情報を更新しました"
+      flash[:notice] = "おすすめの場所の情報を更新しました"
       redirect_to recommend_place_path(@recommend_place)
     else
       @gone_place = @recommend_place.gone_place
@@ -50,9 +53,10 @@ class RecommendPlacesController < ApplicationController
   end
 
   def my_post_index
-    @recommend_places = @current_user.recommend_places.
-      sort_recommend_places(params[:sort_param]).
-      search(params[:search])
+    @recommend_places = RecommendPlace.includes(:user,
+:category).where(user_id: @current_user.id).sort_recommend_places(params[:sort_param]).search(params[:search])
+    @search_keyword = params[:search]
+    @recommend_places_count = @recommend_places.count
   end
 
   def ensure_correct_user

@@ -1,138 +1,157 @@
-<div class="mb-10 mt-10 bg-blue-100 p-4 rounded text-center mx-auto w-1/2">
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">予定名</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.plan_name %></p>
+<h1 class="m-4 text-3xl font-bold text-gray-600 text-center">行きたい場所一覧</h1>
+
+<div class="mx-auto max-w-7xl">
+  <div class="flex ml-8">
+    <div class="flex-col mr-8">
+      <p class="text-gray-600 text-center">タイトル</p>
+      <p class="text-xl font-bold text-gray-600"><%= @plan.plan_name %></p>
+    </div>
+    <div class="flex flex-col">
+      <p class="text-gray-600 text-center">期間</p>
+      <p class="text-lg font-bold text-gray-600"><%= @plan&.start_time&.strftime("%-m月%-d日 %H:%M") %> 〜 <%= @plan&.end_time&.strftime("%-m月%-d日 %H:%M") %></p>
+    </div>
   </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">予定期間</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @plan.start_time&.strftime("%-m月%-d日%H時%M分")%>~<%= @plan.end_time&.strftime("%-m月%-d日%H時%M分")%></p>
+  <div class="mt-4 ml-8 mb-4 flex justify-between items-center">
+    <div class="flex">
+      <% if params[:sort_param] == 'latest' %>
+        <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">新しい順</span>
+      <% else %>
+        <%= link_to "新しい順", place_and_once_again_place_path(sort_param: 'latest'), class: "header-btn" %>
+      <% end %>
+
+      <% if params[:sort_param] == 'old' %>
+        <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">古い順</span>
+      <% else %>
+        <%= link_to "古い順", place_and_once_again_place_path(sort_param: 'old'), class: "header-btn" %>
+      <% end %>
+
+      <% if params[:sort_param] == 'rating' %>
+        <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
+      <% else %>
+        <%= link_to "評価が高い順", place_and_once_again_place_path(sort_param: 'rating'), class: "header-btn" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="places text-gray-800 mb-16">
+    <div class="-mx-4 overflow-x-auto">
+      <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+        <table class="min-w-full">
+          <thead class="bg-gray-50">
+            <tr class="border-b border-gray-200">
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">memo</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">予定に登録する</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
+            </tr>
+          </thead>
+
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @places.each do |place| %>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap"><%= place.name %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= place.memo %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= place.category.name %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= place.rating %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "登録する", from_place_to_plan_place_path(place_id: place.id), class: "header-btn" %></td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <% if place.website == "websiteはありません" %>
+                    websiteはありません
+                  <% else %>
+                    <%= link_to place.website, place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">行きたい場所一覧</h3>
+<h1 class="m-4 text-3xl font-bold text-gray-600 text-center">もう一度行きたい一覧</h1>
 
-<div class="m-5">
-  <% if params[:sort_param] == 'latest' %>
-    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">新しい順</span>
-  <% else %>
-    <%= link_to "新しい順", place_and_once_again_place_path(sort_param: 'latest'), class: "header-btn" %>
-  <% end %>
+<div class="mx-auto max-w-7xl">
+  <div class="flex ml-8">
+    <div class="flex-col mr-8">
+      <p class="text-gray-600 text-center">タイトル</p>
+      <p class="text-xl font-bold text-gray-600"><%= @plan.plan_name %></p>
+    </div>
+    <div class="flex flex-col">
+      <p class="text-gray-600 text-center">期間</p>
+      <p class="text-lg font-bold text-gray-600"><%= @plan&.start_time&.strftime("%-m月%-d日 %H:%M") %> 〜 <%= @plan&.end_time&.strftime("%-m月%-d日 %H:%M") %></p>
+    </div>
+  </div>
+  <div class="mt-4 ml-8 mb-4 flex justify-between items-center">
+    <div class="flex">
+      <% if params[:sort_param] == 'latest' %>
+        <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">新しい順</span>
+      <% else %>
+        <%= link_to "新しい順", place_and_once_again_place_path(sort_param: 'latest'), class: "header-btn" %>
+      <% end %>
 
-  <% if params[:sort_param] == 'old' %>
-    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">古い順</span>
-  <% else %>
-    <%= link_to "古い順", place_and_once_again_place_path(sort_param: 'old'), class: "header-btn" %>
-  <% end %>
+      <% if params[:sort_param] == 'old' %>
+        <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">古い順</span>
+      <% else %>
+        <%= link_to "古い順", place_and_once_again_place_path(sort_param: 'old'), class: "header-btn" %>
+      <% end %>
 
-  <% if params[:sort_param] == 'rating' %>
-    <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
-  <% else %>
-    <%= link_to "評価が高い順", place_and_once_again_place_path(sort_param: 'rating'), class: "header-btn" %>
-  <% end %>
+      <% if params[:sort_param] == 'score' %>
+        <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">myスコアが高い順</span>
+      <% else %>
+        <%= link_to "myスコアが高い順", place_and_once_again_place_path(sort_param: 'score'), class: "header-btn" %>
+      <% end %>
+
+      <% if params[:sort_param] == 'rating' %>
+        <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
+      <% else %>
+        <%= link_to "評価が高い順", place_and_once_again_place_path(sort_param: 'rating'), class: "header-btn" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="text-gray-800 mb-16">
+    <div class="-mx-4 overflow-x-auto">
+      <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+        <table class="min-w-full">
+          <thead class="bg-gray-50">
+            <tr class="border-b border-gray-200">
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">レビュー</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">myスコア</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">予定に登録する</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
+            </tr>
+          </thead>
+
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @once_again_places.each do |once_again_place| %>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.name %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.review %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.score %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.category.name %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= once_again_place.rating %></td>
+                <td class="px-6 py-4 whitespace-nowrap"><%= link_to "登録する", from_once_again_place_to_plan_place_path(gone_place_id: once_again_place.id), class: "header-btn" %></td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <% if once_again_place.website == "websiteはありません" %>
+                    websiteはありません
+                  <% else %>
+                    <%= link_to once_again_place.website, once_again_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
-
-<table class="mb-10 p-4 rounded text-center w-full">
-  <thead>
-    <tr class="bg-blue-100">
-      <th class="px-4 py-2 border border-blue-500">登録名</th>
-      <th class="px-4 py-2 border border-blue-500">memo</th>
-      <th class="px-4 py-2 border border-blue-500">カテゴリー</th>
-      <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
-      <th class="px-4 py-2 border border-blue-500">住所</th>
-      <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
-      <th class="px-4 py-2 border border-blue-500">公式サイト</th>
-      <th class="px-4 py-2 border border-blue-500">予定に登録する</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @places.each do |place| %>
-      <tr class="border-t border-blue-500">
-        <td class="px-4 py-2 border border-blue-500"><%= place.name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= place.memo %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= place.category.name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= place.googlemap_name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= place.address %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= place.rating %></td>
-        <td class="px-4 py-2 border border-blue-500">
-          <% if place.website == "websiteはありません" %>
-            websiteはありません
-          <% else %>
-            <%= link_to place.website, place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-          <% end %>
-        </td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "登録する", from_place_to_plan_place_path(place_id: place.id), class: "header-btn" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">もう一度行きたい一覧</h3>
-
-<div class="m-5">
-  <% if params[:sort_param] == 'latest' %>
-    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">新しい順</span>
-  <% else %>
-    <%= link_to "新しい順", place_and_once_again_place_path(sort_param: 'latest'), class: "header-btn" %>
-  <% end %>
-
-  <% if params[:sort_param] == 'old' %>
-    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">古い順</span>
-  <% else %>
-    <%= link_to "古い順", place_and_once_again_place_path(sort_param: 'old'), class: "header-btn" %>
-  <% end %>
-
-  <% if params[:sort_param] == 'score' %>
-    <span class="mr-5 bg-blue-100 rounded-lg py-2 px-4">スコアが高い順</span>
-  <% else %>
-    <%= link_to "スコアが高い順", place_and_once_again_place_path(sort_param: 'score'), class: "header-btn" %>
-  <% end %>
-
-  <% if params[:sort_param] == 'rating' %>
-    <span class="bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
-  <% else %>
-    <%= link_to "評価が高い順", place_and_once_again_place_path(sort_param: 'rating'), class: "header-btn" %>
-  <% end %>
-</div>
-
-<table class="mb-10 p-4 rounded text-center mx-auto w-full">
-  <thead>
-    <tr class="bg-blue-100">
-      <th class="px-4 py-2 border border-blue-500">登録名</th>
-      <th class="px-4 py-2 border border-blue-500">レビュー</th>
-      <th class="px-4 py-2 border border-blue-500">スコア</th>
-      <th class="px-4 py-2 border border-blue-500">カテゴリー</th>
-      <th class="px-4 py-2 border border-blue-500">googlemapでの正式名称</th>
-      <th class="px-4 py-2 border border-blue-500">住所</th>
-      <th class="px-4 py-2 border border-blue-500">googlemapでの評価</th>
-      <th class="px-4 py-2 border border-blue-500">公式サイト</th>
-      <th class="px-4 py-2 border border-blue-500">予定に登録する</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @once_again_places.each do |once_again_place| %>
-      <tr class="border-t border-blue-500">
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.review %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.score %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.category.name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.googlemap_name %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.address %></td>
-        <td class="px-4 py-2 border border-blue-500"><%= once_again_place.rating %></td>
-        <td class="px-4 py-2 border border-blue-500">
-          <% if once_again_place.website == "websiteはありません" %>
-            websiteはありません
-          <% else %>
-            <%= link_to once_again_place.website, once_again_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-          <% end %>
-        </td>
-        <td class="px-4 py-2 border border-blue-500"><%= link_to "登録する", from_once_again_place_to_plan_place_path(gone_place_id: once_again_place.id), class: "header-btn" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
 <div class="flex justify-center">
-  <%= link_to "予定詳細に戻る", :back, class: "mb-10 inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+  <%= link_to "予定詳細ページに戻る", @plan, class: "header-btn mr-0" %>
 </div>

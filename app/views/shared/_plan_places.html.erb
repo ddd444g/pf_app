@@ -1,36 +1,43 @@
-<table class="mb-10 table-auto bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight">
-  <thead>
-    <tr>
-      <th class="border px-4 py-2">予定時刻</th>
-      <th class="border px-4 py-2">登録名</th>
-      <th class="border px-4 py-2">memo</th>
-      <th class="border px-4 py-2">カテゴリー</th>
-      <th class="border px-4 py-2">googlemapでの正式名称</th>
-      <th class="border px-4 py-2">住所</th>
-      <th class="border px-4 py-2">googlemapでの評価</th>
-      <th class="border px-4 py-2">公式サイト</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% plan_places.each do |plan_place| %>
-      <tr id="plan_place-<%=plan_place.id %>">
-        <td class="border px-4 py-2"><%= plan_place.start_time&.strftime("%-m月%-d日%H時%M分")%>~</td>
-        <td class="border px-4 py-2"><%= link_to plan_place.plan_place_name, plan_place %></td>
-        <td class="border px-4 py-2"><%= plan_place.memo %></td>
-        <td class="border px-4 py-2"><%= plan_place.category.name %></td>
-        <td class="border px-4 py-2"><%= plan_place.googlemap_name %></td>
-        <td class="border px-4 py-2"><%= plan_place.address %></td>
-        <td class="border px-4 py-2"><%= plan_place.rating %></td>
-        <td class="border px-4 py-2">
-          <% if plan_place.website == "websiteはありません" %>
-            websiteはありません
-          <% else %>
-            <%= link_to plan_place.website, plan_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-          <% end %>
-        </td>
-        <td class="border px-4 py-2"><%= link_to "edit", edit_plan_place_path(plan_place.id) %></td>
-        <td class="border px-4 py-2"><%= link_to "削除", plan_place_path(plan_place), method: :delete, data: { confirm: "本当に削除しますか？" }, remote: true %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="-mx-4 overflow-x-auto">
+  <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+    <table class="min-w-full">
+      <thead class="bg-gray-50">
+        <tr class="border-b border-gray-200">
+        </tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">予定時刻</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">登録名</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">memo</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">カテゴリー</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">googlemapでの評価</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">公式サイト</th>
+          <th></th>
+      </thead>
+
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% plan_places.each do |plan_place| %>
+          <tr id="plan_place-<%=plan_place.id %>">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <% if plan_place.start_time %>
+                <%= plan_place.start_time.strftime("%-m月%-d日%H時%M分") %>
+              <% else %>
+                未定
+              <% end %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= link_to plan_place.plan_place_name, plan_place_path(plan_place), class: "text-gray-800 underline hover:no-underline" %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= plan_place.memo %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= plan_place.category.name %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= plan_place.rating %></td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <% if plan_place.website == "websiteはありません" %>
+                websiteはありません
+              <% else %>
+                <%= link_to plan_place.website, plan_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+              <% end %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= link_to "削除", plan_place, method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-blue-500 hover:text-blue-700", remote: true %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

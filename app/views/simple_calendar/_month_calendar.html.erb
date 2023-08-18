@@ -1,11 +1,11 @@
-<div class="simple-calendar">
-  <div class="calendar-heading mb-4">
+<div class="simple-calendar text-gray-800 overflow-auto">
+  <div class="calendar-heading mb-4 mt-2">
     <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view, class: "header-btn" %>
-    <span class="calendar-title text-lg font-bold"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
-    <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view, class: "header-btn" %>
+    <span class="calendar-title text-gray-600 text-lg font-bold"><%= start_date.year %>年 <%= t('date.month_names')[start_date.month] %></span>
+    <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view, class: "header-btn ml-8" %>
   </div>
 
-  <table class="table table-striped w-full">
+  <table class="table table-striped">
     <thead>
       <tr>
         <% date_range.slice(0, 7).each do |day| %>

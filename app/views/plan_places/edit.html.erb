@@ -1,60 +1,49 @@
-<h3 class="text-2xl font-bold mb-4 text-center text-blue-700">行く予定の場所編集</h3>
+<h1 class="m-6 text-3xl text-gray-600 font-bold text-center">行く予定の場所編集</h1>
 
 <%= render "shared/error", obj: @plan_place %>
 
-<%= form_with model: @plan_place, class: "bg-blue-100 p-4 rounded text-center mx-auto w-1/2" do |f| %>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :plan_place_name,"登録名", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.text_field :plan_place_name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-    <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.text_field :memo, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :start_time, class: "block text-gray-700 font-bold mb-2" do %>
-      訪問予定時刻<br>
-      <span class="text-sm">(<%= @plan_place.plan&.start_time&.strftime("%-m月%-d日%H時%M分") %>〜<%= @plan_place.plan&.end_time&.strftime("%-m月%-d日%H時%M分") %>の間で設定して下さい)</span>
-    <% end %>
-    <%= f.datetime_field :start_time, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
-  <div class="mb-10 text-center mx-auto w-1/2">
-    <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
-    <%= f.select :category_id, Category.all.map{|o| [o.name, o.id]}, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-  </div>
+<div class="bg-blue-200 rounded p-8 text-center mx-auto w-1/2">
+  <%= form_with model: @plan_place do |f| %>
+    <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :plan_place_name,"登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :plan_place_name, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :memo, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :start_time, class: "block text-gray-700 font-bold mb-2" do %>
+          訪問予定時刻<br>
+          <span class="text-sm">(<%= @plan_place.plan&.start_time&.strftime("%-m月%-d日%H時%M分") %>〜<%= @plan_place.plan&.end_time&.strftime("%-m月%-d日%H時%M分") %>の間で設定して下さい)</span>
+        <% end %>
+        <%= f.datetime_field :start_time, class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto ml-20 mr-20">
+        <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
+        <%= f.select :category_id, Category.all.map { |o| [o.name, o.id] }, {}, { class: "bg-gray-50 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" } %>
+      </div>
+    </div>
+    <div class="bg-blue-100 m-8 mt-0 pt-8 pb-2">
+      <%= render "shared/register_place_map", place: @plan_place %>
+      <%= render "shared/google_map_info", place: @plan_place %>
+    </div>
+    <div class="ml-40 mr-40 text-center">
+      <%= f.submit "編集を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
+    </div>
+    <%= f.hidden_field :latitude,:value => @plan_place.latitude, id: :lat %>
+    <%= f.hidden_field :longitude,:value => @plan_place.longitude, id: :lng %>
+    <%= f.hidden_field :googlemap_name, :value => @plan_place.googlemap_name, id: :name %>
+    <%= f.hidden_field :address, :value => @plan_place.address, id: :formatted_address %>
+    <%= f.hidden_field :rating, :value => @plan_place.rating, id: :rating %>
+    <%= f.hidden_field :website, :value => @plan_place.website, id: :website %>
+  <% end %>
+</div>
 
-  <%= render "shared/register_place_map", place: @plan_place %>
-
-  <div class="mb-10 mt-10 text-center mx-auto w-1/2">
-    <p class="block text-gray-700 font-bold mb-2">Google マップでの情報</p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= @plan_place.googlemap_name %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= @plan_place.address %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= @plan_place.rating %></p>
-    <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">公式サイト：</span>
-      <% if @plan_place.website == "websiteはありません" %>
-        websiteはありません
-      <% else %>
-        <%= link_to @plan_place.website, @plan_place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
-      <% end %>
-    </p>
-  </div>
-
-  <div class="mt-4">
-    <ul>
-      <li><%= f.submit "編集を完了する", class: "text-center mx-auto w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %></li>
-    </ul>
-  </div>
-  <%= f.hidden_field :latitude,:value => @plan_place.latitude, id: :lat %>
-  <%= f.hidden_field :longitude,:value => @plan_place.longitude, id: :lng %>
-  <%= f.hidden_field :googlemap_name, :value => @plan_place.googlemap_name, id: :name %>
-  <%= f.hidden_field :address, :value => @plan_place.address, id: :formatted_address %>
-  <%= f.hidden_field :rating, :value => @plan_place.rating, id: :rating %>
-  <%= f.hidden_field :website, :value => @plan_place.website, id: :website %>
-<% end %>
-
-<div class="mt-10 mb-10 text-center">
+<div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
-    <li class="mr-5"><%= link_to "予定ページへ", plan_path(@plan_place.plan), class: "text-center mx-auto w-1/2 header-btn" %></li>
-    <li><%= link_to "訪問予定場所詳細ページへ", @plan_place, class: "header-btn" %></li>
+    <li class="mr-8"><%= link_to "予定ページへ", plan_path(@plan_place.plan), class: "text-center mx-auto w-1/2 header-btn" %></li>
+    <li><%= link_to "訪問予定場所詳細ページへ", @plan_place, class: "header-btn mr-0" %></li>
   </ul>
 </div>
