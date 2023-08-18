@@ -36,9 +36,9 @@
       <% end %>
 
       <% if params[:sort_param] == 'score' %>
-        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">スコアが高い順</span>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">myスコアが高い順</span>
       <% else %>
-        <%= link_to "スコアが高い順", gone_places_path(sort_param: 'score', search: params[:search]), class: "header-btn" %>
+        <%= link_to "myスコアが高い順", gone_places_path(sort_param: 'score', search: params[:search]), class: "header-btn" %>
       <% end %>
 
       <% if params[:sort_param] == 'rating' %>
@@ -70,7 +70,7 @@
                 <%= f.text_field :review, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
               <div class="mb-10 ml-40 mr-40 text-center mx-auto">
-                <%= f.label :score, "スコア (1~10点)", class: "block text-gray-700 font-bold mb-2" %>
+                <%= f.label :score, "myスコア (1~10点)", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.number_field :score, in: 1..10, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
               <div class="mb-10 ml-40 mr-40 text-center mx-auto">
