@@ -36,7 +36,7 @@
       <% end %>
 
       <% if params[:sort_param] == 'rating' %>
-        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4">評価の高い順</span>
+        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">評価の高い順</span>
       <% else %>
         <%= link_to "評価が高い順", recommend_places_path(sort_param: 'rating', search: params[:search]), class: "header-btn" %>
       <% end %>
