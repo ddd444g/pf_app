@@ -5,21 +5,21 @@
     </div>
     <div id="modal" x-data="{ open: false }">
       <button class="header-btn mr-20" @click="open = true">メニュー</button>
-      <div id="exampleModal" class="absolute top-0 right-0 w-full min-h-screen items-center justify-center bg-black bg-opacity-50 z-50" x-show="open">
+      <div id="exampleModal" class="absolute top-0 right-0 bottom-0 w-full min-h-screen items-center justify-center bg-black bg-opacity-50 z-50" x-show="open">
         <div class="mt-12 rounded text-center mx-auto w-1/2" @click.away="open = false">
           <div class="bg-gray-100">
             <div class="flex flex-col">
               <% if current_user %>
-                <%= link_to(current_user.name , "/users/#{current_user.id}", class: "header-btn mr-0") %>
-                <%= link_to("ログアウト", "/logout", method: :post, data: { confirm: "ログアウトしますか？" }, class: "header-btn mr-0") %>
-                <%= link_to "おすすめ", recommend_places_path, class: "header-btn mr-0" %>
-                <%= link_to "行きたい", places_path, class: "header-btn mr-0" %>
-                <%= link_to "訪問済み", gone_places_path, class: "header-btn mr-0" %>
-                <%= link_to "予定", plans_path, class: "header-btn mr-0" %>
+                <%= link_to(current_user.name , "/users/#{current_user.id}", class: "header-btn mr-2 ml-2 sm:mr-8 sm:ml-8 md:mr-16 md:ml-16 md:pt-4 md:pb-4 mt-8 mb-8") %>
+                <%= link_to("ログアウト", "/logout", method: :post, data: { confirm: "ログアウトしますか？" }, class: "header-btn mr-2 ml-2 sm:mr-8 sm:ml-8 md:mr-16 md:ml-16 md:pt-4 md:pb-4 mb-8") %>
+                <%= link_to "おすすめ", recommend_places_path, class: "header-btn mr-2 ml-2 sm:mr-8 sm:ml-8 md:mr-16 md:ml-16 md:pt-4 md:pb-4 mb-8" %>
+                <%= link_to "行きたい", places_path, class: "header-btn mr-2 ml-2 sm:mr-8 sm:ml-8 md:mr-16 md:ml-16 md:pt-4 md:pb-4 mb-8" %>
+                <%= link_to "訪問済み", gone_places_path, class: "header-btn mr-2 ml-2 sm:mr-8 sm:ml-8 md:mr-16 md:ml-16 md:pt-4 md:pb-4 mb-8" %>
+                <%= link_to "予定", plans_path, class: "header-btn mr-2 ml-2 sm:mr-8 sm:ml-8 md:mr-16 md:ml-16 md:pt-4 md:pb-4 mb-8" %>
               <% else %>
-                <%= link_to("新規登録", "/users/new", class: "header-btn mr-0") %>
-                <%= link_to("ログイン", "/login", class: "header-btn mr-0") %>
-                <%= link_to "ゲストログイン", guest_login_path, method: :post, class: "header-btn mr-0" %>
+                <%= link_to("新規登録", "/users/new", class: "header-btn mr-2 ml-2 sm:mr-8 sm:ml-8 md:mr-16 md:ml-16 md:pt-4 md:pb-4 mt-8 mb-8") %>
+                <%= link_to("ログイン", "/login", class: "header-btn mr-2 ml-2 sm:mr-8 sm:ml-8 md:mr-16 md:ml-16 md:pt-4 md:pb-4 mb-8") %>
+                <%= link_to "ゲストログイン", guest_login_path, method: :post, class: "header-btn mr-2 ml-2 sm:mr-8 sm:ml-8 md:mr-16 md:ml-16 md:pt-4 md:pb-4 mb-8" %>
               <% end %>
             </div>
           </div>
