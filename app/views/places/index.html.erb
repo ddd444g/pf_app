@@ -26,9 +26,9 @@
     <div class="flex justify-start mb-4 md:mb-0">
       <div class="flex">
         <% if params[:sort_param] == 'latest' %>
-          <span class="md:mr-4 bg-blue-100 rounded-lg py-2 px-3 text-gray-700 md:mb-0">新しい順</span>
+          <span class="mr-8 bg-blue-100 rounded-lg py-2 px-3 text-gray-700 md:mb-0">新しい順</span>
         <% else %>
-          <%= link_to "新しい順", places_path(sort_param: 'latest', search: params[:search]), class: "header-btn md:mr-2 md:mb-0" %>
+          <%= link_to "新しい順", places_path(sort_param: 'latest', search: params[:search]), class: "header-btn" %>
         <% end %>
 
         <% if params[:sort_param] == 'old' %>
@@ -39,19 +39,23 @@
       </div>
     </div>
 
-    <div class="flex justify-start mb-4 md:mb-0 md:ml-2">
-      <div class="flex">
-        <% if params[:sort_param] == 'rating' %>
-          <span class="md:mr-4 bg-blue-100 rounded-lg py-2 px-3 text-gray-700 md:mb-0">評価の高い順</span>
-        <% else %>
-          <%= link_to "評価が高い順", places_path(sort_param: 'rating', search: params[:search]), class: "header-btn md:mr-2 md:mb-0" %>
-        <% end %>
-        <%= link_to "全て表示", places_path, class: "header-btn md:ml-2 md:mr-0 md:mb-0" %>
-      </div>
-    </div>
-
     <div id="modal" x-data="{ open: false }">
-      <div class="flex justify-start mb-4">
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex">
+          <% if params[:sort_param] == 'rating' %>
+            <span class="md:mr-4 bg-blue-100 rounded-lg py-2 px-3 text-gray-700 mr-8">評価の高い順</span>
+          <% else %>
+            <%= link_to "評価が高い順", places_path(sort_param: 'rating', search: params[:search]), class: "header-btn md:mr-2 md:mb-0" %>
+          <% end %>
+          <%= link_to "全て表示", places_path, class: "header-btn mr-0 md:ml-2 md:mr-0 md:mb-0" %>
+        </div>
+        <%# smサイズ用のボタン %>
+        <div class="hidden sm:flex">
+          <button class="create-btn ml-0" @click="open = true">行きたい場所を追加する</button>
+        </div>
+      </div>
+
+      <div class="flex justify-start mb-4 sm:hidden">
         <button class="create-btn ml-0" @click="open = true">行きたい場所を追加する</button>
       </div>
       <div id="exampleModal" class="absolute top-0 left-0 w-full min-h-screen items-center justify-center bg-black bg-opacity-50 z-50" x-show="open">
