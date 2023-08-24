@@ -59,8 +59,8 @@
         <button class="create-btn ml-0 text-sm" @click="open = true">行きたい場所を追加する</button>
       </div>
       <div id="exampleModal" class="absolute top-0 left-0 w-full min-h-screen items-center justify-center bg-black bg-opacity-50 z-50" x-show="open">
-        <div class="mt-12 rounded text-center mx-auto w-1/2" @click.away="open = false">
-          <div class="bg-gray-100 justify-center mb-32">
+        <div class="mt-12 rounded text-center mx-auto lg:w-1/2" @click.away="open = false">
+          <div class="bg-gray-100 justify-center mb-32 mr-4 ml-4">
             <h3 class="text-2xl font-bold pt-8 pb-8 text-center text-gray-600">行きたい場所新規登録</h3>
 
             <div class="bg-blue-100 m-8 mt-0">
@@ -68,24 +68,24 @@
             </div>
 
             <%= form_with(model: @place, local: false, class: "bg-blue-100 m-8 mb-0 rounded text-center") do |f| %>
-              <div class="mb-10 ml-40 mr-40 text-center mx-auto">
+              <div class="text-center mb-10 mr-4 ml-4 lg:ml-40 lg:mr-40 lg:mx-auto">
                 <%= f.label :name,"登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
                 <%= f.text_field :name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
-              <div class="mb-10 ml-40 mr-40 text-center mx-auto">
+              <div class="text-center mb-10 mr-4 ml-4 lg:ml-40 lg:mr-40 lg:mx-auto">
                 <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.text_field :memo, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
-              <div class="mb-10 ml-40 mr-40 text-center mx-auto">
+              <div class="text-center mb-10 mr-4 ml-4 lg:ml-40 lg:mr-40 lg:mx-auto">
                 <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.select :category_id, Category.all.map { |o| [o.name, o.id] }, {}, { class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" } %>
               </div>
 
-              <div class="comments-error w-full">
+              <div class="comments-error w-full text-sm lg:text-base">
                 <%= render "shared/error", obj: @place %>
               </div>
 
-              <div class="ml-40 mr-40 pb-8 text-center">
+              <div class="text-center mr-4 ml-4 pb-8 lg:ml-40 lg:mr-40">
                 <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
               </div>
               <%= f.hidden_field :latitude,:value => nil, id: :lat %>
