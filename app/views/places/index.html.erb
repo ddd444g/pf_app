@@ -68,24 +68,24 @@
             </div>
 
             <%= form_with(model: @place, local: false, class: "bg-blue-100 m-8 mb-0 rounded text-center") do |f| %>
-              <div class="text-center mb-10 mr-4 ml-4 lg:ml-40 lg:mr-40 lg:mx-auto">
+              <div class="text-center mb-10 mr-4 ml-4 sm:mr-24 sm:ml-24 lg:ml-40 lg:mr-40 lg:mx-auto">
                 <%= f.label :name,"登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
                 <%= f.text_field :name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
-              <div class="text-center mb-10 mr-4 ml-4 lg:ml-40 lg:mr-40 lg:mx-auto">
+              <div class="text-center mb-10 mr-4 ml-4 sm:mr-24 sm:ml-24 lg:ml-40 lg:mr-40 lg:mx-auto">
                 <%= f.label :memo,"memo", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.text_field :memo, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               </div>
-              <div class="text-center mb-10 mr-4 ml-4 lg:ml-40 lg:mr-40 lg:mx-auto">
+              <div class="text-center mb-10 mr-4 ml-4 sm:mr-24 sm:ml-24 lg:ml-40 lg:mr-40 lg:mx-auto">
                 <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
                 <%= f.select :category_id, Category.all.map { |o| [o.name, o.id] }, {}, { class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" } %>
               </div>
 
-              <div class="comments-error w-full text-sm lg:text-base">
+              <div class="comments-error w-full text-sm md:text-base">
                 <%= render "shared/error", obj: @place %>
               </div>
 
-              <div class="text-center mr-4 ml-4 pb-8 lg:ml-40 lg:mr-40">
+              <div class="text-center mr-4 ml-4 pb-8 sm:mr-24 sm:ml-24 lg:ml-40 lg:mr-40">
                 <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
               </div>
               <%= f.hidden_field :latitude,:value => nil, id: :lat %>
