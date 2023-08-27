@@ -22,34 +22,34 @@
     <% end %>
   </div>
 
-  <div class="mt-4 m-4 ml-8 flex flex-col md:flex-row">
+  <div class="mt-4 m-4 ml-8 flex flex-col lg:flex-row">
     <div class="flex justify-start mb-4 items-center">
       <div class="flex">
         <% if params[:sort_param] == 'latest' %>
-          <span class="md:mr-8 bg-blue-100 rounded-lg text-sm lg:text-base py-2 px-3 text-gray-700 mr-8">新しい順</span>
+          <span class="lg:mr-8 bg-blue-100 rounded-lg text-sm md:text-base py-2 px-3 text-gray-700 mr-8">新しい順</span>
         <% else %>
-          <%= link_to "新しい順", gone_places_path(sort_param: 'latest', search: params[:search]), class: "header-btn text-sm lg:text-base" %>
+          <%= link_to "新しい順", gone_places_path(sort_param: 'latest', search: params[:search]), class: "header-btn text-sm md:text-base" %>
         <% end %>
 
         <% if params[:sort_param] == 'old' %>
           <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">古い順</span>
         <% else %>
-          <%= link_to "古い順", gone_places_path(sort_param: 'old', search: params[:search]), class: "header-btn text-sm lg:text-base" %>
+          <%= link_to "古い順", gone_places_path(sort_param: 'old', search: params[:search]), class: "header-btn text-sm md:text-base" %>
         <% end %>
       </div>
     </div>
     <div class="flex justify-between items-center mb-4">
       <div class="flex">
         <% if params[:sort_param] == 'score' %>
-          <span class="md:mr-8 bg-blue-100 rounded-lg text-sm lg:text-base py-2 px-3 text-gray-700 mr-8">myスコアが高い順</span>
+          <span class="lg:mr-8 bg-blue-100 rounded-lg text-sm md:text-base py-2 px-3 text-gray-700 mr-8">myスコアが高い順</span>
         <% else %>
-          <%= link_to "myスコアが高い順", gone_places_path(sort_param: 'score', search: params[:search]), class: "header-btn text-sm lg:text-base" %>
+          <%= link_to "myスコアが高い順", gone_places_path(sort_param: 'score', search: params[:search]), class: "header-btn text-sm md:text-base" %>
         <% end %>
 
         <% if params[:sort_param] == 'rating' %>
-          <span class="md:mr-8 bg-blue-100 rounded-lg text-sm lg:text-base py-2 px-3 text-gray-700 mr-8">評価の高い順</span>
+          <span class="lg:mr-8 bg-blue-100 rounded-lg text-sm md:text-base py-2 px-3 text-gray-700 mr-8">評価の高い順</span>
         <% else %>
-          <%= link_to "評価が高い順", gone_places_path(sort_param: 'rating', search: params[:search]), class: "header-btn mr-0 text-sm lg:text-base" %>
+          <%= link_to "評価が高い順", gone_places_path(sort_param: 'rating', search: params[:search]), class: "header-btn mr-0 lg:mr-8 text-sm md:text-base" %>
         <% end %>
       </div>
     </div>
@@ -57,11 +57,11 @@
     <div id="modal" x-data="{ open: false }">
       <div class="flex justify-between items-center mb-4">
         <div class="flex">
-          <%= link_to "全て表示", gone_places_path, class: "header-btn mr-0 text-sm lg:text-base" %>
+          <%= link_to "全て表示", gone_places_path, class: "header-btn mr-0 text-sm md:text-base" %>
         </div>
         <%# smサイズ以上のボタン %>
-        <div class="hidden sm:flex md:ml-8">
-          <button class="create-btn ml-0 text-sm lg:text-base" @click="open = true">訪問済み場所を追加する</button>
+        <div class="hidden sm:flex lg:ml-8">
+          <button class="create-btn ml-0 text-sm md:text-base" @click="open = true">訪問済み場所を追加する</button>
         </div>
       </div>
       <%# smサイズ以下のボタン %>
