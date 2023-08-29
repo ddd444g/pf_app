@@ -1,8 +1,16 @@
-<div class="simple-calendar text-gray-800 overflow-auto">
-  <div class="calendar-heading mb-4 mt-2">
-    <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view, class: "header-btn" %>
-    <span class="calendar-title text-gray-600 text-lg font-bold"><%= start_date.year %>年 <%= t('date.month_names')[start_date.month] %></span>
-    <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view, class: "header-btn ml-8" %>
+<div class="simple-calendar text-gray-800 overflow-auto text-xs sm:text-base">
+  <div class="calendar-heading mb-4 mt-2 text-center">
+    <div class="flex justify-between items-center">
+      <div>
+        <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view, class: "header-btn ml-4 text-xs sm:text-base sm:ml-8 md:ml-16" %>
+      </div>
+      <div class="text-center">
+        <span class="calendar-title text-gray-600 text-xs font-bold sm:text-base"><%= start_date.year %>年 <%= t('date.month_names')[start_date.month] %></span>
+      </div>
+      <div>
+        <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view, class: "header-btn ml-8 mr-4 text-xs sm:text-base sm:mr-8 md:mr-16" %>
+      </div>
+    </div>
   </div>
 
   <table class="table table-striped">
