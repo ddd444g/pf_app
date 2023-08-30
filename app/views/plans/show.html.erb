@@ -8,10 +8,14 @@
     <div id="modal" x-data="{ open: false }">
       <div class="flex justify-between items-center mb-4">
         <div class="flex">
-          <p class="text-gray-600 text-center text-sm lg:text-base">タイトル</p>
-          <p class="text-xl font-bold text-gray-600 text-sm lg:text-base"><%= @plan.plan_name %></p>
-          <p class="text-gray-600 text-center text-sm lg:text-base">期間</p>
-          <p class="font-bold text-gray-600 text-sm lg:text-base"><%= @plan&.start_time&.strftime("%-m月%-d日 %H:%M") %> 〜 <%= @plan&.end_time&.strftime("%-m月%-d日 %H:%M") %></p>
+          <div class="flex flex-col mr-8">
+            <p class="bg-gray-50 text-gray-600 text-center text-sm lg:text-base">タイトル</p>
+            <p class="text-center text-xl font-bold text-gray-600 text-sm lg:text-base"><%= @plan.plan_name %></p>
+          </div>
+          <div class="flex flex-col">
+            <p class="bg-gray-50 text-gray-600 text-center text-sm lg:text-base">期間</p>
+            <p class="font-bold text-gray-600 text-sm lg:text-base"><%= @plan&.start_time&.strftime("%-m月%-d日 %H:%M") %> 〜 <%= @plan&.end_time&.strftime("%-m月%-d日 %H:%M") %></p>
+          </div>
         </div>
         <div class="hidden sm:flex md:ml-8">
           <button class="create-btn ml-0 text-sm lg:text-base" @click="open = true">訪問予定場所を追加する</button>
