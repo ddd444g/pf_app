@@ -30,7 +30,7 @@
           <div class="bg-gray-100 justify-center">
             <h3 class="text-2xl font-bold pt-8 pb-8 text-center text-gray-600">訪問予定場所新規登録</h3>
 
-            <div class="mb-10 text-center">
+            <div class="mb-10 text-center text-sm sm:text-base">
               <p class="text-gray-700 font-bold mb-4">行きたい場所,もう一度行きたい場所から登録する</p>
               <%= link_to "一覧ページへ", place_and_once_again_place_path(@plan), class: "py-2 px-4 bg-blue-500 text-gray-100 hover:bg-blue-600 hover:text-gray-300 rounded" %>
             </div>
@@ -92,7 +92,7 @@
 
 <div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
-    <li class="mr-8"><%= link_to "予定一覧ページへ", plans_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
-    <li><%= link_to "編集する", [:edit, @plan], class: "header-btn mr-0" %></li>
+    <li class="mr-8"><%= link_to "予定一覧ページへ", plans_path, class: "text-center mx-auto w-1/2 header-btn text-sm lg:text-base" %></li>
+    <li><%= link_to "編集する", [:edit, @plan], class: "header-btn mr-0 text-sm lg:text-base" %></li>
   </ul>
 </div>
