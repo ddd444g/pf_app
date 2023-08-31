@@ -39,25 +39,25 @@
         <div class="bg-gray-100 justify-center">
           <h3 class="text-2xl font-bold pt-8 pb-8 text-center text-gray-600">訪問済みに登録</h3>
 
-          <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4">
-            <div class="mb-10 text-center mx-auto mr-2 ml-2">
+          <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:mr-16 sm:ml-16 sm:pt-8">
+            <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16">
               <p class="block text-gray-700 font-bold mb-2">登録名</p>
               <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @place.name %></p>
             </div>
-            <div class="mb-10 text-center mx-auto mr-2 ml-2">
+            <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16">
               <p class="block text-gray-700 font-bold mb-2">memo</p>
               <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @place.memo %></p>
             </div>
-            <div class="mb-10 text-center mx-auto mr-2 ml-2">
+            <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16">
               <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
               <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @place.category.name %></p>
             </div>
           </div>
-          <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4">
+          <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:mr-16 sm:ml-16 sm:pt-8">
             <%= render "shared/google_map_info", place: @place %>
           </div>
           <h3 class="text-2xl pb-2 font-bold text-center text-gray-600">入力フォーム</h3>
-          <%= form_with model: @gone_place, class: "bg-blue-100 m-4 mt-0 pt-8 pb-4", local: false do |f| %>
+          <%= form_with model: @gone_place, class: "bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:mr-16 sm:ml-16 sm:pt-8", local: false do |f| %>
             <div class="text-center mb-10 mr-4 ml-4 sm:mr-24 sm:ml-24 md:mr-40 md:ml-40 lg:mr-56 lg:ml-56 xl:mr-40 xl:ml-40">
               <%= f.label :review,"レビュー", class: "pt-2 block text-gray-700 font-bold mb-2" %>
               <%= f.text_field :review, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
