@@ -1,70 +1,71 @@
-<h1 class="m-6 text-3xl text-gray-600 font-bold text-center">おすすめ場所詳細</h1>
-
+<h1 class="text-center mb-4 mt-4 text-2xl font-bold text-gray-600 sm:m-4 md:text-3xl">おすすめ場所詳細</h1>
 <div id="flash-message">
   <%= render 'shared/flash' %>
 </div>
 
-<div class="bg-blue-200 rounded p-8 text-center mx-auto w-1/2">
-  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
-    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+<div class="bg-blue-200 rounded text-center mx-auto mr-4 ml-4 pt-4 sm:mr-16 sm:ml-16 sm:pt-8 md:mr-32 md:ml-32 lg:mr-64 lg:ml-64">
+  <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:m-16 sm:mt-0">
+    <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
       <p class="block text-gray-700 font-bold mb-2">登録名</p>
       <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @recommend_place.recommend_place_name %></p>
     </div>
-    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+    <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
       <p class="block text-gray-700 font-bold mb-2">おすすめコメント</p>
       <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @recommend_place.recommend_comment %></p>
     </div>
-    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+    <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
       <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
       <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @recommend_place.category.name %></p>
     </div>
   </div>
 
-  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-8">
+  <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:mr-16 sm:ml-16 sm:mb-0 sm:mt-0">
     <%= render "shared/google_map_info", place: @recommend_place %>
     <%= render "shared/place_map", place: @gone_place %>
   </div>
 
   <div id="modal" x-data="{ open: false }">
     <% if @recommend_place.user_id != @current_user.id %>
-      <button class="create-btn" @click="open = true; window.scrollTo({ top: 0, behavior: 'smooth' })">訪問済みに登録</button>
+      <div class="mt-0 pt-8 pb-8 pr-2 pl-2">
+        <button class="create-btn text-sm lg:text-base" @click="open = true; window.scrollTo({ top: 0, behavior: 'smooth' })">訪問済みに登録</button>
+      </div>
     <% end %>
-    <div id="exampleModal" class="absolute top-0 bottom-0 left-0 w-full min-h-screen items-center justify-center bg-black bg-opacity-50 z-50" x-show="open">
-      <div class="mt-12 rounded text-center mx-auto w-1/2" @click.away="open = false">
+    <div id="exampleModal" class="absolute top-0 left-0 w-full min-h-screen justify-center bg-black bg-opacity-50 z-50 xl:flex xl:items-center" x-show="open">
+      <div class="mt-12 rounded text-center mx-auto mr-4 ml-4 md:mr-16 md:ml-16 lg:mr-40 lg:ml-40 xl:w-1/2" @click.away="open = false">
         <div class="bg-gray-100 justify-center mb-32">
           <h3 class="text-2xl font-bold pt-8 pb-8 text-center text-gray-600">行きたい場所に登録</h3>
 
-          <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
-            <div class="mb-10 text-center mx-auto ml-20 mr-20">
+          <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:mr-16 sm:ml-16 sm:pt-8">
+            <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16">
               <p class="block text-gray-700 font-bold mb-2">登録名</p>
               <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @recommend_place.recommend_place_name %></p>
             </div>
-            <div class="mb-10 text-center mx-auto ml-20 mr-20">
+            <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16">
               <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
               <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @recommend_place.category.name %></p>
             </div>
           </div>
-          <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
+          <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:mr-16 sm:ml-16 sm:pt-8">
             <%= render "shared/google_map_info", place: @recommend_place %>
           </div>
           <h3 class="text-2xl pb-2 font-bold text-center text-gray-600">入力フォーム</h3>
-          <%= form_with(model: @place, local: false, url: new_from_recommend_places_path, class: "bg-blue-100 mr-8 ml-8 mb-0 rounded text-center") do |f| %>
+          <%= form_with(model: @place, local: false, url: new_from_recommend_places_path, class: "bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:mr-16 sm:ml-16 sm:pt-8") do |f| %>
             <% if @current_user.places.exists?(recommend_place_id: @recommend_place.id) %>
               <p class="text-center mx-auto bg-yellow-200 block text-gray-700 font-bold mb-2">この場所はすでに行きたい場所へ登録済みです</p>
             <% end %>
 
-            <div class="mb-10 ml-40 mr-40 text-center mx-auto">
+            <div class="text-center mb-10 mr-4 ml-4 sm:mr-24 sm:ml-24 md:mr-40 md:ml-40 lg:mr-56 lg:ml-56 xl:mr-40 xl:ml-40">
               <%= f.label :name, "登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
               <%= f.text_field :name, value: @recommend_place.recommend_place_name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
               <%= f.label :memo,"memo", class: "pt-2 block text-gray-700 font-bold mb-2" %>
               <%= f.text_field :memo, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
             </div>
 
-            <div class="comments-error w-full">
+            <div class="comments-error w-full text-sm md:text-base">
                <%= render "shared/error", obj: @place %>
             </div>
 
-            <div class="ml-40 mr-40 pb-8 text-center">
+            <div class="text-center mr-4 ml-4 pb-8 sm:mr-24 sm:ml-24 md:mr-40 md:ml-40 lg:mr-56 lg:ml-56 xl:mr-40 xl:ml-40">
               <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
             </div>
             <%= f.hidden_field :user_id, value: @current_user.id %>
@@ -87,8 +88,8 @@
 <div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
     <% if @recommend_place.user_id == @current_user.id %>
-      <li class="mr-8"><%= link_to "おすすめ一覧ページへ", recommend_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
-      <li><%= link_to "編集する", [:edit, @recommend_place], class: "header-btn mr-0" %></li>
+      <li class="mr-8"><%= link_to "おすすめ一覧ページへ", recommend_places_path, class: "text-center mx-auto w-1/2 header-btn text-sm lg:text-base" %></li>
+      <li><%= link_to "編集する", [:edit, @recommend_place], class: "header-btn mr-0 text-sm lg:text-base" %></li>
     <% else %>
       <li><%= link_to "おすすめ一覧ページへ", recommend_places_path, class: "text-center mx-auto w-1/2 header-btn" %></li>
     <% end %>
