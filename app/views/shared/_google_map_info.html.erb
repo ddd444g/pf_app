@@ -3,11 +3,11 @@
   <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">名前：</span><%= place.googlemap_name %></p>
   <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">住所：</span><%= place.address %></p>
   <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">評価：</span><%= place.rating %></p>
-  <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><span class="text-gray-700 font-bold">公式サイト：</span>
+  <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight overflow-hidden"><span class="text-gray-700 font-bold">公式サイト：</span>
     <% if place.website == "websiteはありません" %>
       websiteはありません
     <% else %>
-      <%= link_to place.website, place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+      <%= link_to place.website, place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700 break-all" %>
     <% end %>
   </p>
 </div>
