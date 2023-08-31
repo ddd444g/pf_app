@@ -11,7 +11,7 @@ document.querySelector('#flash-message').innerHTML = "<%= j render 'shared/flash
 
 <%# showページ用 %>
 if (document.getElementById("show-page-once-<%= @gone_place.id %>")) {
-  document.getElementById("show-page-once-<%= @gone_place.id %>").innerHTML = "<%=j button_to "解除する", cancel_once_again_path(@gone_place), method: :post, class: "header-btn mr-0", remote: true %>";
+  document.getElementById("show-page-once-<%= @gone_place.id %>").innerHTML = "<%=j button_to "解除する", cancel_once_again_path(@gone_place), method: :post, class: "header-btn mr-0 text-sm lg:text-base", remote: true %>";
 }
 
 if (document.querySelector('#show-page-flash-message')) {

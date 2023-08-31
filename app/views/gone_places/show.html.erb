@@ -28,16 +28,16 @@
     <%= render "shared/place_map", place: @gone_place %>
   </div>
 
-  <div id="show-page-flash-message">
+  <div id="show-page-flash-message" class="mt-4 text-sm lg:text-base">
     <%= render 'shared/flash' %>
   </div>
 
-  <p class="block text-gray-700 font-bold mb-2">もう一度行きたい</p>
+  <p class="block text-gray-700 font-bold mb-2 text-sm lg:text-base">もう一度行きたい</p>
   <div id="show-page-once-<%= @gone_place.id %>">
     <% if @gone_place.once_again %>
-      <%= button_to "解除する", cancel_once_again_path(@gone_place), method: :post, class: "header-btn mr-0", remote: true %>
+      <%= button_to "解除する", cancel_once_again_path(@gone_place), method: :post, class: "header-btn mr-0 text-sm lg:text-base", remote: true %>
     <% else %>
-      <%= button_to("登録する", once_again_path(@gone_place), method: :post, class: "header-btn mr-0", remote: true) %>
+      <%= button_to("登録する", once_again_path(@gone_place), method: :post, class: "header-btn mr-0 text-sm lg:text-base", remote: true) %>
     <% end %>
   </div>
 
