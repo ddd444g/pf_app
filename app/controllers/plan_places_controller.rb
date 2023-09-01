@@ -16,18 +16,15 @@ class PlanPlacesController < ApplicationController
     end
   end
 
-  def from_place_place_to_plan_place_create
+  def from_place_to_plan_place_create
     @user = User.find_by(id: session[:user_id])
     @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
 :user_id, :plan_id, :place_id, :start_time, :googlemap_name, :address, :rating, :category_id, :website))
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       flash[:notice] = "#{@plan_place.plan_place_name}を追加しました"
-      redirect_to plan_path(@plan)
     else
-      @plan = Plan.find_by(id: params[:plan_place][:plan_id])
-      @place = Place.find_by(id: params[:plan_place][:place_id])
-      render "plans/from_place_to_plan_place"
+      render :error
     end
   end
 
@@ -38,11 +35,8 @@ class PlanPlacesController < ApplicationController
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       flash[:notice] = "#{@plan_place.plan_place_name}を追加しました"
-      redirect_to plan_path(@plan)
     else
-      @plan = Plan.find_by(id: params[:plan_place][:plan_id])
-      @once_again_place = GonePlace.find_by(id: params[:plan_place][:gone_place_id])
-      render "plans/from_once_again_place_to_plan_place"
+      render :error
     end
   end
 

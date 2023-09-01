@@ -1,6 +1,6 @@
 <% if obj.errors.any? %>
   <% obj.errors.full_messages.each do |message| %>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded text-center mx-auto w-1/2" role="alert">
+    <div class="bg-red-100 border border-red-400 text-red-700 mr-4 ml-4 px-4 py-2 rounded text-center sm:mr-24 sm:ml-24 md:mr-40 md:ml-40 lg:mr-56 lg:ml-56 xl:mr-40 xl:ml-40" role="alert">
       <ul>
         <li><%= message %></li>
       </ul>

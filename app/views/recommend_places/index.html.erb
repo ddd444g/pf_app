@@ -1,4 +1,4 @@
-<h1 class="m-4 text-3xl font-bold text-gray-600 text-center">おすすめ一覧</h1>
+<h1 class="ml-8 mb-4 mt-4 text-2xl font-bold text-gray-600 sm:m-4 sm:text-center md:text-3xl">おすすめ一覧</h1>
 <div id="flash-message">
   <%= render 'shared/flash' %>
 </div>
@@ -21,33 +21,45 @@
       <p class="places_count text-gray-700 mt-2">該当する結果はありませんでした。</p>
     <% end %>
   </div>
-  <div class="mt-4 ml-8 mb-4 flex justify-between items-center">
-    <div class="flex">
-      <% if params[:sort_param] == 'latest' %>
-        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">新しい順</span>
-      <% else %>
-        <%= link_to "新しい順", recommend_places_path(sort_param: 'latest', search: params[:search]), class: "header-btn" %>
-      <% end %>
 
-      <% if params[:sort_param] == 'old' %>
-        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">古い順</span>
-      <% else %>
-        <%= link_to "古い順", recommend_places_path(sort_param: 'old', search: params[:search]), class: "header-btn" %>
-      <% end %>
+  <div class="mt-4 m-4 ml-8 flex flex-col lg:flex-row">
+    <div class="flex justify-start mb-4 items-center">
+      <div class="flex">
+        <% if params[:sort_param] == 'latest' %>
+          <span class="mr-8 bg-blue-100 rounded-lg text-sm py-2 px-3 text-gray-700 md:text-base">新しい順</span>
+        <% else %>
+          <%= link_to "新しい順", recommend_places_path(sort_param: 'latest', search: params[:search]), class: "header-btn text-sm md:text-base" %>
+        <% end %>
 
-      <% if params[:sort_param] == 'rating' %>
-        <span class="mr-8 bg-blue-100 rounded-lg py-2 px-4 text-gray-700">評価の高い順</span>
-      <% else %>
-        <%= link_to "評価が高い順", recommend_places_path(sort_param: 'rating', search: params[:search]), class: "header-btn" %>
-      <% end %>
-
-      <%= link_to "全て表示", recommend_places_path, class: "header-btn" %>
+        <% if params[:sort_param] == 'old' %>
+          <span class="bg-blue-100 rounded-lg text-sm py-2 px-3 text-gray-700 lg:mr-8 md:text-base">古い順</span>
+        <% else %>
+          <%= link_to "古い順", recommend_places_path(sort_param: 'old', search: params[:search]), class: "header-btn text-sm md:text-base" %>
+        <% end %>
+      </div>
     </div>
-    <%= link_to "自分の投稿したおすすめ一覧へ", my_post_recommend_places_path, class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex">
+        <% if params[:sort_param] == 'rating' %>
+          <span class="bg-blue-100 rounded-lg text-sm py-2 px-3 text-gray-700 mr-8 md:text-base">評価の高い順</span>
+        <% else %>
+          <%= link_to "評価が高い順", recommend_places_path(sort_param: 'rating', search: params[:search]), class: "header-btn text-sm md:text-base" %>
+        <% end %>
+        <%= link_to "全て表示", recommend_places_path, class: "header-btn mr-0 text-sm md:text-base" %>
+      </div>
+      <%# smサイズ以上で表示するリンク %>
+      <div class="hidden sm:flex lg:ml-8">
+        <%= link_to "自分の投稿したおすすめ一覧へ", my_post_recommend_places_path, class: "text-blue-500 underline hover:no-underline hover:text-blue-700 ml-0 text-sm md:text-base md:mr-8" %>
+      </div>
+    </div>
+    <%# smサイズ未満で表示するリンク %>
+    <div class="flex justify-start mb-4 sm:hidden">
+      <%= link_to "自分の投稿したおすすめ一覧へ", my_post_recommend_places_path, class: "text-blue-500 underline hover:no-underline hover:text-blue-700 ml-0 text-sm" %>
+    </div>
   </div>
 
   <div class="text-gray-800 mb-16">
-    <div class="-mx-4 overflow-x-auto">
+    <div class="-mx-4 overflow-x-auto mr-2 ml-2 text-sm md:text-base xl:mr-0 xl:ml-0">
       <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
         <table class="min-w-full">
           <thead class="bg-gray-50">
