@@ -1,8 +1,7 @@
-<h1 class="m-6 text-3xl text-gray-600 font-bold text-center">ユーザー新規作成</h1>
+<h1 class="text-center mb-4 mt-4 text-2xl font-bold text-gray-600 sm:m-4 md:text-3xl">ユーザー新規作成</h1>
 
 <%= render "shared/error", obj: @user %>
 
-<div class="bg-blue-200 rounded pr-8 pb-8 pl-8 pt-16 text-center mx-auto w-1/2">
+<div class="bg-blue-200 rounded text-center mx-auto mr-4 mb-16 ml-4 pt-4 sm:mr-16 sm:ml-16 sm:pt-8 md:mr-32 md:ml-32 lg:mr-64 lg:ml-64">
   <%= render "shared/user_form", user: @user %>
 </div>
-
