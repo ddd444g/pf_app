@@ -1,51 +1,53 @@
-<h3 class="text-2xl font-bold pt-8 pb-8 text-center text-gray-600">この場所を予定に追加する</h3>
+<h1 class="text-center mb-4 mt-4 text-2xl font-bold text-gray-600 sm:m-4 md:text-3xl">この場所を予定に追加する</h1>
 
 <%= render "shared/error", obj: @plan_place %>
 
-<div class="bg-blue-200 rounded p-8 text-center mx-auto w-1/2">
-  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
-    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+<div class="bg-blue-200 rounded text-center mx-auto mr-4 ml-4 pt-4 sm:mr-16 sm:ml-16 sm:pt-8 md:mr-32 md:ml-32 lg:mr-64 lg:ml-64">
+  <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:m-16 sm:mt-0">
+    <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
       <p class="block text-gray-700 font-bold mb-2">登録名</p>
       <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.name %></p>
     </div>
-    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+    <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
       <p class="block text-gray-700 font-bold mb-2">レビュー</p>
       <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.review %></p>
     </div>
-    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+    <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
       <p class="block text-gray-700 font-bold mb-2">myスコア (1~10点)</p>
       <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.score %></p>
     </div>
-    <div class="mb-10 text-center mx-auto ml-20 mr-20">
+    <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
       <p class="block text-gray-700 font-bold mb-2">カテゴリー</p>
       <p class="bg-gray-50 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"><%= @once_again_place.category.name %></p>
     </div>
   </div>
 
-  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-8">
+  <div class="bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:mr-16 sm:ml-16 sm:mb-0 sm:mt-0">
     <%= render "shared/google_map_info", place: @once_again_place %>
     <%= render "shared/place_map", place: @once_again_place %>
   </div>
 
-  <h3 class="text-2xl pb-2 font-bold text-center text-gray-600">入力フォーム</h3>
-  <%= form_with(model: @plan_place, local: true, method: :post, url: from_once_again_place_to_plan_place_create_path, class: "bg-blue-100 mr-8 ml-8 mb-0 rounded text-center") do |f| %>
-    <div class="mb-10 ml-40 mr-40 text-center mx-auto">
-      <%= f.label :plan_place_name,"登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
-      <%= f.text_field :plan_place_name, value: @once_again_place.name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-    </div>
-    <div class="mb-10 ml-40 mr-40 text-center mx-auto">
-      <%= f.label :memo,"memo", class: "pt-2 block text-gray-700 font-bold mb-2" %>
-      <%= f.text_field :memo, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
-    </div>
-    <div class="mb-10 ml-40 mr-40 text-center mx-auto">
-      <%= f.label :start_time, class: "block text-gray-700 font-bold mb-2" do %>
-        訪問予定時刻<br>
-        <span class="text-sm">(<%= @plan&.start_time&.strftime("%-m月%-d日%H時%M分") %>〜<%= @plan&.end_time&.strftime("%-m月%-d日%H時%M分") %>の間で設定して下さい)(空白でも可能です)</span>
-      <% end %>
-      <%= f.datetime_field :start_time, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+  <h3 class="text-2xl pt-2 pb-2 font-bold text-center text-gray-600 sm:pt-8 sm:pb-8">入力フォーム</h3>
+  <%= form_with(model: @plan_place, local: true, method: :post, url: from_once_again_place_to_plan_place_create_path) do |f| %>
+    <div class="bg-blue-100 mr-4 ml-4 pt-8 pb-4 sm:mr-16 sm:ml-16">
+      <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
+        <%= f.label :plan_place_name,"登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :plan_place_name, value: @once_again_place.name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
+        <%= f.label :memo,"memo", class: "pt-2 block text-gray-700 font-bold mb-2" %>
+        <%= f.text_field :memo, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
+      <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
+        <%= f.label :start_time, class: "block text-gray-700 font-bold mb-2" do %>
+          訪問予定時刻<br>
+          <span class="text-sm">(<%= @plan&.start_time&.strftime("%-m月%-d日%H時%M分") %>〜<%= @plan&.end_time&.strftime("%-m月%-d日%H時%M分") %>の間で設定して下さい)(空白でも可能です)</span>
+        <% end %>
+        <%= f.datetime_field :start_time, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
+      </div>
     </div>
 
-    <div class="ml-40 mr-40 pb-8 text-center">
+    <div class="text-center mr-4 ml-4 pb-8 pt-8 sm:mr-24 sm:ml-24 md:mr-40 md:ml-40 lg:mr-40 lg:ml-40 xl:mr-72 xl:ml-72">
       <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
     </div>
     <%= f.hidden_field :latitude, value: @once_again_place.latitude %>
@@ -63,6 +65,6 @@
 
 <div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
-    <li><%= link_to "前のページへ戻る", :back, class: "text-center mx-auto w-1/2 header-btn mr-0" %></li>
+    <li><%= link_to "前のページへ戻る", :back, class: "text-center mx-auto w-1/2 header-btn mr-0 text-sm lg:text-base" %></li>
   </ul>
 </div>
