@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get "plans/:id/from_place_to_plan_place", to: "plans#from_place_to_plan_place", as: "from_place_to_plan_place"
 
   # 行きたい場所に登録されている場所をplan_placeに登録する処理
-  post "from_place_to_plan_place_create", to: "plan_places#from_place_place_to_plan_place_create"
+  post "from_place_to_plan_place_create", to: "plan_places#from_place_to_plan_place_create"
 
   # もう一度行きたいに登録されている場所をplan_placeに登録するページ
   get "plans/:id/from_once_again_place_to_plan_place", to: "plans#from_once_again_place_to_plan_place", as: "from_once_again_place_to_plan_place"

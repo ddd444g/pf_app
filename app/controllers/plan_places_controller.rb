@@ -16,7 +16,7 @@ class PlanPlacesController < ApplicationController
     end
   end
 
-  def from_place_place_to_plan_place_create
+  def from_place_to_plan_place_create
     @user = User.find_by(id: session[:user_id])
     @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
 :user_id, :plan_id, :place_id, :start_time, :googlemap_name, :address, :rating, :category_id, :website))
