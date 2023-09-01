@@ -27,7 +27,7 @@ only: [
   def show
     @user = User.find_by(id: session[:user_id])
     @plan = Plan.find(params[:id])
-    @plan_places = @plan.plan_places.order(:start_time)
+    @plan_places = @plan.plan_places.includes(:category).order(:start_time)
     @plan_place = PlanPlace.new
   end
 
@@ -55,8 +55,8 @@ only: [
   def place_and_once_again_place
     @user = User.find_by(id: session[:user_id])
     @plan = Plan.find(params[:id])
-    @places = @user.places.sort_places(params[:sort_param])
-    @once_again_places = @user.gone_places.where(once_again: true).sort_gone_places(params[:sort_param])
+    @places = @user.places.includes(:category).sort_places(params[:sort_param])
+    @once_again_places = @user.gone_places.where(once_again: true).includes(:category).sort_gone_places(params[:sort_param])
   end
 
   # 行きたい場所からplan_placeに登録するページ
