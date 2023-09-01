@@ -35,11 +35,8 @@ class PlanPlacesController < ApplicationController
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       flash[:notice] = "#{@plan_place.plan_place_name}を追加しました"
-      redirect_to plan_path(@plan)
     else
-      @plan = Plan.find_by(id: params[:plan_place][:plan_id])
-      @once_again_place = GonePlace.find_by(id: params[:plan_place][:gone_place_id])
-      render "plans/from_once_again_place_to_plan_place"
+      render :error
     end
   end
 
