@@ -1,5 +1,5 @@
 <%= form_with model: user do |f| %>
-  <div class="bg-blue-100 m-8 mt-0 pt-8 pb-4">
+  <div class="bg-blue-100 m-4 mt-0 pt-8 pr-4 pl-4 pb-4 text-sm lg:text-base sm:mr-16 sm:ml-16">
     <table class="w-full max-w-md mx-auto">
       <tr>
         <th class="text-left pb-4">
@@ -35,7 +35,7 @@
       </tr>
     </table>
   </div>
-  <div class="ml-40 mr-40 text-center">
+  <div class="text-center mr-4 ml-4 pb-8 pt-8 sm:mr-24 sm:ml-24 md:mr-40 md:ml-40 lg:mr-40 lg:ml-40 xl:mr-72 xl:ml-72">
     <%= f.submit "編集を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
   </div>
 <% end %>
