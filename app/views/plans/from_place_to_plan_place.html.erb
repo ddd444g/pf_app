@@ -23,8 +23,8 @@
     <%= render "shared/place_map", place: @place %>
   </div>
 
-  <h3 class="text-2xl pb-2 font-bold text-center text-gray-600">入力フォーム</h3>
-  <%= form_with(model: @plan_place, local: true, method: :post, url: from_place_to_plan_place_create_path, class: "bg-blue-100 mr-8 ml-8 mb-0 rounded text-center") do |f| %>
+  <h3 class="text-2xl pt-2 pb-2 font-bold text-center text-gray-600 sm:pt-8 sm:pb-8">入力フォーム</h3>
+  <%= form_with(model: @plan_place, local: true, method: :post, url: from_place_to_plan_place_create_path, class: "bg-blue-100 m-4 mt-0 pt-8 pb-4 sm:m-16 sm:mt-0") do |f| %>
     <div class="mb-10 text-center mx-auto mr-2 ml-2 sm:mr-8 sm:ml-8 lg:mr-16 lg:ml-16 xl:mr-32 xl:ml-32">
       <%= f.label :plan_place_name,"登録名", class: "pt-2 block text-gray-700 font-bold mb-2" %>
       <%= f.text_field :plan_place_name, value: @place.name, class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" %>
