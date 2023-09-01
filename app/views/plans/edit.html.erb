@@ -1,6 +1,8 @@
 <h1 class="m-6 text-3xl text-gray-600 font-bold text-center">予定編集</h1>
 
-<%= render "shared/error", obj: @plan %>
+<div class="text-center mx-auto mr-4 ml-4 pt-4 pb-4 sm:mr-16 sm:ml-16 sm:pt-8 sm:pb-8 md:mr-32 md:ml-32 lg:mr-64 lg:ml-64">
+  <%= render "shared/error", obj: @plan %>
+</div>
 
 <div class="bg-blue-200 rounded p-8 text-center mx-auto w-1/2">
   <%= form_with model: @plan do |f| %>
