@@ -86,6 +86,12 @@ RSpec.describe User, type: :model do
         user = build(:user, password: '123456')
         expect(user).to be_valid
       end
+
+      it 'passwordがpassword_confirmationと一致しない場合登録できないこと' do
+        user = build(:user, password_confirmation: '')
+        user.valid?
+        expect(user.errors[:password_confirmation]).to include('とパスワードの入力が一致しません')
+      end
     end
   end
 end
