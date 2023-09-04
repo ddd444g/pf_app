@@ -62,5 +62,30 @@ RSpec.describe User, type: :model do
         expect(user.errors[:email]).to include('は不正な値です')
       end
     end
+
+    context 'passwordに対するバリデーションが有効であるか' do
+      it 'passwordがnilなら登録できないこと' do
+        user = build(:user, password: nil)
+        user.valid?
+        expect(user.errors[:password]).to include('を入力してください')
+      end
+
+      it 'passwordが空なら登録できないこと' do
+        user = build(:user, password: ' ')
+        user.valid?
+        expect(user.errors[:password]).to include('を入力してください')
+      end
+
+      it 'passwordが5文字以下なら登録できないこと' do
+        user = build(:user, password: '12345')
+        user.valid?
+        expect(user.errors[:password]).to include('は6文字以上で入力してください')
+      end
+
+      it 'passwordが6文字以上なら登録できること' do
+        user = build(:user, password: '123456')
+        expect(user).to be_valid
+      end
+    end
   end
 end
