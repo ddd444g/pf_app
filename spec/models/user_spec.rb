@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let!(:user) { create(:user) }
 
-  describe 'User' do
+  describe 'Userモデルが登録できるか' do
     it 'name,email,passwordがあれば有効な状態であること' do
       expect(user).to be_valid
     end
