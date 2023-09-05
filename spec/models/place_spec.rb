@@ -218,4 +218,22 @@ RSpec.describe Place, type: :model do
       end
     end
   end
+
+  describe '並び替えが機能しているか' do
+    let!(:place1) do
+      create(:place, user_id: user.id, category_id: category.id, created_at: 1.day.ago, rating: 1)
+    end
+    let!(:place2) do
+      create(:place, user_id: user.id, category_id: category.id, created_at: 2.days.ago, rating: 2)
+    end
+    let!(:place3) do
+      create(:place, user_id: user.id, category_id: category.id, created_at: 3.days.ago, rating: 3)
+    end
+    context '新しい順に並び替える場合' do
+      it 'created_atが新しい順にならんでいること' do
+        result_latest = Place.sort_places("latest")
+        expect(result_latest).to eq([place1, place2, place3])
+      end
+    end
+  end
 end
