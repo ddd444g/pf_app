@@ -17,8 +17,8 @@ class GonePlace < ApplicationRecord
   validates :longitude, presence: { message: "したい位置にピンを刺してください" }
   validates :website, presence: true
 
-  geocoded_by :name
-  after_validation :geocode, if: :name_changed?
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
 
   # 絞り込み検索機能
   scope :search, -> (keyword) {

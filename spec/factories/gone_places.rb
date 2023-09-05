@@ -1,10 +1,14 @@
 FactoryBot.define do
   factory :gone_place do
-    name { "MyString" }
-    latitude { 1.5 }
-    longitude { 1.5 }
-    review { "MyString" }
+    name { "test_name" }
+    latitude { 1 }
+    longitude { 1 }
+    review { "test_review" }
     score { 1 }
-    user_id { 1 }
+    googlemap_name { "test_googlemap_name" }
+    address { "test_address" }
+    once_again { false }
+    recommend { false }
+    website { "https.test_website.jp" }
   end
 end
