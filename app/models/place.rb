@@ -6,13 +6,12 @@ class Place < ApplicationRecord
 
   has_many :plan_places
 
-  geocoded_by :name
-  after_validation :geocode, if: :name_changed?
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
 
   validates :name, presence: true
   validates :latitude, presence: { message: "で検索し位置を指定してください" }
   validates :longitude, presence: { message: "したい位置にピンを刺してください" }
-  validates :website, presence: true
 
   # 絞り込み検索機能
   scope :search, -> (keyword) {
