@@ -65,7 +65,7 @@ RSpec.describe Place, type: :model do
     let!(:tokyo2) do
       create(:place, user_id: user.id, category_id: category.id, name: 'tokyo2', memo: 'Kanto',
                      googlemap_name: 'TOKYO2',
-                     address: 'japan-tokyo')
+                     address: 'japan-tokyo2')
     end
     let!(:osaka) do
       create(:place, user_id: user.id, category_id: category.id, name: 'osaka', memo: 'Kansai',
@@ -182,6 +182,38 @@ RSpec.describe Place, type: :model do
 
       it '部分一致で該当するtokyo,tokyo2が取得できていること' do
         results = Place.search("TOK")
+        expect(results).to include(tokyo, tokyo2)
+      end
+    end
+
+    context 'addressで検索する場合' do
+      it '該当する1件が取得できていること' do
+        results = Place.search("japan-tokyo2")
+        expect(results.count).to eq(1)
+      end
+
+      it '該当するtokyo2が取得できていること' do
+        results = Place.search("japan-tokyo2")
+        expect(results).to include(tokyo2)
+      end
+
+      it '部分一致で該当する1件が取得できていること' do
+        results = Place.search("japan-o")
+        expect(results.count).to eq(1)
+      end
+
+      it '部分一致で該当するosakaが取得できていること' do
+        results = Place.search("japan-o")
+        expect(results).to include(osaka)
+      end
+
+      it '部分一致で該当する2件が取得できていること' do
+        results = Place.search("japan-t")
+        expect(results.count).to eq(2)
+      end
+
+      it '部分一致で該当するtokyo,tokyo2が取得できていること' do
+        results = Place.search("japan-t")
         expect(results).to include(tokyo, tokyo2)
       end
     end
