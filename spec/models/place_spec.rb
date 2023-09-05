@@ -57,18 +57,23 @@ RSpec.describe Place, type: :model do
   end
 
   describe '絞り込み検索が機能しているか' do
-    let!(:place1) do
-      create(:place, user_id: user.id, category_id: category.id, name: 'Tokyo', memo: 'Kanto region',
+    let!(:tokyo) do
+      create(:place, user_id: user.id, category_id: category.id, name: 'tokyo', memo: 'Kanto region',
                      googlemap_name: 'tokyo',
                      address: 'japan tokyo')
     end
-    let!(:place2) do
-      create(:place, user_id: user.id, category_id: category.id, name: 'Osaka', memo: 'Kansai region',
+    let!(:tokyo2) do
+      create(:place, user_id: user.id, category_id: category.id, name: 'tokyo2', memo: 'Kanto region',
+                     googlemap_name: 'tokyo',
+                     address: 'japan tokyo')
+    end
+    let!(:osaka) do
+      create(:place, user_id: user.id, category_id: category.id, name: 'osaka', memo: 'Kansai region',
                      googlemap_name: 'osaka',
                      address: 'japan osaka')
     end
-    let!(:place3) do
-      create(:place, user_id: user.id, category_id: category.id, name: 'Kobe', memo: 'Kansai region',
+    let!(:kobe) do
+      create(:place, user_id: user.id, category_id: category.id, name: 'kobe', memo: 'Kansai region',
                      googlemap_name: 'kobe',
                      address: 'japan kobe')
     end
@@ -76,22 +81,49 @@ RSpec.describe Place, type: :model do
     context 'キーワードが空白またはnilの場合' do
       it 'キーワードがnilの場合、全てのモデルを返すこと' do
         results = Place.search(nil)
-        expect(results.count).to eq(3)
+        expect(results.count).to eq(4)
       end
 
-      it 'キーワードがnilの場合、place1,2,3が検索結果に含まれていること' do
+      it 'キーワードがnilの場合、tokyo,tokyo2,osaka,kobeが検索結果に含まれていること' do
         results = Place.search(nil)
-        expect(results).to include(place1, place2, place3)
+        expect(results).to include(tokyo, tokyo2, osaka, kobe)
       end
 
       it 'キーワードが空白の場合、全てのモデルを返すこと' do
         results = Place.search(" ")
-        expect(results.count).to eq(3)
+        expect(results.count).to eq(4)
       end
 
-      it 'キーワードが空白の場合、place1,2,3が検索結果に含まれていること' do
+      it 'キーワードが空白の場合、tokyo,tokyo2,osaka,kobeが検索結果に含まれていること' do
         results = Place.search(" ")
-        expect(results).to include(place1, place2, place3)
+        expect(results).to include(tokyo, tokyo2, osaka, kobe)
+      end
+    end
+
+    context 'nameで検索する場合' do
+      it '該当する1件が取得できていること' do
+        results = Place.search("tokyo2")
+        expect(results.count).to eq(1)
+      end
+
+      it '該当するtokyo2が取得できていること' do
+        results = Place.search("tokyo2")
+        expect(results).to include(tokyo2)
+      end
+
+      it '部分一致で該当する2件が取得できていること' do
+        results = Place.search("to")
+        expect(results.count).to eq(2)
+      end
+
+      it '部分一致で該当するtokyo,tokyo2が取得できていること' do
+        results = Place.search("to")
+        expect(results).to include(tokyo, tokyo2)
+      end
+
+      it '該当しない場合、何も取得しないこと' do
+        results = Place.search("fukuoka")
+        expect(results.count).to eq(0)
       end
     end
   end
