@@ -230,9 +230,30 @@ RSpec.describe Place, type: :model do
       create(:place, user_id: user.id, category_id: category.id, created_at: 3.days.ago, rating: 3)
     end
     context '新しい順に並び替える場合' do
-      it 'created_atが新しい順にならんでいること' do
+      it 'created_atが新しい順に並んでいること' do
         result_latest = Place.sort_places("latest")
         expect(result_latest).to eq([place1, place2, place3])
+      end
+    end
+
+    context '古い順に並び替える場合' do
+      it 'created_atが古い順に並んでいること' do
+        result_old = Place.sort_places("old")
+        expect(result_old).to eq([place3, place2, place1])
+      end
+    end
+
+    context '評価が高い順に並び替える場合' do
+      it 'ratingが高い順に並んでいること' do
+        result_rating = Place.sort_places("rating")
+        expect(result_rating).to eq([place3, place2, place1])
+      end
+    end
+
+    context 'sort_paramに無効な値が入った場合' do
+      it '古い順にならんでいること' do
+        result_invalid = Place.sort_places("invalid")
+        expect(result_invalid).to eq([place1, place2, place3])
       end
     end
   end
