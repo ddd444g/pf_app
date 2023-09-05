@@ -59,17 +59,17 @@ RSpec.describe Place, type: :model do
   describe '絞り込み検索が機能しているか' do
     let!(:tokyo) do
       create(:place, user_id: user.id, category_id: category.id, name: 'tokyo', memo: 'Kanto',
-                     googlemap_name: 'tokyo',
+                     googlemap_name: 'TOKYO',
                      address: 'japan-tokyo')
     end
     let!(:tokyo2) do
       create(:place, user_id: user.id, category_id: category.id, name: 'tokyo2', memo: 'Kanto',
-                     googlemap_name: 'tokyo',
+                     googlemap_name: 'TOKYO2',
                      address: 'japan-tokyo')
     end
     let!(:osaka) do
       create(:place, user_id: user.id, category_id: category.id, name: 'osaka', memo: 'Kansai',
-                     googlemap_name: 'osaka',
+                     googlemap_name: 'OSAKA',
                      address: 'japan-osaka')
     end
 
@@ -150,6 +150,38 @@ RSpec.describe Place, type: :model do
 
       it '部分一致で該当するtokyo,tokyo2が取得できていること' do
         results = Place.search("kant")
+        expect(results).to include(tokyo, tokyo2)
+      end
+    end
+
+    context 'googlemap_nameで検索する場合' do
+      it '該当する1件が取得できていること' do
+        results = Place.search("TOKYO2")
+        expect(results.count).to eq(1)
+      end
+
+      it '該当するtokyo2が取得できていること' do
+        results = Place.search("TOKYO2")
+        expect(results).to include(tokyo2)
+      end
+
+      it '部分一致で該当する1件が取得できていること' do
+        results = Place.search("OSA")
+        expect(results.count).to eq(1)
+      end
+
+      it '部分一致で該当するosakaが取得できていること' do
+        results = Place.search("OSA")
+        expect(results).to include(osaka)
+      end
+
+      it '部分一致で該当する2件が取得できていること' do
+        results = Place.search("TOK")
+        expect(results.count).to eq(2)
+      end
+
+      it '部分一致で該当するtokyo,tokyo2が取得できていること' do
+        results = Place.search("TOK")
         expect(results).to include(tokyo, tokyo2)
       end
     end
