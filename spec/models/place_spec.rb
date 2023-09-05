@@ -58,19 +58,19 @@ RSpec.describe Place, type: :model do
 
   describe '絞り込み検索が機能しているか' do
     let!(:place1) do
-      create(:place, user_id: user.id, category_id: category.id, name: '東京にある駅', memo: '関東地方にあります',
-                     googlemap_name: '東京駅',
-                     address: '東京都千代田区丸の内一丁目')
+      create(:place, user_id: user.id, category_id: category.id, name: 'Tokyo', memo: 'Kanto region',
+                     googlemap_name: 'tokyo',
+                     address: 'japan tokyo')
     end
     let!(:place2) do
-      create(:place, user_id: user.id, category_id: category.id, name: '池袋にある駅', memo: '関東地方にあります',
-                     googlemap_name: '池袋駅',
-                     address: '東京都豊島区南池袋１丁目東京都')
+      create(:place, user_id: user.id, category_id: category.id, name: 'Osaka', memo: 'Kansai region',
+                     googlemap_name: 'osaka',
+                     address: 'japan osaka')
     end
     let!(:place3) do
-      create(:place, user_id: user.id, category_id: category.id, name: '仙台にある駅', memo: '東北地方にあります',
-                     googlemap_name: '仙台駅',
-                     address: '宮城県仙台市青葉区中央')
+      create(:place, user_id: user.id, category_id: category.id, name: 'Kobe', memo: 'Kansai region',
+                     googlemap_name: 'kobe',
+                     address: 'japan kobe')
     end
 
     context 'キーワードが空白またはnilの場合' do
