@@ -4,6 +4,28 @@ RSpec.describe GonePlace, type: :model do
   let!(:user) { create(:user) }
   let!(:category) { create(:category) }
 
+  describe 'GonePlaceモデルの関連付けが出来ているか' do
+    it 'userとの関連付けがあること' do
+      should belong_to(:user)
+    end
+
+    it 'recommend_placeとの関連付けがあること' do
+      should belong_to(:recommend_place).optional(true).dependent(:destroy)
+    end
+
+    it 'categoryとの関連付けがあること' do
+      should belong_to(:category)
+    end
+
+    it '1つのplaceとの関連付けがあること' do
+      should have_one(:place)
+    end
+
+    it '複数のplan_placesを持っていること' do
+      should have_many(:plan_places)
+    end
+  end
+
   describe 'GonePlaceモデルが登録できるか' do
     let!(:gone_place) { create(:gone_place, user_id: user.id, category_id: category.id) }
     it 'すべての項目があれば有効な状態であること' do
