@@ -25,6 +25,11 @@ RSpec.describe GonePlace, type: :model do
         gone_place.valid?
         expect(gone_place.errors[:name]).to include('を入力してください')
       end
+
+      it 'nameが有効なら登録できること' do
+        gone_place.name = 'test_gone_place'
+        expect(gone_place).to be_valid
+      end
     end
 
     context 'latitudeに対するバリデーションが有効であるか' do
@@ -39,6 +44,11 @@ RSpec.describe GonePlace, type: :model do
         gone_place.valid?
         expect(gone_place.errors[:latitude]).to include('で検索し位置を指定してください')
       end
+
+      it 'latitudeが有効なら登録できること' do
+        gone_place.latitude = 1
+        expect(gone_place).to be_valid
+      end
     end
 
     context 'longitudeに対するバリデーションが有効であるか' do
@@ -48,10 +58,15 @@ RSpec.describe GonePlace, type: :model do
         expect(gone_place.errors[:longitude]).to include('したい位置にピンを刺してください')
       end
 
-      it 'longitudenilがnilなら登録できないこと' do
+      it 'longitudeがnilなら登録できないこと' do
         gone_place.longitude = nil
         gone_place.valid?
         expect(gone_place.errors[:longitude]).to include('したい位置にピンを刺してください')
+      end
+
+      it 'longitudeが有効なら登録できること' do
+        gone_place.longitude = 1
+        expect(gone_place).to be_valid
       end
     end
 
@@ -66,6 +81,11 @@ RSpec.describe GonePlace, type: :model do
         gone_place.review = nil
         gone_place.valid?
         expect(gone_place.errors[:review]).to include('を入力してください')
+      end
+
+      it 'reviewが有効なら登録できること' do
+        gone_place.review = 'nice'
+        expect(gone_place).to be_valid
       end
     end
 
