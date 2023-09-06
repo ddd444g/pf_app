@@ -300,4 +300,37 @@ RSpec.describe GonePlace, type: :model do
       end
     end
   end
+
+  describe '並び替えが機能しているか' do
+    let!(:gone_place1) { create(:gone_place, user_id: user.id, category_id: category.id, created_at: 1.day.ago, rating: 1) }
+    let!(:gone_place2) { create(:gone_place, user_id: user.id, category_id: category.id, created_at: 2.day.ago, rating: 2) }
+    let!(:gone_place3) { create(:gone_place, user_id: user.id, category_id: category.id, created_at: 3.day.ago, rating: 3) }
+    context '新しい順に並び替える場合' do
+      it 'created_atが新しい順に並んでいること' do
+        result_latest = GonePlace.sort_gone_places("latest")
+        expect(result_latest).to eq([gone_place1, gone_place2, gone_place3])
+      end
+    end
+
+    context '古い順に並び替える場合' do
+      it 'created_atが古い順に並んでいること' do
+        result_old = GonePlace.sort_gone_places("old")
+        expect(result_old).to eq([gone_place3, gone_place2, gone_place1])
+      end
+    end
+
+    context '評価が高い順に並び替える場合' do
+      it 'ratingが高い順に並んでいること' do
+        result_rating = GonePlace.sort_gone_places("rating")
+        expect(result_rating).to eq([gone_place3, gone_place2, gone_place1])
+      end
+    end
+
+    context 'sort_paramに無効な値が入った場合' do
+      it '古い順にならんでいること' do
+        result_invalid = GonePlace.sort_gone_places("invalid")
+        expect(result_invalid).to eq([gone_place1, gone_place2, gone_place3])
+      end
+    end
+  end
 end
