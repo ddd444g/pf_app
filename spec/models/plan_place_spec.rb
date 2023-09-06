@@ -71,4 +71,42 @@ RSpec.describe PlanPlace, type: :model do
       end
     end
   end
+
+  describe 'PlanPlaceモデルは紐ずくPlanモデルの開始時刻から終了時刻までの間でしか登録できないか' do
+    let!(:plan2) { create(:plan, user_id: user.id, start_time: '2023-01-01 0:00:00', end_time: '2024-01-01 0:00:00') }
+    let!(:plan_place) do
+      create(:plan_place, user_id: user.id, category_id: category.id, plan_id: plan2.id, start_time: user.id)
+    end
+    it 'PlanPlaceのstart_timeがnilの場合登録できること' do
+      plan_place.start_time = nil
+      expect(plan_place).to be_valid
+    end
+
+    it 'PlanPlaceのstart_timeが空の場合登録できること' do
+      plan_place.start_time = ' '
+      expect(plan_place).to be_valid
+    end
+
+    it 'PlanPlaceのstart_timeがPlanの開始時間1分前の場合登録できないこと' do
+      plan_place.start_time = '2022-12-31 23:59:59'
+      plan_place.valid?
+      expect(plan_place.errors[:start_time]).to include('はプランの期間内で設定してください')
+    end
+
+    it 'PlanPlaceのstart_timeがPlanの終了時間1分後の場合登録できないこと' do
+      plan_place.start_time = '2024-01-01 0:01:00'
+      plan_place.valid?
+      expect(plan_place.errors[:start_time]).to include('はプランの期間内で設定してください')
+    end
+
+    it 'PlanPlaceのstart_timeがPlanの開始時間と同じ場合登録できること' do
+      plan_place.start_time = '2023-01-01 0:00:00'
+      expect(plan_place).to be_valid
+    end
+
+    it 'PlanPlaceのstart_timeがPlanの終了時間と同じ場合登録できること' do
+      plan_place.start_time = '2024-01-01 0:00:00'
+      expect(plan_place).to be_valid
+    end
+  end
 end
