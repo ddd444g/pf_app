@@ -3,6 +3,25 @@ require 'rails_helper'
 RSpec.describe RecommendPlace, type: :model do
   let!(:user) { create(:user) }
   let!(:category) { create(:category) }
+
+  describe 'RecommendPlaceモデルの関連付けが出来ているか' do
+    it 'userとの関連付けがあること' do
+      should belong_to(:user)
+    end
+
+    it 'categoryとの関連付けがあること' do
+      should belong_to(:category)
+    end
+
+    it 'gone_placeとの関連付けがあること' do
+      should have_one(:gone_place)
+    end
+
+    it 'placesとの関連付けがあること' do
+      should have_many(:places)
+    end
+  end
+
   describe 'RecommendPlaceモデルが登録できるか' do
     let!(:recommend_place) { create(:recommend_place, user_id: user.id, category_id: category.id) }
     it 'すべての項目があれば有効な状態であること' do
