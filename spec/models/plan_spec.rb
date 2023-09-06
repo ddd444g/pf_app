@@ -73,4 +73,34 @@ RSpec.describe Plan, type: :model do
       end
     end
   end
+
+  describe '自作のバリデーションが有効であるか' do
+    let!(:plan) { create(:plan, user_id: user.id, start_time: Time.now, end_time: Time.now + 1.hour) }
+    context 'start_timeよりend_timeが後でないと登録出来ないか' do
+      it 'start_timeがend_timeより後の場合登録出来ないこと' do
+        plan.end_time = Time.now - 1.hour
+        plan.valid?
+        expect(plan.errors[:end_time]).to include('は開始日時より後にして下さい')
+      end
+
+      it 'start_timeがend_timeより前の場合登録出来ること' do
+        expect(plan).to be_valid
+      end
+    end
+
+    context 'start_timeよりend_timeが1分以上後でないと登録出来ないか' do
+      it 'start_timeがend_timeと同じ時刻なら登録出来ないこと' do
+        plan.end_time = Time.now
+        plan.end_time = Time.now
+        plan.valid?
+        expect(plan.errors[:end_time]).to include('は開始日時より、1分以上後にして下さい')
+      end
+
+      it 'start_timeがend_time1分以上後なら登録出来ること' do
+        plan.end_time = Time.now
+        plan.end_time = Time.now + 1.minute
+        expect(plan).to be_valid
+      end
+    end
+  end
 end
