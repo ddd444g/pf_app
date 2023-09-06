@@ -3,6 +3,16 @@ require 'rails_helper'
 RSpec.describe Plan, type: :model do
   let!(:user) { create(:user) }
 
+  describe 'Planモデルの関連付けが出来ているか' do
+    it 'userとの関連付けがあること' do
+      should belong_to(:user)
+    end
+
+    it 'plan_placesとの関連付けがあること' do
+      should have_many(:plan_places).dependent(:delete_all)
+    end
+  end
+
   describe 'Planモデルが登録できるか' do
     let!(:plan) { create(:plan, user_id: user.id) }
     it 'すべての項目があれば有効な状態であること' do
