@@ -3,6 +3,28 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let!(:user) { create(:user) }
 
+  describe 'Userモデルの関連付けが出来ているか' do
+    it "userは複数のplacesを持っていること" do
+      should have_many(:places).dependent(:delete_all)
+    end
+
+    it "userは複数のgone_placesを持っていること" do
+      should have_many(:gone_places).dependent(:destroy)
+    end
+
+    it "userは複数のrecommend_placesを持っていること" do
+      should have_many(:recommend_places).dependent(:delete_all)
+    end
+
+    it "userは複数のplansを持っていること" do
+      should have_many(:plans).dependent(:delete_all)
+    end
+
+    it "userは複数のplan_placesを持っていること" do
+      should have_many(:plan_places).dependent(:delete_all)
+    end
+  end
+
   describe 'Userモデルが登録できるか' do
     it 'name,email,passwordがあれば有効な状態であること' do
       expect(user).to be_valid
