@@ -216,4 +216,43 @@ RSpec.describe RecommendPlace, type: :model do
       end
     end
   end
+
+  describe '並び替えが機能しているか' do
+    let!(:recommend_place1) do
+      create(:recommend_place, user_id: user.id, category_id: category.id, created_at: 1.day.ago, rating: 1)
+    end
+    let!(:recommend_place2) do
+      create(:recommend_place, user_id: user.id, category_id: category.id, created_at: 2.day.ago, rating: 2)
+    end
+    let!(:recommend_place3) do
+      create(:recommend_place, user_id: user.id, category_id: category.id, created_at: 3.day.ago, rating: 3)
+    end
+    context '新しい順に並び替える場合' do
+      it 'created_atが新しい順に並んでいること' do
+        result_latest = RecommendPlace.sort_recommend_places("latest")
+        expect(result_latest).to eq([recommend_place1, recommend_place2, recommend_place3])
+      end
+    end
+
+    context '古い順に並び替える場合' do
+      it 'created_atが古い順に並んでいること' do
+        result_old = RecommendPlace.sort_recommend_places("old")
+        expect(result_old).to eq([recommend_place3, recommend_place2, recommend_place1])
+      end
+    end
+
+    context '評価が高い順に並び替える場合' do
+      it 'ratingが高い順に並んでいること' do
+        result_rating = RecommendPlace.sort_recommend_places("rating")
+        expect(result_rating).to eq([recommend_place3, recommend_place2, recommend_place1])
+      end
+    end
+
+    context 'sort_paramに無効な値が入った場合' do
+      it '古い順に並んでいること' do
+        result_invalid = RecommendPlace.sort_recommend_places("invalid")
+        expect(result_invalid).to eq([recommend_place1, recommend_place2, recommend_place3])
+      end
+    end
+  end
 end
