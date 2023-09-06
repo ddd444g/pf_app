@@ -302,9 +302,15 @@ RSpec.describe GonePlace, type: :model do
   end
 
   describe '並び替えが機能しているか' do
-    let!(:gone_place1) { create(:gone_place, user_id: user.id, category_id: category.id, created_at: 1.day.ago, rating: 1) }
-    let!(:gone_place2) { create(:gone_place, user_id: user.id, category_id: category.id, created_at: 2.day.ago, rating: 2) }
-    let!(:gone_place3) { create(:gone_place, user_id: user.id, category_id: category.id, created_at: 3.day.ago, rating: 3) }
+    let!(:gone_place1) do
+      create(:gone_place, user_id: user.id, category_id: category.id, created_at: 1.day.ago, rating: 1, score: 1)
+    end
+    let!(:gone_place2) do
+      create(:gone_place, user_id: user.id, category_id: category.id, created_at: 2.day.ago, rating: 2, score: 2)
+    end
+    let!(:gone_place3) do
+      create(:gone_place, user_id: user.id, category_id: category.id, created_at: 3.day.ago, rating: 3, score: 3)
+    end
     context '新しい順に並び替える場合' do
       it 'created_atが新しい順に並んでいること' do
         result_latest = GonePlace.sort_gone_places("latest")
@@ -326,8 +332,15 @@ RSpec.describe GonePlace, type: :model do
       end
     end
 
+    context 'MYスコアが高い順に並び替える場合' do
+      it 'scoreが高い順に並んでいること' do
+        result_score = GonePlace.sort_gone_places("score")
+        expect(result_score).to eq([gone_place3, gone_place2, gone_place1])
+      end
+    end
+
     context 'sort_paramに無効な値が入った場合' do
-      it '古い順にならんでいること' do
+      it '古い順に並んでいること' do
         result_invalid = GonePlace.sort_gone_places("invalid")
         expect(result_invalid).to eq([gone_place1, gone_place2, gone_place3])
       end

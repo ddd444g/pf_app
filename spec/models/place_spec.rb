@@ -260,7 +260,7 @@ RSpec.describe Place, type: :model do
     end
 
     context 'sort_paramに無効な値が入った場合' do
-      it '古い順にならんでいること' do
+      it '古い順に並んでいること' do
         result_invalid = Place.sort_places("invalid")
         expect(result_invalid).to eq([place1, place2, place3])
       end
