@@ -17,7 +17,7 @@ class GonePlacesController < ApplicationController
 :googlemap_name, :address, :rating, :category_id, :website))
     if @gone_place.save
       @place = Place.find_by(id: params[:gone_place][:place_id])
-      @place.update(visited: true)
+      @place.update(visited: true, gone_place_id: @gone_place.id)
       flash[:notice] = "#{@gone_place.name}を訪問済みに登録しました。"
     else
       render :error

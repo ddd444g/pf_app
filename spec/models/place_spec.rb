@@ -4,6 +4,28 @@ RSpec.describe Place, type: :model do
   let!(:user) { create(:user) }
   let!(:category) { create(:category) }
 
+  describe 'Placeモデルの関連付けが出来ているか' do
+    it 'userとの関連付けがあること' do
+      should belong_to(:user)
+    end
+
+    it 'gone_placeとの関連付けがあること' do
+      should belong_to(:gone_place).optional
+    end
+
+    it 'recommend_placeとの関連付けがあること' do
+      should belong_to(:recommend_place).optional
+    end
+
+    it 'categoryとの関連付けがあること' do
+      should belong_to(:category)
+    end
+
+    it '複数のplan_placesを持っていること' do
+      should have_many(:plan_places)
+    end
+  end
+
   describe 'Placeモデルが登録できるか' do
     let!(:place) { create(:place, user_id: user.id, category_id: category.id) }
     it 'すべての項目があれば有効な状態であること' do
