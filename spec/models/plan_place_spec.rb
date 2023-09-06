@@ -5,6 +5,28 @@ RSpec.describe PlanPlace, type: :model do
   let!(:category) { create(:category) }
   let!(:plan) { create(:plan, user_id: user.id) }
 
+  describe 'PlanPlaceモデルの関連付けが出来ているか' do
+    it 'userとの関連付けがあること' do
+      should belong_to(:user)
+    end
+
+    it 'planとの関連付けがあること' do
+      should belong_to(:plan)
+    end
+
+    it 'placeとの関連付けがあること' do
+      should belong_to(:place).optional(true)
+    end
+
+    it 'gone_placeとの関連付けがあること' do
+      should belong_to(:gone_place).optional(true)
+    end
+
+    it 'categoryとの関連付けがあること' do
+      should belong_to(:category)
+    end
+  end
+
   describe 'PlanPlaceモデルが登録できるか' do
     let!(:plan_place) { create(:plan_place, user_id: user.id, category_id: category.id, plan_id: plan.id) }
     it 'すべての項目があれば有効な状態であること' do
