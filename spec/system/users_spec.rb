@@ -31,7 +31,7 @@ RSpec.describe 'Users_system', type: :system do
       end
     end
 
-    context 'メールアドレスが未入力' do
+    context 'メールアドレスに不備がある場合登録出来ずにエラーメッセージが表示されるか' do
       it 'emailは必須なので登録出来ずにエラーメッセージが表示されること' do
         fill_in '名前', with: user.name
         fill_in 'メールアドレス', with: nil
@@ -41,9 +41,7 @@ RSpec.describe 'Users_system', type: :system do
         expect(current_path).to eq users_path
         expect(page).to have_content 'メールアドレスを入力してください'
       end
-    end
 
-    context '登録済メールアドレスを入力した場合' do
       it '同じemailでは登録出来ずにエラーメッセージが表示されること' do
         fill_in '名前', with: user.name
         fill_in 'メールアドレス', with: user.email
@@ -53,9 +51,7 @@ RSpec.describe 'Users_system', type: :system do
         expect(current_path).to eq users_path
         expect(page).to have_content 'メールアドレスはすでに存在します'
       end
-    end
 
-    context '無効な値をemailフォームに入力した場合' do
       it '正規表現ではないので登録出来ずにエラーメッセージが表示されること' do
         fill_in '名前', with: user.name
         fill_in 'メールアドレス', with: '@.@.@.@'
@@ -64,6 +60,48 @@ RSpec.describe 'Users_system', type: :system do
         click_button '入力を完了する'
         expect(current_path).to eq users_path
         expect(page).to have_content 'メールアドレスは不正な値です'
+      end
+    end
+
+    context 'パスワードに不備がある場合、登録出来ずにエラーメッセージが表示されるか' do
+      it 'パスワードが未入力の場合登録出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: 'test@test.com'
+        fill_in 'パスワード(6文字以上)', with: nil
+        fill_in '確認用パスワード', with: '123456'
+        click_button '入力を完了する'
+        expect(current_path).to eq users_path
+        expect(page).to have_content 'パスワードを入力してください'
+      end
+
+      it '確認用パスワードが未入力の場合登録出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: 'test@test.com'
+        fill_in 'パスワード(6文字以上)', with: '123456'
+        fill_in '確認用パスワード', with: nil
+        click_button '入力を完了する'
+        expect(current_path).to eq users_path
+        expect(page).to have_content '確認用パスワードとパスワードの入力が一致しません'
+      end
+
+      it 'パスワードが5文字以下の場合登録出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: 'test@test.com'
+        fill_in 'パスワード(6文字以上)', with: '12345'
+        fill_in '確認用パスワード', with: '12345'
+        click_button '入力を完了する'
+        expect(current_path).to eq users_path
+        expect(page).to have_content 'パスワードは6文字以上で入力してください'
+      end
+
+      it 'パスワードと確認用パスワードが異なる場合登録出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: 'test@test.com'
+        fill_in 'パスワード(6文字以上)', with: '123456'
+        fill_in '確認用パスワード', with: '654321'
+        click_button '入力を完了する'
+        expect(current_path).to eq users_path
+        expect(page).to have_content '確認用パスワードとパスワードの入力が一致しません'
       end
     end
   end
