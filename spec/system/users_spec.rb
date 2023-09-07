@@ -121,7 +121,7 @@ RSpec.describe 'Users_system', type: :system do
       end
     end
 
-    context 'エールアドレスに不備がある場合' do
+    context 'メールアドレスに不備がある場合' do
       it 'メールアドレスが未入力の場合ログイン出来ずにエラーメッセージが表示されること' do
         fill_in 'メールアドレス', with: nil
         fill_in 'パスワード', with: user.password
@@ -133,6 +133,24 @@ RSpec.describe 'Users_system', type: :system do
       it '未登録のメールアドレスが入力された場合ログイン出来ずにエラーメッセージが表示されること' do
         fill_in 'メールアドレス', with: 'error@error.jp'
         fill_in 'パスワード', with: user.password
+        click_button 'ログインする'
+        expect(current_path).to eq login_path
+        expect(page).to have_content 'メールアドレスまたはパスワードが間違っています'
+      end
+    end
+
+    context 'パスワードに不備がある場合' do
+      it 'パスワードが未入力の場合ログイン出来ずにエラーメッセージが表示されること' do
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード', with: nil
+        click_button 'ログインする'
+        expect(current_path).to eq login_path
+        expect(page).to have_content 'メールアドレスまたはパスワードが間違っています'
+      end
+
+      it 'パスワードが間違っている場合ログイン出来ずにエラーメッセージが表示されること' do
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード', with: user.password + 'test'
         click_button 'ログインする'
         expect(current_path).to eq login_path
         expect(page).to have_content 'メールアドレスまたはパスワードが間違っています'
