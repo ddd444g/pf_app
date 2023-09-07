@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = 'ユーザーを新規登録しました'
-      redirect_to user_path(@user)
+      redirect_to places_path
     else
       render 'new'
     end
