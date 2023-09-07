@@ -156,5 +156,16 @@ RSpec.describe 'Users_system', type: :system do
         expect(page).to have_content 'メールアドレスまたはパスワードが間違っています'
       end
     end
+
+    context '異なる人物のemailとパスワードの組み合わせの場合' do
+      it 'ログイン出来ずにエラーメッセージが表示されること' do
+        other_user = create(:user, email: 'login@test.jp', password: 'other_user')
+        fill_in 'メールアドレス', with: other_user.email
+        fill_in 'パスワード', with: user.password
+        click_button 'ログインする'
+        expect(current_path).to eq login_path
+        expect(page).to have_content 'メールアドレスまたはパスワードが間違っています'
+      end
+    end
   end
 end
