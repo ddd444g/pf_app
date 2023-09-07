@@ -106,16 +106,19 @@ RSpec.describe 'Users_system', type: :system do
     end
   end
 
-  describe 'userの情報が表示されてるか' do
+  describe '一般ユーザーログイン' do
     before do
       visit login_path
-      fill_in 'メールアドレス', with: user.email
-      fill_in 'パスワード', with: user.password
-      click_button 'ログインする'
     end
 
-    it 'nameが表示されていること' do
-      expect(page).to have_content user.name
+    context 'フォームの入力値が正常の場合' do
+      it 'ログインが成功し行きたい場所一覧ページに移動すること' do
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード', with: user.password
+        click_button 'ログインする'
+        expect(current_path).to eq places_path
+        expect(page).to have_content 'ログインしました'
+      end
     end
   end
 end
