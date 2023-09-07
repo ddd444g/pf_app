@@ -168,4 +168,26 @@ RSpec.describe 'Users_system', type: :system do
       end
     end
   end
+
+  describe 'ユーザー編集' do
+    before do
+      visit login_path
+      fill_in 'メールアドレス', with: user.email
+      fill_in 'パスワード', with: user.password
+      click_button 'ログインする'
+      visit edit_user_path(user)
+    end
+
+    context 'フォームの入力値が正常の場合' do
+      it 'ユーザーの編集が成功すること' do
+        fill_in '名前', with: 'taro'
+        fill_in 'メールアドレス', with: 'test@example.com'
+        fill_in 'パスワード(6文字以上)', with: 'testtest'
+        fill_in '確認用パスワード', with: 'testtest'
+        click_button '入力を完了する'
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_content '編集が完了しました'
+      end
+    end
+  end
 end
