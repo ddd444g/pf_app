@@ -190,6 +190,36 @@ RSpec.describe 'Users_system', type: :system do
         expect(page).to have_content 'taro'
         expect(page).to have_content 'test@example.com'
       end
+
+      it 'ユーザーの編集完了後、編集後のemailとパスワードでログインできること' do
+        fill_in '名前', with: 'taro'
+        fill_in 'メールアドレス', with: 'test@example.com'
+        fill_in 'パスワード(6文字以上)', with: 'testtest'
+        fill_in '確認用パスワード', with: 'testtest'
+        click_button '入力を完了する'
+        find_by_id('logout').click
+        find_by_id('login').click
+        fill_in 'メールアドレス', with: 'test@example.com'
+        fill_in 'パスワード', with: 'testtest'
+        click_button 'ログインする'
+        expect(current_path).to eq places_path
+        expect(page).to have_content 'ログインしました'
+      end
+
+      it 'ユーザーの編集完了後、編集前のemailとパスワードではログインできないこと' do
+        fill_in '名前', with: 'taro'
+        fill_in 'メールアドレス', with: 'test@example.com'
+        fill_in 'パスワード(6文字以上)', with: 'testtest'
+        fill_in '確認用パスワード', with: 'testtest'
+        click_button '入力を完了する'
+        find_by_id('logout').click
+        find_by_id('login').click
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード', with: user.password
+        click_button 'ログインする'
+        expect(current_path).to eq login_path
+        expect(page).to have_content 'メールアドレスまたはパスワードが間違っています'
+      end
     end
 
     context '名前が未入力' do
