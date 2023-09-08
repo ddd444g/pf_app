@@ -196,11 +196,33 @@ RSpec.describe 'Users_system', type: :system do
       it 'nameのバリデーションでひっかりエラーメッセージが表示されること' do
         fill_in '名前', with: nil
         fill_in 'メールアドレス', with: 'test@example.com'
-        fill_in 'パスワード(6文字以上)', with: '123456'
-        fill_in '確認用パスワード', with: '123456'
+        fill_in 'パスワード(6文字以上)', with: user.password
+        fill_in '確認用パスワード', with: user.password
         click_button '入力を完了する'
         expect(current_path).to eq user_path(user)
         expect(page).to have_content '名前を入力してください'
+      end
+    end
+
+    context 'メールアドレスに不備がある場合' do
+      it 'メールアドレスが未入力の場合編集出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: nil
+        fill_in 'パスワード(6文字以上)', with: user.password
+        fill_in '確認用パスワード', with: user.password
+        click_button '入力を完了する'
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_content 'メールアドレスを入力してください'
+      end
+
+      it '正規表現ではないので編集出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: '@.@.@.@'
+        fill_in 'パスワード(6文字以上)', with: user.password
+        fill_in '確認用パスワード', with: user.password
+        click_button '入力を完了する'
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_content 'メールアドレスは不正な値です'
       end
     end
   end
