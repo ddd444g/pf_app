@@ -187,6 +187,20 @@ RSpec.describe 'Users_system', type: :system do
         click_button '入力を完了する'
         expect(current_path).to eq user_path(user)
         expect(page).to have_content '編集が完了しました'
+        expect(page).to have_content 'taro'
+        expect(page).to have_content 'test@example.com'
+      end
+    end
+
+    context '名前が未入力' do
+      it 'nameのバリデーションでひっかりエラーメッセージが表示されること' do
+        fill_in '名前', with: nil
+        fill_in 'メールアドレス', with: 'test@example.com'
+        fill_in 'パスワード(6文字以上)', with: '123456'
+        fill_in '確認用パスワード', with: '123456'
+        click_button '入力を完了する'
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_content '名前を入力してください'
       end
     end
   end
