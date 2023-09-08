@@ -195,7 +195,7 @@ RSpec.describe 'Users_system', type: :system do
     context '名前が未入力' do
       it 'nameのバリデーションでひっかりエラーメッセージが表示されること' do
         fill_in '名前', with: nil
-        fill_in 'メールアドレス', with: 'test@example.com'
+        fill_in 'メールアドレス', with: user.email
         fill_in 'パスワード(6文字以上)', with: user.password
         fill_in '確認用パスワード', with: user.password
         click_button '入力を完了する'
@@ -223,6 +223,48 @@ RSpec.describe 'Users_system', type: :system do
         click_button '入力を完了する'
         expect(current_path).to eq user_path(user)
         expect(page).to have_content 'メールアドレスは不正な値です'
+      end
+    end
+
+    context 'パスワードに不備がある場合、編集出来ずにエラーメッセージが表示されるか' do
+      it 'パスワードが未入力の場合編集出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード(6文字以上)', with: nil
+        fill_in '確認用パスワード', with: user.password
+        click_button '入力を完了する'
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_content 'パスワードを入力してください'
+      end
+
+      it '確認用パスワードが未入力の場合編集出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード(6文字以上)', with: user.password
+        fill_in '確認用パスワード', with: nil
+        click_button '入力を完了する'
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_content '確認用パスワードとパスワードの入力が一致しません'
+      end
+
+      it 'パスワードが5文字以下の場合編集出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード(6文字以上)', with: '12345'
+        fill_in '確認用パスワード', with: '12345'
+        click_button '入力を完了する'
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_content 'パスワードは6文字以上で入力してください'
+      end
+
+      it 'パスワードと確認用パスワードが異なる場合編集出来ずにエラーメッセージが表示されること' do
+        fill_in '名前', with: user.name
+        fill_in 'メールアドレス', with: user.email
+        fill_in 'パスワード(6文字以上)', with: '123456'
+        fill_in '確認用パスワード', with: '654321'
+        click_button '入力を完了する'
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_content '確認用パスワードとパスワードの入力が一致しません'
       end
     end
   end
