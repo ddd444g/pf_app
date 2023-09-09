@@ -16,6 +16,7 @@ jobs:
   install_chrome_and_chromedriver:
     docker:
       - image: cimg/ruby:2.7.3
+      - image: circleci/selenium:chrome
     steps:
       - run:
           name: Install Chrome
@@ -58,7 +59,7 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
-      CHROME_BINARY_PATH: /usr/bin/google-chrome
+      SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
     working_directory: ~/pf_app
     steps:
       - checkout:
