@@ -10,8 +10,7 @@ jobs:
       - image: cimg/ruby:2.7.3-browsers
     working_directory: ~/pf_app
     steps:
-      - checkout:
-          path: ~/pf_app
+      - checkout
       - ruby/install-deps
 
   rubocop:
@@ -19,8 +18,7 @@ jobs:
       - image: cimg/ruby:2.7.3-browsers
     working_directory: ~/pf_app
     steps:
-      - checkout:
-          path: ~/pf_app
+      - checkout
       - ruby/install-deps
       - run:
           name: Run rubocop
@@ -37,14 +35,13 @@ jobs:
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
-      APP_DATABASE_HOST: "127.0.0.1"
+      APP_DATABASE_HOST: "db"
       RAILS_ENV: test
     working_directory: ~/pf_app
     steps:
+      - checkout
       - browser-tools/install-chrome
-      - browser-tools/install-selenium_chrome
-      - checkout:
-          path: ~/pf_app
+      - browser-tools/install-selenium
       - ruby/install-deps
       - run:
           name: yarn Install
