@@ -22,7 +22,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt clean
-            sudo apt install fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libu2f-udev libvulkan1 libxcomposite1 libxdamage1 libxfixes3 libxkbcommon0 libxrandr2 xdg-utils
+            sudo apt install -y fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libu2f-udev libvulkan1 libxcomposite1 libxdamage1 libxfixes3 libxkbcommon0 libxrandr2 xdg-utils
             wget -q -O chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             sudo dpkg -i chrome.deb
       - run:
@@ -66,6 +66,9 @@ jobs:
       - run:
           name: yarn Install
           command: yarn install
+      - run:
+          name: bundle Install
+          command: bundle install
       - run:
           name: webpack install
           command: bundle exec bin/webpack
