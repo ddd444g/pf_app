@@ -13,6 +13,18 @@ jobs:
           path: ~/pf_app
       - ruby/install-deps
 
+  install_chrome:
+    docker:
+      - image: cimg/ruby:2.7.3
+    steps:
+      - run:
+          name: Install Chrome
+          command: |
+            curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+            echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list
+            apt-get update
+            apt-get install -y google-chrome-stable
+
   rubocop:
     docker:
       - image: cimg/ruby:2.7.3
@@ -33,19 +45,6 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: myapp_test
           MYSQL_USER: test
-      - image: circleci/python:3.7
-        # ChromeとChrome WebDriverをインストール
-        steps:
-          - run:
-              name: Install Chrome and Chrome WebDriver
-              command: |
-                wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-                sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-                apt-get update && apt-get install -y google-chrome-stable
-                LATEST=$(wget -q -O - https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-                wget https://chromedriver.storage.googleapis.com/$LATEST/chromedriver_linux64.zip
-                unzip chromedriver_linux64.zip -d /usr/local/bin
-
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
@@ -55,7 +54,6 @@ jobs:
     steps:
       - checkout:
           path: ~/pf_app
-      - ruby/install-deps
       - run:
           name: yarn Install
           command: yarn install
@@ -74,7 +72,12 @@ workflows:
   build_test:
     jobs:
       - build
-      - rubocop
+      - install_chrome:
+          requires:
+            - build
+      - rubocop:
+          requires:
+            - build
       - rspec:
           requires:
             - build
