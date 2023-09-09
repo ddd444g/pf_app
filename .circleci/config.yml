@@ -41,7 +41,7 @@ jobs:
     steps:
       - checkout
       - browser-tools/install-chrome
-      - browser-tools/install-selenium
+      - browser-tools/install-browser
       - ruby/install-deps
       - run:
           name: yarn Install
