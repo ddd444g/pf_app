@@ -7,7 +7,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:2.7.3
+      - image: cimg/ruby:2.7.3-browsers
     working_directory: ~/pf_app
     steps:
       - checkout:
@@ -16,7 +16,7 @@ jobs:
 
   rubocop:
     docker:
-      - image: cimg/ruby:2.7.3
+      - image: cimg/ruby:2.7.3-browsers
     working_directory: ~/pf_app
     steps:
       - checkout:
@@ -42,7 +42,7 @@ jobs:
     working_directory: ~/pf_app
     steps:
       - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - browser-tools/install-selenium_chrome
       - checkout:
           path: ~/pf_app
       - ruby/install-deps
