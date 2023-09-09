@@ -51,7 +51,7 @@
         </div>
         <%# smサイズ以上のボタン %>
         <div class="hidden sm:flex md:ml-8">
-          <button class="create-btn ml-0 text-sm lg:text-base" @click="open = true">行きたい場所を追加する</button>
+          <button id="create" class="create-btn ml-0 text-sm lg:text-base" @click="open = true">行きたい場所を追加する</button>
         </div>
       </div>
       <%# smサイズ未満で表示するボタン %>
@@ -78,7 +78,7 @@
               </div>
               <div class="text-center mb-10 mr-4 ml-4 sm:mr-24 sm:ml-24 md:mr-40 md:ml-40 lg:mr-56 lg:ml-56 xl:mr-40 xl:ml-40">
                 <%= f.label :category_id,"カテゴリー選択", class: "block text-gray-700 font-bold mb-2" %>
-                <%= f.select :category_id, Category.all.map { |o| [o.name, o.id] }, {}, { class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" } %>
+                <%= f.select :category_id, Category.all.map { |o| [o.name, o.id] }, {}, { id: "place_category_id", class: "bg-gray-100 shadow appearance-none border rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300" } %>
               </div>
 
               <div class="comments-error w-full text-sm md:text-base">
