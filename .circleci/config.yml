@@ -23,6 +23,13 @@ jobs:
             wget -q -O chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             dpkg -i chrome.deb
             apt-get install -f -y
+      - run:
+          name: Install ChromeDriver
+          command: |
+            CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+            wget -q -O chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
+            unzip chromedriver_linux64.zip -d /usr/local/bin
+            rm chromedriver_linux64.zip
 
   rubocop:
     docker:
@@ -53,6 +60,7 @@ jobs:
     steps:
       - checkout:
           path: ~/pf_app
+      - ruby/install-deps
       - run:
           name: yarn Install
           command: yarn install
@@ -79,4 +87,4 @@ workflows:
             - build
       - rspec:
           requires:
-            - install_chrome
+            - build
