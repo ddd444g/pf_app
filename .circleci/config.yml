@@ -33,6 +33,19 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: myapp_test
           MYSQL_USER: test
+      - image: circleci/python:3.7
+        # ChromeとChrome WebDriverをインストール
+        steps:
+          - run:
+              name: Install Chrome and Chrome WebDriver
+              command: |
+                wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+                sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+                apt-get update && apt-get install -y google-chrome-stable
+                LATEST=$(wget -q -O - https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+                wget https://chromedriver.storage.googleapis.com/$LATEST/chromedriver_linux64.zip
+                unzip chromedriver_linux64.zip -d /usr/local/bin
+
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
