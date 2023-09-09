@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.4.0
+  browser-tools: circleci/browser-tools@1.4.0
 
 jobs:
   build:
@@ -12,27 +13,6 @@ jobs:
       - checkout:
           path: ~/pf_app
       - ruby/install-deps
-
-  install_chrome_and_chromedriver:
-    docker:
-      - image: cimg/ruby:2.7.3
-      - image: circleci/selenium:chrome
-    steps:
-      - run:
-          name: Install Chrome
-          command: |
-            sudo apt-get update
-            sudo apt clean
-            sudo apt install -y fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libu2f-udev libvulkan1 libxcomposite1 libxdamage1 libxfixes3 libxkbcommon0 libxrandr2 xdg-utils
-            wget -q -O chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            sudo dpkg -i chrome.deb
-      - run:
-          name: Install ChromeDriver
-          command: |
-            CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-            wget -q -O chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
-            sudo unzip chromedriver_linux64.zip -d /usr/local/bin
-            sudo rm chromedriver_linux64.zip
 
   rubocop:
     docker:
@@ -48,7 +28,7 @@ jobs:
 
   rspec:
     docker:
-      - image: cimg/ruby:2.7.3-node
+      - image: cimg/ruby:2.7.3-browsers
       - image: cimg/mysql:5.7
         environment:
           MYSQL_ROOT_PASSWORD: password
@@ -59,9 +39,10 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
-      SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
     working_directory: ~/pf_app
     steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - checkout:
           path: ~/pf_app
       - ruby/install-deps
@@ -69,16 +50,13 @@ jobs:
           name: yarn Install
           command: yarn install
       - run:
-          name: bundle Install
-          command: bundle install
-      - run:
           name: webpack install
           command: bundle exec bin/webpack
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
       - run:
-          name: bundle exec rails spec
+          name: Run rspec
           command: bundle exec rails spec
 
 workflows:
@@ -86,12 +64,7 @@ workflows:
   build_test:
     jobs:
       - build
-      - install_chrome_and_chromedriver:
-          requires:
-            - build
-      - rubocop:
-          requires:
-            - build
+      - rubocop
       - rspec:
           requires:
-            - install_chrome_and_chromedriver
+            - build
