@@ -40,17 +40,17 @@ jobs:
     working_directory: ~/pf_app
     steps:
       - run:
-        name: Install Chrome
-        command: |
-          wget -q -O chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i chrome.deb
+          name: Install Chrome
+          command: |
+            wget -q -O chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo dpkg -i chrome.deb
       - run:
-        name: Install ChromeDriver
-        command: |
-          CHROME_DRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          wget -q -O chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
-          sudo unzip chromedriver_linux64.zip -d /usr/local/bin
-          sudo rm chromedriver_linux64.zip
+          name: Install ChromeDriver
+          command: |
+            CHROME_DRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+            wget -q -O chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
+            sudo unzip chromedriver_linux64.zip -d /usr/local/bin
+            sudo rm chromedriver_linux64.zip
       - checkout:
             path: ~/pf_app
       - run:
