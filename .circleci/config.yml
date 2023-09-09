@@ -13,13 +13,14 @@ jobs:
           path: ~/pf_app
       - ruby/install-deps
 
-  install_chrome:
+  install_chrome_and_chromedriver:
     docker:
       - image: cimg/ruby:2.7.3
     steps:
       - run:
           name: Install Chrome
           command: |
+            sudo apt-get update
             wget -q -O chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             sudo dpkg -i chrome.deb
             sudo apt-get install -f -y
@@ -79,7 +80,7 @@ workflows:
   build_test:
     jobs:
       - build
-      - install_chrome:
+      - install_chrome_and_chromedriver:
           requires:
             - build
       - rubocop:
