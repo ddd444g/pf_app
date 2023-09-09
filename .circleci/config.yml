@@ -58,6 +58,7 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
+      CHROME_BINARY_PATH: /usr/bin/google-chrome
     working_directory: ~/pf_app
     steps:
       - checkout:
@@ -76,10 +77,8 @@ jobs:
           name: Database setup
           command: bundle exec rails db:migrate
       - run:
-          name: Set Chrome Binary Path
-          command: |
-            export CHROME_BINARY_PATH=/usr/bin/google-chrome
-            bundle exec rails spec
+          name: bundle exec rails spec
+          command: bundle exec rails spec
 
 workflows:
   version: 2.1
