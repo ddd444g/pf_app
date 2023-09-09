@@ -39,10 +39,10 @@ jobs:
       RAILS_ENV: test
     working_directory: ~/pf_app
     steps:
-      - checkout
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
-      - ruby/install-deps
+      - checkout:
+            path: ~/pf_app
       - run:
           name: yarn Install
           command: yarn install
