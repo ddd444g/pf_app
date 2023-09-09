@@ -73,9 +73,9 @@ jobs:
           name: Database setup
           command: bundle exec rails db:migrate
       - run:
-          name: Run rspec
-          command: bundle exec rails spec
-
+          command: |
+          export CHROME_BINARY_PATH=/usr/bin/google-chrome
+          bundle exec rails spec
 workflows:
   version: 2.1
   build_test:

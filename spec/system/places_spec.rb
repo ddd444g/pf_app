@@ -17,7 +17,7 @@ RSpec.describe 'Places_system', js: true, type: :system do
         find_by_id('create').click
         # mapで検索
         page.execute_script("document.getElementById('address').value = '札幌駅'")
-        find_by_id('search').click
+        find_by_id('search-button').click
         # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
         sleep(3)
         # 自動設定されたのを自分で上書き
