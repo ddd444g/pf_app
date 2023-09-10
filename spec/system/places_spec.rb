@@ -23,9 +23,10 @@ RSpec.describe 'Places_system', js: true, type: :system do
         # 自動設定されたのを自分で上書き
         fill_in '登録名', with: '札幌にある駅'
         fill_in 'memo', with: '行ってみたい'
-        find("#place_category_id").find("option[value='1']").select_option
+        find("#place_category_id").find("option[value='4']").select_option
         click_button '登録を完了する'
         expect(page).to have_content '札幌にある駅'
+        expect(page).to have_content 'others'
       end
     end
   end
