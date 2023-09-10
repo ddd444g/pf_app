@@ -47,6 +47,7 @@ jobs:
       - ruby/install-deps
       - browser-tools/install-chrome:
           chrome-version: 116.0.5845.96
+          background: true
       - run:
           name: yarn Install
           command: yarn install
@@ -56,6 +57,9 @@ jobs:
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
+      - run:
+          name: Seed setup
+          command: bundle exec rails db:seed RAILS_ENV=test
       - run:
           name: Run rspec
           command: bundle exec rails spec
