@@ -78,7 +78,7 @@ RSpec.describe 'Places_system', type: :system do
         # mapで検索
         page.execute_script("document.getElementById('address').value = 'test-test-hoge-hoge'")
         page.accept_confirm("該当する結果がありませんでした") do
-         find_by_id('search-button').click
+          find_by_id('search-button').click
         end
         fill_in '登録名', with: 'sapporo-station'
         fill_in 'memo', with: 'Hokkaido'
