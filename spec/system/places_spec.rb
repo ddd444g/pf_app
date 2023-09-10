@@ -57,6 +57,38 @@ RSpec.describe 'Places_system', type: :system do
       end
     end
 
+    context 'mapで検索しても場所が出てこない場合' do
+      it '空白で検索するとダイアログが出てくること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = ' '")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+      end
+
+      it '存在しない場所を検索するとダイアログが出てくること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'test-test-hoge-hoge'")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+      end
+
+      it '存在しない場所は登録できないこと' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'test-test-hoge-hoge'")
+        page.accept_confirm("該当する結果がありませんでした") do
+         find_by_id('search-button').click
+        end
+        fill_in '登録名', with: 'sapporo-station'
+        fill_in 'memo', with: 'Hokkaido'
+        select('others', from: 'place_category_id')
+        click_button '登録を完了する'
+        expect(page).to have_content 'mapで検索し位置を指定してください'
+        expect(page).to have_content '登録したい位置にピンを刺してください'
+      end
+    end
+
     context 'nameがnilの場合' do
       it 'nameのバリデーションでひっかりエラーメッセージが表示されること' do
         # mapで検索
