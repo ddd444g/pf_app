@@ -11,6 +11,10 @@ RSpec.describe 'Places_system', js: true, type: :system do
   end
 
   describe 'Place新規登録', js: true do
+    let!(:category1) { create(:category, name: 'hotel') }
+    let!(:category2) { create(:category, name: 'restaurant') }
+    let!(:category3) { create(:category, name: 'amusement-park') }
+    let!(:category4) { create(:category, name: 'others') }
     context 'フォームの入力値が正常の場合' do
       it 'Placeの新規作成が成功し新規作成した場所が表示されていること' do
         # モーダルを開く
@@ -23,7 +27,7 @@ RSpec.describe 'Places_system', js: true, type: :system do
         # 自動設定されたのを自分で上書き
         fill_in '登録名', with: '札幌にある駅'
         fill_in 'memo', with: '行ってみたい'
-        select('others', from: 'place_category_id', visible: false)
+        select(category4.name, from: 'place_category_id', visible: false)
         click_button '登録を完了する'
         expect(page).to have_content '札幌にある駅'
         expect(page).to have_content 'others'
