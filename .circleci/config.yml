@@ -47,7 +47,6 @@ jobs:
       - ruby/install-deps
       - browser-tools/install-chrome:
           chrome-version: 116.0.5845.96
-          background: true
       - run:
           name: yarn Install
           command: yarn install
