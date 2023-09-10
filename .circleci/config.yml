@@ -33,7 +33,8 @@ jobs:
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: myapp_test
-          MYSQL_USER: test
+          MYSQL_USER: root
+          LANG: 'ja_JP.UTF-8'
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
