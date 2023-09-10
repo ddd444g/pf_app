@@ -71,5 +71,20 @@ RSpec.describe 'Places_system', type: :system do
         expect(page).to have_content '登録名を入力してください'
       end
     end
+
+    context 'カテゴリーを自分で選択しない場合' do
+      it '自動でセレクトボックスの一番上のカテゴリーに設定され登録が成功すること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'sapporo-station'")
+        find_by_id('search-button').click
+        # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+        sleep(3)
+        fill_in '登録名', with: 'sapporo-station'
+        fill_in 'memo', with: 'Hokkaido'
+        click_button '登録を完了する'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to have_content 'hotel'
+      end
+    end
   end
 end
