@@ -16,16 +16,16 @@ RSpec.describe 'Places_system', type: :system do
         # モーダルを開く
         find_by_id('create').click
         # mapで検索
-        page.execute_script("document.getElementById('address').value = '札幌駅'")
+        page.execute_script("document.getElementById('address').value = 'sapporo-station'")
         find_by_id('search-button').click
         # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
         sleep(3)
         # 自動設定されたのを自分で上書き
-        fill_in '登録名', with: '札幌にある駅'
-        fill_in 'memo', with: '行ってみたい'
+        fill_in '登録名', with: 'sapporo-station'
+        fill_in 'memo', with: 'Hokkaido'
         select('others', from: 'place_category_id')
         click_button '登録を完了する'
-        expect(page).to have_content '札幌にある駅'
+        expect(page).to have_content 'sapporo-station'
         expect(page).to have_content 'others'
       end
     end
