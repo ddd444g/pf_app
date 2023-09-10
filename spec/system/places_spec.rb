@@ -31,6 +31,19 @@ RSpec.describe 'Places_system', type: :system do
         expect(page).to have_content 'sapporo-station'
         expect(page).to have_content 'others'
       end
+
+      it 'nameを登録しなくてもmapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定され登録が成功していること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'sapporo-station'")
+        find_by_id('search-button').click
+        # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+        sleep(3)
+        fill_in 'memo', with: 'Hokkaido'
+        select('others', from: 'place_category_id')
+        click_button '登録を完了する'
+        expect(page).to have_content 'Sapporo Station'
+        expect(page).to have_content 'others'
+      end
     end
 
     context 'mapで検索してない場合' do
