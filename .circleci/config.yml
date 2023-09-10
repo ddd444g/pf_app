@@ -55,9 +55,10 @@ jobs:
           command: bundle exec bin/webpack
       - run:
           name: Database setup
-          command: |
-            bundle exec rails db:migrate
-            bundle exec rails db:seed RAILS_ENV=test
+          command: bundle exec rails db:migrate
+      - run:
+          name: seed setup
+          command: bundle exec rails db:seed RAILS_ENV=test
       - run:
           name: Run rspec
           command: bundle exec rails spec
