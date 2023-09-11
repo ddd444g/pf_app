@@ -130,22 +130,22 @@ RSpec.describe 'Places_system', type: :system do
     before do
       # モーダルを開く
       find_by_id('create').click
-      page.execute_script("document.getElementById('address').value = 'sendai-station'")
+      page.execute_script("document.getElementById('address').value = 'sapporo-station'")
       find_by_id('search-button').click
       # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
       sleep(3)
-      fill_in '登録名', with: 'sendai-station'
-      fill_in 'memo', with: 'Miyagi'
+      fill_in '登録名', with: 'sapporo-station'
+      fill_in 'memo', with: 'Hokkaido'
       select('others', from: 'place_category_id')
       click_button '登録を完了する'
       sleep(3)
-      click_on 'sendai-station'
+      click_on 'sapporo-station'
       click_on '編集する'
     end
 
     it 'beforeで作られたテストデータが表示されていること' do
-      expect(page).to have_field('登録名', with: 'sendai-station')
-      expect(page).to have_field('memo', with: 'Miyagi')
+      expect(page).to have_field('登録名', with: 'sapporo-station')
+      expect(page).to have_field('memo', with: 'Hokkaido')
     end
 
     context 'フォームの入力値が正常の場合' do
@@ -163,8 +163,8 @@ RSpec.describe 'Places_system', type: :system do
         expect(page).to have_content 'tokyo-station'
         expect(page).to have_content 'Tokyo'
         expect(page).to have_content 'amusement-park'
-        expect(page).not_to have_content 'sendai-station'
-        expect(page).not_to have_content 'Miyagi'
+        expect(page).not_to have_content 'sapporo-station'
+        expect(page).not_to have_content 'Hokkaido'
       end
     end
   end
