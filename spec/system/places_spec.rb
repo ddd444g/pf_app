@@ -28,6 +28,7 @@ RSpec.describe 'Places_system', type: :system do
         fill_in 'memo', with: 'Hokkaido'
         select('others', from: 'place_category_id')
         click_button '登録を完了する'
+        sleep(3)
         expect(page).to have_content 'sapporo-station'
         expect(page).to have_content 'others'
       end
@@ -52,6 +53,7 @@ RSpec.describe 'Places_system', type: :system do
         fill_in 'memo', with: 'Hokkaido'
         select('others', from: 'place_category_id')
         click_button '登録を完了する'
+        sleep(3)
         expect(page).to have_content 'mapで検索し位置を指定してください'
         expect(page).to have_content '登録したい位置にピンを刺してください'
       end
@@ -84,6 +86,7 @@ RSpec.describe 'Places_system', type: :system do
         fill_in 'memo', with: 'Hokkaido'
         select('others', from: 'place_category_id')
         click_button '登録を完了する'
+        sleep(3)
         expect(page).to have_content 'mapで検索し位置を指定してください'
         expect(page).to have_content '登録したい位置にピンを刺してください'
       end
@@ -100,6 +103,7 @@ RSpec.describe 'Places_system', type: :system do
         fill_in 'memo', with: 'Hokkaido'
         select('others', from: 'place_category_id')
         click_button '登録を完了する'
+        sleep(3)
         expect(page).to have_content '登録名を入力してください'
       end
     end
@@ -114,8 +118,53 @@ RSpec.describe 'Places_system', type: :system do
         fill_in '登録名', with: 'sapporo-station'
         fill_in 'memo', with: 'Hokkaido'
         click_button '登録を完了する'
+        sleep(3)
         expect(page).to have_content 'sapporo-station'
         expect(page).to have_content 'hotel'
+      end
+    end
+  end
+
+  describe 'Place編集', js: true do
+    # hakata-stationを作成し、編集ページまで移動
+    before do
+      # モーダルを開く
+      find_by_id('create').click
+      page.execute_script("document.getElementById('address').value = 'hakata-station'")
+      find_by_id('search-button').click
+      # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+      sleep(3)
+      fill_in '登録名', with: 'hakata-station'
+      fill_in 'memo', with: 'Fukuoka'
+      select('others', from: 'place_category_id')
+      click_button '登録を完了する'
+      sleep(3)
+      click_on 'hakata-station'
+      click_on '編集する'
+    end
+
+    it 'beforeで作られたテストデータが表示されていること' do
+      expect(page).to have_field('登録名', with: 'hakata-station')
+      expect(page).to have_field('memo', with: 'Fukuoka')
+    end
+
+    context 'フォームの入力値が正常の場合' do
+      it 'Placeの編集が成功し編集が反映されていること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'tokyo-station'")
+        find_by_id('search-button').click
+        # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+        sleep(3)
+        # 自動設定されたのを自分で上書き
+        fill_in '登録名', with: 'tokyo-station'
+        fill_in 'memo', with: 'Tokyo'
+        select('amusement-park', from: 'place_category_id')
+        click_button '編集を完了する'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'Tokyo'
+        expect(page).to have_content 'amusement-park'
+        expect(page).not_to have_content 'hakata-station'
+        expect(page).not_to have_content 'Fukuoka'
       end
     end
   end
