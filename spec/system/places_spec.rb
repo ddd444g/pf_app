@@ -128,16 +128,7 @@ RSpec.describe 'Places_system', type: :system do
   describe 'Place編集', js: true do
     # sapporo-stationを作成し、編集ページまで移動
     before do
-      # モーダルを開く
-      find_by_id('create').click
-      page.execute_script("document.getElementById('address').value = 'sapporo-station'")
-      find_by_id('search-button').click
-      # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
-      sleep(3)
-      fill_in '登録名', with: 'sapporo-station'
-      fill_in 'memo', with: 'Hokkaido'
-      select('others', from: 'place_category_id')
-      click_button '登録を完了する'
+      sapporo_station_create
       sleep(3)
       click_on 'sapporo-station'
       click_on '編集する'
@@ -214,16 +205,7 @@ RSpec.describe 'Places_system', type: :system do
 
   describe 'Place削除', js: true do
     before do
-      # モーダルを開く
-      find_by_id('create').click
-      page.execute_script("document.getElementById('address').value = 'tokyo-station'")
-      find_by_id('search-button').click
-      # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
-      sleep(3)
-      fill_in '登録名', with: 'tokyo-station'
-      fill_in 'memo', with: 'Tokyo'
-      select('others', from: 'place_category_id')
-      click_button '登録を完了する'
+      tokyo_station_create
     end
 
     it '作成したデータが存在すること' do
@@ -256,16 +238,7 @@ RSpec.describe 'Places_system', type: :system do
 
   describe '訪問済みに登録', js: true do
     before do
-      # モーダルを開く
-      find_by_id('create').click
-      page.execute_script("document.getElementById('address').value = 'tokyo-station'")
-      find_by_id('search-button').click
-      # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
-      sleep(3)
-      fill_in '登録名', with: 'tokyo-station'
-      fill_in 'memo', with: 'Tokyo'
-      select('others', from: 'place_category_id')
-      click_button '登録を完了する'
+      tokyo_station_create
       click_link 'tokyo-station'
       click_button '訪問済みに登録'
     end
@@ -341,7 +314,6 @@ RSpec.describe 'Places_system', type: :system do
       tokyo2_station_create
       sapporo_station_create
     end
-
 
     context 'キーワードがnilの場合' do
       it 'キーワードがnilの場合、全てのplaceが表示されていること' do
