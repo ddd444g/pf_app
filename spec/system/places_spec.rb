@@ -184,5 +184,31 @@ RSpec.describe 'Places_system', type: :system do
         expect(page).to have_content '登録名を入力してください'
       end
     end
+
+    context 'mapで検索しても場所が出てこない場合' do
+      it 'nilで検索した場合、位置情報は更新されずに編集は完了すること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = ' '")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+        click_button '編集を完了する'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to have_content 'Hokkaido'
+        expect(page).to have_content 'others'
+      end
+
+      it '存在しない場所が検索結果の場合、位置情報は更新されずに編集は完了すること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'test-test-hoge-hoge'")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+        click_button '編集を完了する'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to have_content 'Hokkaido'
+        expect(page).to have_content 'others'
+      end
+    end
   end
 end
