@@ -253,4 +253,31 @@ RSpec.describe 'Places_system', type: :system do
       end
     end
   end
+
+  describe '訪問済みに登録', js: true do
+    before do
+      # モーダルを開く
+      find_by_id('create').click
+      page.execute_script("document.getElementById('address').value = 'tokyo-station'")
+      find_by_id('search-button').click
+      # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+      sleep(3)
+      fill_in '登録名', with: 'tokyo-station'
+      fill_in 'memo', with: 'Tokyo'
+      select('others', from: 'place_category_id')
+      click_button '登録を完了する'
+    end
+
+    context 'フォームの入力値が正常の場合' do
+      it 'Placeを訪問済みに登録が完了すること' do
+        click_link 'tokyo-station'
+        click_button '訪問済みに登録'
+        fill_in 'レビュー', with: 'good'
+        fill_in 'myスコア (1~10点)', with: 10
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+        expect(page).to have_content 'tokyo-stationを訪問済みに登録しました'
+      end
+    end
+  end
 end
