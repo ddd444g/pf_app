@@ -334,4 +334,22 @@ RSpec.describe 'Places_system', type: :system do
       end
     end
   end
+
+  describe 'Place絞り込み検索', js: true do
+    before do
+      tokyo_station_create
+      tokyo2_station_create
+      sapporo_station_create
+    end
+
+
+    context 'キーワードがnilの場合' do
+      it 'キーワードがnilの場合、全てのplaceが表示されていること' do
+        fill_in 'フリーワード検索', with: nil
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'tokyo-station2'
+        expect(page).to have_content 'sapporo-station'
+      end
+    end
+  end
 end
