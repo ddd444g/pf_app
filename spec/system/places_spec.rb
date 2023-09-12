@@ -266,17 +266,40 @@ RSpec.describe 'Places_system', type: :system do
       fill_in 'memo', with: 'Tokyo'
       select('others', from: 'place_category_id')
       click_button '登録を完了する'
+      click_link 'tokyo-station'
+      click_button '訪問済みに登録'
     end
 
     context 'フォームの入力値が正常の場合' do
       it 'Placeを訪問済みに登録が完了すること' do
-        click_link 'tokyo-station'
-        click_button '訪問済みに登録'
         fill_in 'レビュー', with: 'good'
         fill_in 'myスコア (1~10点)', with: 10
         select('others', from: 'gone_place_category_id')
         click_button '登録を完了する'
         expect(page).to have_content 'tokyo-stationを訪問済みに登録しました'
+      end
+    end
+
+    context 'reviewがnilの場合' do
+      it 'reviewのバリデーションでひっかりエラーメッセージが表示されること' do
+        fill_in 'レビュー', with: nil
+        fill_in 'myスコア (1~10点)', with: 10
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+        sleep(3)
+        expect(page).to have_content 'レビューを入力してください'
+      end
+    end
+
+    context 'scoreがnilの場合' do
+      it 'scoreのバリデーションでひっかりエラーメッセージが表示されること' do
+        fill_in 'レビュー', with: 'good'
+        fill_in 'myスコア (1~10点)', with: nil
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+        sleep(3)
+        expect(page).to have_content 'myスコア (1~10点)を入力してください'
+        expect(page).to have_content 'myスコア (1~10点)は数値で入力してください'
       end
     end
   end
