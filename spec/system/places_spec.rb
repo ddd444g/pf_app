@@ -216,18 +216,18 @@ RSpec.describe 'Places_system', type: :system do
     before do
       # モーダルを開く
       find_by_id('create').click
-      page.execute_script("document.getElementById('address').value = 'kobe-station'")
+      page.execute_script("document.getElementById('address').value = 'tokyo-station'")
       find_by_id('search-button').click
       # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
       sleep(3)
-      fill_in '登録名', with: 'kobe-station'
-      fill_in 'memo', with: 'Hyogo'
+      fill_in '登録名', with: 'tokyo-station'
+      fill_in 'memo', with: 'Tokyo'
       select('others', from: 'place_category_id')
       click_button '登録を完了する'
     end
 
     it '作成したデータが存在すること' do
-      expect(page).to have_content 'kobe-station'
+      expect(page).to have_content 'tokyo-station'
       expect(page).to have_content 'others'
     end
 
@@ -235,11 +235,21 @@ RSpec.describe 'Places_system', type: :system do
       it '削除が成功し表示されていないこと' do
         click_link '削除'
         page.driver.browser.switch_to.alert.accept
-        expect(page).to have_content 'kobe-stationを削除しました'
-        # 削除完了メッセージに'kobe-station'が入っているためリロード
+        expect(page).to have_content 'tokyo-stationを削除しました'
+        # 削除完了メッセージに'tokyo-station'が入っているためリロード
         visit current_path
-        expect(page).not_to have_content 'kobe-station'
+        expect(page).not_to have_content 'tokyo-station'
         expect(page).not_to have_content 'others'
+      end
+    end
+
+    context '削除しない場合' do
+      it 'キャンセルして削除されていないこと' do
+        click_link '削除'
+        # 削除をキャンセル
+        page.driver.browser.switch_to.alert.dismiss
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'others'
       end
     end
   end
