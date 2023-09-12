@@ -280,6 +280,37 @@ RSpec.describe 'Places_system', type: :system do
       end
     end
 
+    context 'すでに訪問済みにしている場合' do
+      before do
+        fill_in 'レビュー', with: 'good'
+        fill_in 'myスコア (1~10点)', with: 10
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+      end
+
+      it '登録ボタンが表示されずに訪問済み場所へ登録していますのテキストが出ること' do
+        click_link '行きたい'
+        click_link 'tokyo-station'
+        expect(page).to have_content 'この場所はすでに訪問済み場所へ登録しています'
+        # ボタンが存在しないことを確認
+        expect(page).not_to have_button('訪問済みに登録')
+      end
+
+      it '登録した訪問済み場所を削除すればもう一度訪問済みに登録できること' do
+        click_link '削除'
+        page.driver.browser.switch_to.alert.accept
+        click_link '行きたい'
+        click_link 'tokyo-station'
+        click_button '訪問済みに登録'
+        sleep(3)
+        fill_in 'レビュー', with: 'good'
+        fill_in 'myスコア (1~10点)', with: 10
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+        expect(page).to have_content 'tokyo-stationを訪問済みに登録しました'
+      end
+    end
+
     context 'reviewがnilの場合' do
       it 'reviewのバリデーションでひっかりエラーメッセージが表示されること' do
         fill_in 'レビュー', with: nil

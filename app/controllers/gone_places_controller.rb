@@ -62,6 +62,7 @@ class GonePlacesController < ApplicationController
       @once_again_place = @gone_place
       @once_again_place.destroy
     end
+    @gone_place.place.update(visited: false, gone_place_id: nil) if @gone_place.place
     @gone_place.destroy
     flash.now[:notice] = "#{@gone_place.name}を削除しました"
   end
