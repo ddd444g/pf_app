@@ -126,7 +126,7 @@ RSpec.describe 'Places_system', type: :system do
   end
 
   describe 'Place編集', js: true do
-    # hakata-stationを作成し、編集ページまで移動
+    # sapporo-stationを作成し、編集ページまで移動
     before do
       # モーダルを開く
       find_by_id('create').click
@@ -165,6 +165,15 @@ RSpec.describe 'Places_system', type: :system do
         expect(page).to have_content 'amusement-park'
         expect(page).not_to have_content 'sapporo-station'
         expect(page).not_to have_content 'Hokkaido'
+      end
+    end
+
+    context '何もせず完了ボタンを押した場合' do
+      it 'Placeの編集がされず元のままであること' do
+        click_button '編集を完了する'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to have_content 'Hokkaido'
+        expect(page).to have_content 'others'
       end
     end
   end
