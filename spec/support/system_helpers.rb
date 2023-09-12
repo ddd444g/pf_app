@@ -1,5 +1,6 @@
 module SystemHelpers
   def tokyo_station_create
+    sleep(3)
     find_by_id('create').click
     page.execute_script("document.getElementById('address').value = 'tokyo-station'")
     find_by_id('search-button').click
@@ -11,6 +12,7 @@ module SystemHelpers
   end
 
   def tokyo2_station_create
+    sleep(3)
     find_by_id('create').click
     page.execute_script("document.getElementById('address').value = 'tokyo-station'")
     find_by_id('search-button').click
@@ -22,6 +24,7 @@ module SystemHelpers
   end
 
   def sapporo_station_create
+    sleep(3)
     find_by_id('create').click
     page.execute_script("document.getElementById('address').value = 'sapporo-station'")
     find_by_id('search-button').click
