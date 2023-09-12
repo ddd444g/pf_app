@@ -176,5 +176,13 @@ RSpec.describe 'Places_system', type: :system do
         expect(page).to have_content 'others'
       end
     end
+
+    context 'nameがnilの場合' do
+      it 'nameのバリデーションに引っかかりエラーメッセージが表示されること' do
+        fill_in '登録名', with: nil
+        click_button '編集を完了する'
+        expect(page).to have_content '登録名を入力してください'
+      end
+    end
   end
 end
