@@ -278,4 +278,74 @@ RSpec.describe 'GonePlaces_system', type: :system do
       end
     end
   end
+
+  describe 'おすすめに公開', js: true do
+    before do
+      tokyo_station_create_use_in_gone_place
+      click_link 'tokyo-station'
+      click_button 'おすすめに公開する'
+    end
+
+    context 'フォームの入力値が正常の場合' do
+      it 'GonePlaceをおすすめに公開が完了すること' do
+        fill_in '登録名', with: 'tokyo-station'
+        fill_in 'おすすめコメント', with: 'good'
+        click_button '登録を完了する'
+        expect(page).to have_content 'おすすめ場所として公開しました'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'good'
+      end
+    end
+
+    context 'すでにおすすめに公開している場合' do
+      before do
+        fill_in '登録名', with: 'tokyo-station'
+        fill_in 'おすすめコメント', with: 'good'
+        click_button '登録を完了する'
+      end
+
+      it '登録ボタンが表示されずにおすすめに公開済みですのテキストが出ること' do
+        click_link '訪問済み'
+        click_link 'tokyo-station'
+        expect(page).to have_content 'おすすめに公開済みです'
+        # ボタンが存在しないことを確認
+        expect(page).not_to have_button('おすすめに公開する')
+      end
+
+      it '登録したおすすめ場所を削除すればもう一度、おすすめに登録できること' do
+        click_link '削除'
+        page.driver.browser.switch_to.alert.accept
+        click_link '訪問済み'
+        click_link 'tokyo-station'
+        click_button 'おすすめに公開する'
+        sleep(3)
+        fill_in '登録名', with: 'tokyo-station'
+        fill_in 'おすすめコメント', with: 'good'
+        click_button '登録を完了する'
+        expect(page).to have_content 'おすすめ場所として公開しました'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'good'
+      end
+    end
+
+    context '登録名がnilの場合' do
+      it '登録名のバリデーションでひっかりエラーメッセージが表示されること' do
+        fill_in '登録名', with: nil
+        fill_in 'おすすめコメント', with: 'good'
+        click_button '登録を完了する'
+        sleep(3)
+        expect(page).to have_content '登録名を入力してください'
+      end
+    end
+
+    context 'おすすめコメントがnilの場合' do
+      it 'おすすめコメントのバリデーションでひっかりエラーメッセージが表示されること' do
+        fill_in '登録名', with: 'tokyo-station'
+        fill_in 'おすすめコメント', with: nil
+        click_button '登録を完了する'
+        sleep(3)
+        expect(page).to have_content 'おすすめコメントを入力してください'
+      end
+    end
+  end
 end
