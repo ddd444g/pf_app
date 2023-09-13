@@ -313,12 +313,12 @@ RSpec.describe 'Places_system', type: :system do
       tokyo_station_create
       tokyo2_station_create
       sapporo_station_create
+      visit current_path
+      sleep(3)
     end
 
     context 'キーワードがnilの場合' do
       it 'キーワードがnilの場合、全てのplaceが表示されていること' do
-        visit current_path
-        sleep(3)
         fill_in 'search', with: nil
         sleep(3)
         click_button '検索'
@@ -330,14 +330,30 @@ RSpec.describe 'Places_system', type: :system do
 
     context 'nameで検索する場合' do
       it '一致する一件のみが表示されていること' do
-        visit current_path
-        sleep(3)
         fill_in 'search', with: 'sapporo-station'
         sleep(3)
         click_button '検索'
         expect(page).to have_content 'sapporo-station'
         expect(page).to_not have_content 'tokyo-station'
         expect(page).to_not have_content 'tokyo-station2'
+      end
+
+      it '部分一致で一致する二件のみが表示されていること' do
+        fill_in 'search', with: 'tokyo'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'tokyo-station2'
+        expect(page).to_not have_content 'sapporo-station'
+      end
+
+      it '該当しない場合何も表示しないこと' do
+        fill_in 'search', with: 'fukuoka'
+        sleep(3)
+        click_button '検索'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+        expect(page).to_not have_content 'sapporo-station'
       end
     end
   end
