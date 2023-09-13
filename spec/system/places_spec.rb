@@ -376,5 +376,16 @@ RSpec.describe 'Places_system', type: :system do
         expect(page).to_not have_content 'sapporo-station'
       end
     end
+
+    context 'googlemap_nameで検索する場合' do
+      it '一致する一件のみが表示されていること' do
+        fill_in 'search', with: 'Sapporo'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+      end
+    end
   end
 end
