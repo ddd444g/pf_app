@@ -387,5 +387,25 @@ RSpec.describe 'Places_system', type: :system do
         expect(page).to_not have_content 'tokyo-station2'
       end
     end
+
+    context 'addressで検索する場合' do
+      it '一致する一件のみが表示されていること' do
+        fill_in 'search', with: '3 Chome-4 Chome Kita 6 Jonishi, Kita Ward'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+      end
+
+      it '部分一致で一致する二件のみが表示されていること' do
+        fill_in 'search', with: 'chiyoda'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'tokyo-station2'
+        expect(page).to_not have_content 'sapporo-station'
+      end
+    end
   end
 end
