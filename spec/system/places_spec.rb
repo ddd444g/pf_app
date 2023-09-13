@@ -413,7 +413,7 @@ RSpec.describe 'Places_system', type: :system do
     before do
       tokyo_station_create
       sapporo_station_create
-      hamamatu_station_create
+      nagoya_station_create
       sleep(3)
       visit current_path
       sleep(3)
@@ -421,8 +421,8 @@ RSpec.describe 'Places_system', type: :system do
 
     context 'デフォルトの場合' do
       it '作成時期が古い順に並んでいること' do
-        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'hamamatu-station'}/m)
-        expect(page.text).to_not match(/#{'hamamatu-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'nagoya-station'}/m)
+        expect(page.text).to_not match(/#{'nagoya-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
       end
     end
 
@@ -433,22 +433,38 @@ RSpec.describe 'Places_system', type: :system do
       end
 
       it 'デフォルトの状態では無く、新しい順に並んでいること' do
-        expect(page.text).to match(/#{'hamamatu-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
-        expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'hamamatu-station'}/m)
+        expect(page.text).to match(/#{'nagoya-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'nagoya-station'}/m)
       end
 
       it '作成時期が古い順に並んでいること' do
         click_link '古い順'
-        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'hamamatu-station'}/m)
-        expect(page.text).to_not match(/#{'hamamatu-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'nagoya-station'}/m)
+        expect(page.text).to_not match(/#{'nagoya-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
       end
     end
 
     context '新しい順に並び替える場合' do
       it '作成時期が新しい順に並んでいること' do
         click_link '新しい順'
-        expect(page.text).to match(/#{'hamamatu-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
-        expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'hamamatu-station'}/m)
+        expect(page.text).to match(/#{'nagoya-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'nagoya-station'}/m)
+      end
+    end
+
+    context '評価が高い順に並び替える場合' do
+      it 'googleでの評価が高い順(tokyo 4.3,sapporo 4.1,nagoya 3.9の順番)に並んでいること' do
+        click_link '評価が高い順'
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'nagoya-station'}/m)
+        expect(page.text).to_not match(/#{'nagoya-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+      end
+    end
+
+    context '全て表示をクリックした場合' do
+      it 'デフォルトの状態(古い順)で並んでいること' do
+        click_link '全て表示'
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'nagoya-station'}/m)
+        expect(page.text).to_not match(/#{'nagoya-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
       end
     end
   end

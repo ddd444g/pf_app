@@ -35,13 +35,13 @@ module SystemHelpers
     click_button '登録を完了する'
   end
 
-  def hamamatu_station_create
+  def nagoya_station_create
     sleep(3)
     find_by_id('create').click
-    page.execute_script("document.getElementById('address').value = 'hamamatu-station'")
+    page.execute_script("document.getElementById('address').value = 'nagoya-station'")
     find_by_id('search-button').click
     sleep(3)
-    fill_in '登録名', with: 'hamamatu-station'
+    fill_in '登録名', with: 'nagoya-station'
     fill_in 'memo', with: 'Sizuoka'
     select('others', from: 'place_category_id')
     click_button '登録を完了する'
