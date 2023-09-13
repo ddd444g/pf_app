@@ -148,4 +148,100 @@ RSpec.describe 'GonePlaces_system', type: :system do
       end
     end
   end
+
+  describe 'GonePlace編集', js: true do
+    # sapporo-stationを作成し、編集ページまで移動
+    before do
+      sapporo_station_create_use_in_gone_place
+      sleep(3)
+      click_on 'sapporo-station'
+      click_on '編集する'
+    end
+
+    it 'beforeで作られたテストデータが表示されていること' do
+      expect(page).to have_field('登録名', with: 'sapporo-station')
+      expect(page).to have_field('レビュー', with: 'Hokkaido')
+    end
+
+    context 'フォームの入力値が正常の場合' do
+      it 'GonePlaceの編集が成功し編集が反映されていること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'tokyo-station'")
+        find_by_id('search-button').click
+        # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+        sleep(3)
+        # 自動設定されたのを自分で上書き
+        fill_in '登録名', with: 'tokyo-station'
+        fill_in 'レビュー', with: 'Tokyo'
+        fill_in 'myスコア (1~10点)', with: 1
+        select('amusement-park', from: 'gone_place_category_id')
+        click_button '編集を完了する'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'Tokyo'
+        expect(page).to have_content 'amusement-park'
+        expect(page).not_to have_content 'sapporo-station'
+        expect(page).not_to have_content 'Hokkaido'
+      end
+    end
+
+    context '何もせず完了ボタンを押した場合' do
+      it 'GonePlaceの編集がされず元のままであること' do
+        click_button '編集を完了する'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to have_content 'Hokkaido'
+        expect(page).to have_content 'others'
+      end
+    end
+
+    context 'nameがnilの場合' do
+      it 'nameのバリデーションに引っかかりエラーメッセージが表示されること' do
+        fill_in '登録名', with: nil
+        click_button '編集を完了する'
+        expect(page).to have_content '登録名を入力してください'
+      end
+    end
+
+    context 'レビューがnilの場合' do
+      it 'レビューのバリデーションに引っかかりエラーメッセージが表示されること' do
+        fill_in 'レビュー', with: nil
+        click_button '編集を完了する'
+        expect(page).to have_content 'レビューを入力してください'
+      end
+    end
+
+    context 'myスコアがnilの場合' do
+      it 'myスコアのバリデーションに引っかかりエラーメッセージが表示されること' do
+        fill_in 'myスコア (1~10点)', with: nil
+        click_button '編集を完了する'
+        expect(page).to have_content 'myスコア (1~10点)を入力してください'
+        expect(page).to have_content 'myスコア (1~10点)は数値で入力してください'
+      end
+    end
+
+    context 'mapで検索しても場所が出てこない場合' do
+      it 'nilで検索した場合、位置情報は更新されずに編集は完了すること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = ' '")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+        click_button '編集を完了する'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to have_content 'Hokkaido'
+        expect(page).to have_content 'others'
+      end
+
+      it '存在しない場所が検索結果の場合、位置情報は更新されずに編集は完了すること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'test-test-hoge-hoge'")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+        click_button '編集を完了する'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to have_content 'Hokkaido'
+        expect(page).to have_content 'others'
+      end
+    end
+  end
 end
