@@ -49,5 +49,103 @@ RSpec.describe 'GonePlaces_system', type: :system do
         expect(page).to have_content 'others'
       end
     end
+
+    context 'mapで検索してない場合' do
+      it 'latitude,longitudeのバリデーションでひっかりエラーメッセージが表示されること' do
+        fill_in '登録名', with: 'sapporo-station'
+        fill_in 'レビュー', with: 'Hokkaido'
+        fill_in 'myスコア (1~10点)', with: 10
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+        sleep(3)
+        expect(page).to have_content 'mapで検索し位置を指定してください'
+        expect(page).to have_content '登録したい位置にピンを刺してください'
+      end
+    end
+
+    context 'mapで検索しても場所が出てこない場合' do
+      it '空白で検索するとダイアログが出てくること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = ' '")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+      end
+
+      it '存在しない場所を検索するとダイアログが出てくること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'test-test-hoge-hoge'")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+      end
+
+      it '存在しない場所は登録できないこと' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'test-test-hoge-hoge'")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+        fill_in '登録名', with: 'sapporo-station'
+        fill_in 'レビュー', with: 'Hokkaido'
+        fill_in 'myスコア (1~10点)', with: 10
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+        expect(page).to have_content 'mapで検索し位置を指定してください'
+        expect(page).to have_content '登録したい位置にピンを刺してください'
+      end
+    end
+
+    context 'nameがnilの場合' do
+      it 'nameのバリデーションでひっかりエラーメッセージが表示されること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'sapporo-station'")
+        find_by_id('search-button').click
+        # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+        sleep(3)
+        fill_in '登録名', with: nil
+        fill_in 'レビュー', with: 'Hokkaido'
+        fill_in 'myスコア (1~10点)', with: 10
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+        sleep(3)
+        expect(page).to have_content '登録名を入力してください'
+      end
+    end
+
+    context 'レビューがnilの場合' do
+      it 'レビューのバリデーションでひっかりエラーメッセージが表示されること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'sapporo-station'")
+        find_by_id('search-button').click
+        # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+        sleep(3)
+        fill_in '登録名', with: 'sapporo-station'
+        fill_in 'レビュー', with: nil
+        fill_in 'myスコア (1~10点)', with: 10
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+        sleep(3)
+        expect(page).to have_content 'レビューを入力してください'
+      end
+    end
+
+    context 'myスコアがnilの場合' do
+      it 'myスコアのバリデーションでひっかりエラーメッセージが表示されること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'sapporo-station'")
+        find_by_id('search-button').click
+        # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+        sleep(3)
+        fill_in '登録名', with: 'sapporo-station'
+        fill_in 'レビュー', with: 'Hokkaido'
+        fill_in 'myスコア (1~10点)', with: nil
+        select('others', from: 'gone_place_category_id')
+        click_button '登録を完了する'
+        sleep(3)
+        expect(page).to have_content 'myスコア (1~10点)を入力してください'
+        expect(page).to have_content 'myスコア (1~10点)は数値で入力してください'
+      end
+    end
   end
 end
