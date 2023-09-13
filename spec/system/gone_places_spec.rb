@@ -244,4 +244,38 @@ RSpec.describe 'GonePlaces_system', type: :system do
       end
     end
   end
+
+  describe 'GonePlace削除', js: true do
+    before do
+      tokyo_station_create_use_in_gone_place
+      sleep(3)
+    end
+
+    it '作成したデータが存在すること' do
+      expect(page).to have_content 'tokyo-station'
+      expect(page).to have_content 'others'
+    end
+
+    context '削除する場合' do
+      it '削除が成功し表示されていないこと' do
+        click_link '削除'
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content 'tokyo-stationを削除しました'
+        # 削除完了メッセージに'tokyo-station'が入っているためリロード
+        visit current_path
+        expect(page).not_to have_content 'tokyo-station'
+        expect(page).not_to have_content 'others'
+      end
+    end
+
+    context '削除しない場合' do
+      it 'キャンセルして削除されていないこと' do
+        click_link '削除'
+        # 削除をキャンセル
+        page.driver.browser.switch_to.alert.dismiss
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'others'
+      end
+    end
+  end
 end
