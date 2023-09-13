@@ -408,4 +408,48 @@ RSpec.describe 'Places_system', type: :system do
       end
     end
   end
+
+  describe '並び替えが機能しているか', js: true do
+    before do
+      tokyo_station_create
+      sapporo_station_create
+      hamamatu_station_create
+      sleep(3)
+      visit current_path
+      sleep(3)
+    end
+
+    context 'デフォルトの場合' do
+      it '作成時期が古い順に並んでいること' do
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'hamamatu-station'}/m)
+        expect(page.text).to_not match(/#{'hamamatu-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+      end
+    end
+
+    context '古い順に並び替える場合' do
+      before do
+        click_link '新しい順'
+        sleep(3)
+      end
+
+      it 'デフォルトの状態では無く、新しい順に並んでいること' do
+        expect(page.text).to match(/#{'hamamatu-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'hamamatu-station'}/m)
+      end
+
+      it '作成時期が古い順に並んでいること' do
+        click_link '古い順'
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'hamamatu-station'}/m)
+        expect(page.text).to_not match(/#{'hamamatu-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+      end
+    end
+
+    context '新しい順に並び替える場合' do
+      it '作成時期が新しい順に並んでいること' do
+        click_link '新しい順'
+        expect(page.text).to match(/#{'hamamatu-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'hamamatu-station'}/m)
+      end
+    end
+  end
 end
