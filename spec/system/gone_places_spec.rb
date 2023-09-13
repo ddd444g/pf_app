@@ -348,4 +348,194 @@ RSpec.describe 'GonePlaces_system', type: :system do
       end
     end
   end
+
+  describe 'GonePlace絞り込み検索', js: true do
+    before do
+      tokyo_station_create_use_in_gone_place
+      tokyo2_station_create_use_in_gone_place
+      sapporo_station_create_use_in_gone_place
+      visit current_path
+      sleep(3)
+    end
+
+    context 'キーワードがnilの場合' do
+      it 'キーワードがnilの場合、全てのgone_placeが表示されていること' do
+        fill_in 'search', with: nil
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'tokyo-station2'
+        expect(page).to have_content 'sapporo-station'
+      end
+    end
+
+    context 'nameで検索する場合' do
+      it '一致する一件のみが表示されていること' do
+        fill_in 'search', with: 'sapporo-station'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+      end
+
+      it '部分一致で一致する二件のみが表示されていること' do
+        fill_in 'search', with: 'tokyo'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'tokyo-station2'
+        expect(page).to_not have_content 'sapporo-station'
+      end
+
+      it '該当しない場合何も表示しないこと' do
+        fill_in 'search', with: 'fukuoka'
+        sleep(3)
+        click_button '検索'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+        expect(page).to_not have_content 'sapporo-station'
+      end
+    end
+
+    context 'reviewで検索する場合' do
+      it '一致する一件のみが表示されていること' do
+        fill_in 'search', with: 'Hokkaido'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+      end
+
+      it '部分一致で一致する二件のみが表示されていること' do
+        fill_in 'search', with: 'Tok'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'tokyo-station2'
+        expect(page).to_not have_content 'sapporo-station'
+      end
+    end
+
+    context 'googlemap_nameで検索する場合' do
+      it '一致する一件のみが表示されていること' do
+        fill_in 'search', with: 'Sapporo'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+      end
+    end
+
+    context 'addressで検索する場合' do
+      it '一致する一件のみが表示されていること' do
+        fill_in 'search', with: '3 Chome-4 Chome Kita 6 Jonishi, Kita Ward'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'sapporo-station'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+      end
+
+      it '部分一致で一致する二件のみが表示されていること' do
+        fill_in 'search', with: 'chiyoda'
+        sleep(3)
+        click_button '検索'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'tokyo-station2'
+        expect(page).to_not have_content 'sapporo-station'
+      end
+    end
+
+    context '全て表示ボタンをクリックした場合' do
+      before do
+        fill_in 'search', with: 'fukuoka'
+        sleep(3)
+        click_button '検索'
+      end
+
+      it '全て表示ボタンのテストの為、beforeで何も表示されていない状態が作られていること' do
+        expect(page).to_not have_content 'sapporo-station'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+      end
+
+      it '登録しているすべての場所が表示されること' do
+        click_link '全て表示'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'tokyo-station2'
+        expect(page).to have_content 'sapporo-station'
+      end
+    end
+  end
+
+  describe '並び替えが機能しているか', js: true do
+    before do
+      tokyo_station_create_use_in_gone_place
+      sapporo_station_create_use_in_gone_place
+      yokohama_station_create_use_in_gone_place
+      sleep(3)
+      visit current_path
+      sleep(3)
+    end
+
+    context 'デフォルトの場合' do
+      it '作成時期が古い順に並んでいること' do
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+        expect(page.text).to_not match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+      end
+    end
+
+    context '古い順に並び替える場合' do
+      before do
+        click_link '新しい順'
+        sleep(3)
+      end
+
+      it 'デフォルトの状態では無く、新しい順に並んでいること' do
+        expect(page.text).to match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+      end
+
+      it '作成時期が古い順に並んでいること' do
+        click_link '古い順'
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+        expect(page.text).to_not match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+      end
+    end
+
+    context '新しい順に並び替える場合' do
+      it '作成時期が新しい順に並んでいること' do
+        click_link '新しい順'
+        expect(page.text).to match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+      end
+    end
+
+    context '評価が高い順に並び替える場合' do
+      it 'googleでの評価が高い順(tokyo 4.3,sapporo 4.1,yokohama 3.9の順番)に並んでいること' do
+        click_link '評価が高い順'
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+        expect(page.text).to_not match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+      end
+    end
+
+    context 'myスコアが高い順に並び替える場合' do
+      it 'myスコアが高い順(sapporo 10,yokohama 5,tokyo 1の順番)に並んでいること' do
+        click_link 'myスコアが高い順'
+        expect(page.text).to match(/#{'sapporo-station'}.*#{'yokohama-station'}.*#{'tokyo-station'}/m)
+        expect(page.text).to_not match(/#{'tokyo-station'}.*#{'yokohama-station'}.*#{'sapporo-station'}/m)
+      end
+    end
+
+    context '全て表示をクリックした場合' do
+      it 'デフォルトの状態(古い順)で並んでいること' do
+        click_link '全て表示'
+        expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+        expect(page.text).to_not match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+      end
+    end
+  end
 end
