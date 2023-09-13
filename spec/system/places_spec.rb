@@ -407,6 +407,27 @@ RSpec.describe 'Places_system', type: :system do
         expect(page).to_not have_content 'sapporo-station'
       end
     end
+
+    context '全て表示ボタンをクリックした場合' do
+      before do
+        fill_in 'search', with: 'fukuoka'
+        sleep(3)
+        click_button '検索'
+      end
+
+      it '全て表示ボタンのテストの為、beforeで何も表示されていない状態が作られていること' do
+        expect(page).to_not have_content 'sapporo-station'
+        expect(page).to_not have_content 'tokyo-station'
+        expect(page).to_not have_content 'tokyo-station2'
+      end
+
+      it '登録しているすべての場所が表示されること' do
+        click_link '全て表示'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'tokyo-station2'
+        expect(page).to have_content 'sapporo-station'
+      end
+    end
   end
 
   describe '並び替えが機能しているか', js: true do
