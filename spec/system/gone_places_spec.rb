@@ -538,4 +538,60 @@ RSpec.describe 'GonePlaces_system', type: :system do
       end
     end
   end
+
+  describe 'もう一度行きたいに登録', js: true do
+    before do
+      tokyo_station_create_use_in_gone_place
+    end
+
+    context 'indexページで登録する場合' do
+      it 'まだもう一度行きたい一覧に登録されておらず、もう一度行きたいボタンが存在すること' do
+        expect(page).to have_button('もう一度行きたい')
+        expect(page).to_not have_content 'tokyo-stationをもう一度行きたいに登録しました'
+        expect(page).to_not have_content '登録済みです'
+        within('.once-again-places') do
+          expect(page).to_not have_content('tokyo-station')
+          expect(page).to_not have_button('解除する')
+        end
+      end
+
+      it 'もう一度行きたいボタンを押すともう一度行きたい一覧に登録され、もう一度行きたいボタンが登録済みですに変わること' do
+        click_button 'もう一度行きたい'
+        expect(page).to have_content 'tokyo-stationをもう一度行きたいに登録しました'
+        expect(page).to have_content '登録済みです'
+        within('.once-again-places') do
+          expect(page).to have_button('解除する')
+          expect(page).to have_content('tokyo-station')
+        end
+      end
+    end
+
+    context '詳細ページで登録する場合' do
+      before do
+        click_link 'tokyo-station'
+      end
+
+      it 'まだもう一度行きたいに登録されておらず、登録するボタンが存在すること' do
+        expect(page).to have_button('登録する')
+      end
+
+      it 'もう一度行きたいに登録するボタンを押すと登録メッセージが表示され、登録ボタンが解除ボタンに変わること' do
+        click_button '登録する'
+        sleep(2)
+        expect(page).to have_content 'tokyo-stationをもう一度行きたいに登録しました'
+        expect(page).to have_button('解除する')
+      end
+
+      it 'もう一度行きたいに登録するボタンを押し一覧ページに戻るともう一度行きたい一覧に登録されていること' do
+        click_button '登録する'
+        sleep(2)
+        click_link '訪問済み一覧ページへ'
+        expect(page).to have_content '登録済みです'
+        within('.once-again-places') do
+          expect(page).to have_button('解除する')
+          expect(page).to have_content('tokyo-station')
+        end
+      end
+    end
+  end
 end
