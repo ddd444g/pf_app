@@ -352,7 +352,7 @@ RSpec.describe 'GonePlaces_system', type: :system do
   describe 'GonePlace絞り込み検索', js: true do
     before do
       tokyo_station_create_use_in_gone_place
-      tokyo2_station_create_use_in_gone_place
+      tokyo_station2_create_use_in_gone_place
       sapporo_station_create_use_in_gone_place
       visit current_path
       sleep(3)

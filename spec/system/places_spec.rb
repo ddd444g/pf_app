@@ -311,7 +311,7 @@ RSpec.describe 'Places_system', type: :system do
   describe 'Place絞り込み検索', js: true do
     before do
       tokyo_station_create
-      tokyo2_station_create
+      tokyo_station2_create
       sapporo_station_create
       visit current_path
       sleep(3)

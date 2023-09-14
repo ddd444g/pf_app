@@ -101,4 +101,365 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
       end
     end
   end
+
+  describe 'RecommendPlace絞り込み検索', js: true do
+    let!(:other_user) { create(:user) }
+    let!(:category) { create(:category) }
+
+    let!(:tokyo) do
+      create(:recommend_place, recommend_place_name: 'tokyo-station', recommend_comment: 'good',
+                               googlemap_name: 'Tokyo Station', address: 'Tokyo chiyoda', user_id: user.id,
+                               category_id: category.id)
+    end
+
+    let!(:tokyo2) do
+      create(:recommend_place, recommend_place_name: 'tokyo-station2', recommend_comment: 'good2',
+                               googlemap_name: 'Tokyo Station', address: 'Tokyo chiyoda', user_id: user.id,
+                               category_id: category.id)
+    end
+
+    let!(:sapporo) do
+      create(:recommend_place, recommend_place_name: 'sapporo-station', recommend_comment: 'amazing',
+                               googlemap_name: 'Sapporo Station', address: 'Hokkaido', user_id: user.id,
+                               category_id: category.id)
+    end
+
+    let!(:yokohama) do
+      create(:recommend_place, recommend_place_name: 'yokohama-station2', recommend_comment: 'good',
+                               googlemap_name: 'Yokohama Station', address: 'Kanagawa', user_id: other_user.id,
+                               category_id: category.id)
+    end
+
+    before do
+      # click_link '訪問済み'
+      # tokyo_station_create_use_in_recommend_place
+      # sleep(3)
+      # click_link '訪問済み'
+      # tokyo_station2_create_use_in_recommend_place
+      # sleep(3)
+      # click_link '訪問済み'
+      # sapporo_station_create_use_in_recommend_place
+      # sleep(3)
+      click_link 'おすすめ'
+      click_link '自分の投稿したおすすめ一覧へ'
+    end
+
+    it 'beforeで作られたおすすめ場所が全て表示されていること' do
+      click_link '他の人のおすすめ一覧へ'
+      expect(page).to have_content 'tokyo-station'
+      expect(page).to have_content 'tokyo-station2'
+      expect(page).to have_content 'sapporo-station'
+      expect(page).to have_content 'yokohama-station2'
+    end
+
+    describe '自分が投稿したおすすめ一覧ページの場合' do
+      context 'キーワードがnilの場合' do
+        it '自分が投稿したおすすめ場所のみが全て表示されていること' do
+          fill_in 'search', with: nil
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to have_content 'sapporo-station'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+      end
+
+      context 'nameで検索する場合' do
+        it '一致する一件のみが表示されていること' do
+          fill_in 'search', with: 'sapporo-station'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to have_content 'sapporo-station'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+
+        it '部分一致で一致する二件のみが表示されていること' do
+          fill_in 'search', with: 'tokyo'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+
+        it '自分が投稿したおすすめ場所だけが検索対象であること' do
+          fill_in 'search', with: 'yokohama-station2'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+      end
+
+      context 'おすすめコメントで検索する場合' do
+        it '一致する一件のみが表示されていること' do
+          fill_in 'search', with: 'amazing'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to have_content 'sapporo-station'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+
+        it '部分一致で一致する二件のみが表示されていること' do
+          fill_in 'search', with: 'good'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+      end
+
+      context 'googlemap_nameで検索する場合' do
+        it '一致する一件のみが表示されていること' do
+          fill_in 'search', with: 'Sapporo'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to have_content 'sapporo-station'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+
+        it '自分が投稿したおすすめ場所だけが検索対象であること' do
+          fill_in 'search', with: 'Yokohama'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+          end
+        end
+      end
+
+      context 'addressで検索する場合' do
+        it '一致する一件のみが表示されていること' do
+          fill_in 'search', with: 'Hokkaido'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to have_content 'sapporo-station'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+
+        it '部分一致で一致する二件のみが表示されていること' do
+          fill_in 'search', with: 'chiyoda'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+
+        it '自分が投稿したおすすめ場所だけが検索対象であること' do
+          fill_in 'search', with: 'Kanagawa'
+          sleep(3)
+          click_button '検索'
+          within('.my-post-index') do
+            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+          end
+        end
+      end
+
+      context '全て表示ボタンをクリックした場合' do
+        before do
+          fill_in 'search', with: 'fukuoka'
+          sleep(3)
+          click_button '検索'
+        end
+
+        it '全て表示ボタンのテストの為、beforeで何も表示されていない状態が作られていること' do
+          within('.my-post-index') do
+            expect(page).to_not have_content 'sapporo-station'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+
+        it '自分が投稿したすべての場所が表示されること' do
+          click_link '全て表示'
+          within('.my-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to have_content 'sapporo-station'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+      end
+    end
+
+    describe '全てのおすすめ一覧ページの場合' do
+      before do
+        click_link '他の人のおすすめ一覧へ'
+      end
+
+      context 'キーワードがnilの場合' do
+        it '全てのおすすめ場所表示されていること' do
+          fill_in 'search', with: nil
+          sleep(3)
+          click_button '検索'
+          within('.all-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to have_content 'sapporo-station'
+            expect(page).to have_content 'yokohama-station2'
+          end
+        end
+      end
+
+      context 'nameで検索する場合' do
+        it '自分が投稿していない場所も検索対象であること' do
+          fill_in 'search', with: 'yokohama-station2'
+          sleep(3)
+          click_button '検索'
+          within('.all-post-index') do
+            expect(page).to have_content 'yokohama-station2'
+            expect(page).to_not have_content 'sapporo-station'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+          end
+        end
+
+        it '部分一致で一致する二件のみが表示されていること' do
+          fill_in 'search', with: 'tokyo'
+          sleep(3)
+          click_button '検索'
+          within('.all-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+      end
+
+      context 'おすすめコメントで検索する場合' do
+        it '一致する一件のみが表示されていること' do
+          fill_in 'search', with: 'amazing'
+          sleep(3)
+          click_button '検索'
+          within('.all-post-index') do
+            expect(page).to have_content 'sapporo-station'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+
+        it '部分一致で一致する三件が表示されていること' do
+          fill_in 'search', with: 'good'
+          sleep(3)
+          click_button '検索'
+          within('.all-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to have_content 'yokohama-station2'
+            expect(page).to_not have_content 'sapporo-station'
+          end
+        end
+      end
+
+      context 'googlemap_nameで検索する場合' do
+        it '自分が投稿していない場所も検索対象であること' do
+          fill_in 'search', with: 'Yokohama'
+          sleep(3)
+          click_button '検索'
+          within('.all-post-index') do
+            expect(page).to have_content 'yokohama-station2'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+          end
+        end
+      end
+
+      context 'addressで検索する場合' do
+        it '自分が投稿していない場所も検索対象であること' do
+          fill_in 'search', with: 'Kanagawa'
+          sleep(3)
+          click_button '検索'
+          within('.all-post-index') do
+            expect(page).to have_content 'yokohama-station2'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+          end
+        end
+
+        it '部分一致で一致する二件のみが表示されていること' do
+          fill_in 'search', with: 'chiyoda'
+          sleep(3)
+          click_button '検索'
+          within('.all-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to_not have_content 'sapporo-station'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+      end
+
+      context '全て表示ボタンをクリックした場合' do
+        before do
+          fill_in 'search', with: 'fukuoka'
+          sleep(3)
+          click_button '検索'
+        end
+
+        it '全て表示ボタンのテストの為、beforeで何も表示されていない状態が作られていること' do
+          within('.all-post-index') do
+            expect(page).to_not have_content 'sapporo-station'
+            expect(page).to_not have_content 'tokyo-station'
+            expect(page).to_not have_content 'tokyo-station2'
+            expect(page).to_not have_content 'yokohama-station2'
+          end
+        end
+
+        it 'すべてのおすすめ場所が表示されること' do
+          click_link '全て表示'
+          within('.all-post-index') do
+            expect(page).to have_content 'tokyo-station'
+            expect(page).to have_content 'tokyo-station2'
+            expect(page).to have_content 'sapporo-station'
+            expect(page).to have_content 'yokohama-station2'
+          end
+        end
+      end
+    end
+  end
 end
