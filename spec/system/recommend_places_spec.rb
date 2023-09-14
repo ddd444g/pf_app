@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'RecmmendPlaces_system', type: :system do
   let!(:user) { create(:user) }
+  let!(:other_user) { create(:user) }
+  let!(:category) { create(:category) }
 
   before do
     visit login_path
@@ -103,43 +105,35 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
   end
 
   describe 'RecommendPlace絞り込み検索', js: true do
-    let!(:other_user) { create(:user) }
-    let!(:category) { create(:category) }
-
     let!(:tokyo) do
       create(:recommend_place, recommend_place_name: 'tokyo-station', recommend_comment: 'good',
-                               googlemap_name: 'Tokyo Station', address: 'Tokyo chiyoda', user_id: user.id,
-                               category_id: category.id)
-    end
-
-    let!(:tokyo2) do
-      create(:recommend_place, recommend_place_name: 'tokyo-station2', recommend_comment: 'good2',
-                               googlemap_name: 'Tokyo Station', address: 'Tokyo chiyoda', user_id: user.id,
+                               googlemap_name: 'Tokyo Station', address: 'Tokyo chiyoda',
+                               rating: 1, user_id: user.id,
                                category_id: category.id)
     end
 
     let!(:sapporo) do
       create(:recommend_place, recommend_place_name: 'sapporo-station', recommend_comment: 'amazing',
-                               googlemap_name: 'Sapporo Station', address: 'Hokkaido', user_id: user.id,
+                               googlemap_name: 'Sapporo Station', address: 'Hokkaido',
+                               rating: 3, user_id: user.id,
                                category_id: category.id)
     end
 
-    let!(:yokohama) do
-      create(:recommend_place, recommend_place_name: 'yokohama-station2', recommend_comment: 'good',
-                               googlemap_name: 'Yokohama Station', address: 'Kanagawa', user_id: other_user.id,
+    let!(:osaka) do
+      create(:recommend_place, recommend_place_name: 'osaka-station', recommend_comment: 'good',
+                               googlemap_name: 'Osaka Station', address: 'Kansai',
+                               rating: 4, user_id: other_user.id,
+                               category_id: category.id)
+    end
+
+    let!(:tokyo2) do
+      create(:recommend_place, recommend_place_name: 'tokyo-station2', recommend_comment: 'good2',
+                               googlemap_name: 'Tokyo Station', address: 'Tokyo chiyoda',
+                               rating: 2, user_id: user.id,
                                category_id: category.id)
     end
 
     before do
-      # click_link '訪問済み'
-      # tokyo_station_create_use_in_recommend_place
-      # sleep(3)
-      # click_link '訪問済み'
-      # tokyo_station2_create_use_in_recommend_place
-      # sleep(3)
-      # click_link '訪問済み'
-      # sapporo_station_create_use_in_recommend_place
-      # sleep(3)
       click_link 'おすすめ'
       click_link '自分の投稿したおすすめ一覧へ'
     end
@@ -149,7 +143,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
       expect(page).to have_content 'tokyo-station'
       expect(page).to have_content 'tokyo-station2'
       expect(page).to have_content 'sapporo-station'
-      expect(page).to have_content 'yokohama-station2'
+      expect(page).to have_content 'osaka-station'
     end
 
     describe '自分が投稿したおすすめ一覧ページの場合' do
@@ -162,7 +156,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
             expect(page).to have_content 'sapporo-station'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
       end
@@ -176,7 +170,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'sapporo-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
 
@@ -188,19 +182,19 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
 
         it '自分が投稿したおすすめ場所だけが検索対象であること' do
-          fill_in 'search', with: 'yokohama-station2'
+          fill_in 'search', with: 'osaka-station'
           sleep(3)
           click_button '検索'
           within('.my-post-index') do
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
       end
@@ -214,7 +208,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'sapporo-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
 
@@ -226,7 +220,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
       end
@@ -240,16 +234,16 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'sapporo-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
 
         it '自分が投稿したおすすめ場所だけが検索対象であること' do
-          fill_in 'search', with: 'Yokohama'
+          fill_in 'search', with: 'Osaka'
           sleep(3)
           click_button '検索'
           within('.my-post-index') do
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
@@ -266,7 +260,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'sapporo-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
 
@@ -278,16 +272,16 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
 
         it '自分が投稿したおすすめ場所だけが検索対象であること' do
-          fill_in 'search', with: 'Kanagawa'
+          fill_in 'search', with: 'Kansai'
           sleep(3)
           click_button '検索'
           within('.my-post-index') do
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
@@ -307,7 +301,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to_not have_content 'sapporo-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
 
@@ -317,7 +311,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
             expect(page).to have_content 'sapporo-station'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
       end
@@ -337,18 +331,18 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
             expect(page).to have_content 'sapporo-station'
-            expect(page).to have_content 'yokohama-station2'
+            expect(page).to have_content 'osaka-station'
           end
         end
       end
 
       context 'nameで検索する場合' do
         it '自分が投稿していない場所も検索対象であること' do
-          fill_in 'search', with: 'yokohama-station2'
+          fill_in 'search', with: 'osaka-station'
           sleep(3)
           click_button '検索'
           within('.all-post-index') do
-            expect(page).to have_content 'yokohama-station2'
+            expect(page).to have_content 'osaka-station'
             expect(page).to_not have_content 'sapporo-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
@@ -363,7 +357,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
       end
@@ -377,7 +371,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'sapporo-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
 
@@ -388,7 +382,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
           within('.all-post-index') do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
-            expect(page).to have_content 'yokohama-station2'
+            expect(page).to have_content 'osaka-station'
             expect(page).to_not have_content 'sapporo-station'
           end
         end
@@ -396,11 +390,11 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
 
       context 'googlemap_nameで検索する場合' do
         it '自分が投稿していない場所も検索対象であること' do
-          fill_in 'search', with: 'Yokohama'
+          fill_in 'search', with: 'Osaka'
           sleep(3)
           click_button '検索'
           within('.all-post-index') do
-            expect(page).to have_content 'yokohama-station2'
+            expect(page).to have_content 'osaka-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
@@ -410,11 +404,11 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
 
       context 'addressで検索する場合' do
         it '自分が投稿していない場所も検索対象であること' do
-          fill_in 'search', with: 'Kanagawa'
+          fill_in 'search', with: 'Kansai'
           sleep(3)
           click_button '検索'
           within('.all-post-index') do
-            expect(page).to have_content 'yokohama-station2'
+            expect(page).to have_content 'osaka-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
@@ -429,7 +423,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
             expect(page).to_not have_content 'sapporo-station'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
       end
@@ -446,7 +440,7 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to_not have_content 'sapporo-station'
             expect(page).to_not have_content 'tokyo-station'
             expect(page).to_not have_content 'tokyo-station2'
-            expect(page).to_not have_content 'yokohama-station2'
+            expect(page).to_not have_content 'osaka-station'
           end
         end
 
@@ -456,8 +450,202 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
             expect(page).to have_content 'tokyo-station'
             expect(page).to have_content 'tokyo-station2'
             expect(page).to have_content 'sapporo-station'
-            expect(page).to have_content 'yokohama-station2'
+            expect(page).to have_content 'osaka-station'
           end
+        end
+      end
+    end
+  end
+
+  describe 'RecommendPlace並び替え機能', js: true do
+    let!(:tokyo) do
+      create(:recommend_place, recommend_place_name: 'tokyo-station', recommend_comment: 'good',
+                               googlemap_name: 'Tokyo Station', address: 'Tokyo chiyoda',
+                               rating: 1, user_id: user.id,
+                               category_id: category.id)
+    end
+
+    let!(:sapporo) do
+      create(:recommend_place, recommend_place_name: 'sapporo-station', recommend_comment: 'amazing',
+                               googlemap_name: 'Sapporo Station', address: 'Hokkaido',
+                               rating: 3, user_id: user.id,
+                               category_id: category.id)
+    end
+
+    let!(:osaka) do
+      create(:recommend_place, recommend_place_name: 'osaka-station', recommend_comment: 'good',
+                               googlemap_name: 'Osaka Station', address: 'Kansai',
+                               rating: 4, user_id: other_user.id,
+                               category_id: category.id)
+    end
+
+    let!(:yokohama) do
+      create(:recommend_place, recommend_place_name: 'yokohama-station', recommend_comment: 'nice',
+                               googlemap_name: 'Yokohama Station', address: 'Kanagawa',
+                               rating: 5, user_id: user.id,
+                               category_id: category.id)
+    end
+
+    before do
+      click_link 'おすすめ'
+    end
+
+    describe '自分が投稿したおすすめ一覧ページ' do
+      before do
+        click_link '自分の投稿したおすすめ一覧へ'
+      end
+
+      context 'デフォルトの場合' do
+        it '作成時期が古い順に並んでいること' do
+          expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+          expect(page.text).to_not match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        end
+
+        it '自分が登録した場所しか表示されていないこと' do
+          expect(page).to have_content 'tokyo-station'
+          expect(page).to have_content 'yokohama-station'
+          expect(page).to have_content 'sapporo-station'
+          expect(page).to_not have_content 'osaka-station'
+        end
+      end
+
+      context '古い順に並び替える場合' do
+        before do
+          click_link '新しい順'
+          sleep(3)
+        end
+
+        it 'デフォルトの状態では無く、新しい順に並んでいること' do
+          expect(page.text).to match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+          expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+        end
+
+        it '作成時期が古い順に並んでいること' do
+          click_link '古い順'
+          expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+          expect(page.text).to_not match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        end
+
+        it '自分が登録した場所しか表示されていないこと' do
+          click_link '古い順'
+          expect(page).to have_content 'tokyo-station'
+          expect(page).to have_content 'yokohama-station'
+          expect(page).to have_content 'sapporo-station'
+          expect(page).to_not have_content 'osaka-station'
+        end
+      end
+
+      context '新しい順に並び替える場合' do
+        before do
+          click_link '新しい順'
+        end
+
+        it '作成時期が新しい順に並んでいること' do
+          expect(page.text).to match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+          expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+        end
+
+        it '自分が登録した場所しか表示されていないこと' do
+          expect(page).to have_content 'tokyo-station'
+          expect(page).to have_content 'yokohama-station'
+          expect(page).to have_content 'sapporo-station'
+          expect(page).to_not have_content 'osaka-station'
+        end
+      end
+
+      context '評価が高い順に並び替える場合' do
+        before do
+          click_link '評価が高い順'
+        end
+
+        it 'googleでの評価が高い順(yokohama 5,sapporo 3,tokyo 1の順番)に並んでいること' do
+          expect(page.text).to match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+          expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+        end
+
+        it '自分が登録した場所しか表示されていないこと' do
+          expect(page).to have_content 'tokyo-station'
+          expect(page).to have_content 'yokohama-station'
+          expect(page).to have_content 'sapporo-station'
+          expect(page).to_not have_content 'osaka-station'
+        end
+      end
+
+      context '全て表示をクリックした場合' do
+        before do
+          click_link '全て表示'
+        end
+
+        it 'デフォルトの状態(古い順)で並んでいること' do
+          expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'yokohama-station'}/m)
+          expect(page.text).to_not match(/#{'yokohama-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        end
+
+        it '自分が登録した場所しか表示されていないこと' do
+          expect(page).to have_content 'tokyo-station'
+          expect(page).to have_content 'yokohama-station'
+          expect(page).to have_content 'sapporo-station'
+          expect(page).to_not have_content 'osaka-station'
+        end
+      end
+    end
+
+    describe '全てのおすすめ一覧ページ' do
+      context 'デフォルトの場合' do
+        it '作成時期が古い順に並んでいること' do
+          expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'osaka-station'}.*#{'yokohama-station'}/m)
+          expect(page.text).to_not match(/#{'yokohama-station'}.*#{'osaka-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        end
+      end
+
+      context '古い順に並び替える場合' do
+        before do
+          click_link '新しい順'
+          sleep(3)
+        end
+
+        it 'デフォルトの状態では無く、新しい順に並んでいること' do
+          expect(page.text).to match(/#{'yokohama-station'}.*#{'osaka-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+          expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'osaka-station'}.*#{'yokohama-station'}/m)
+        end
+
+        it '作成時期が古い順に並んでいること' do
+          click_link '古い順'
+          expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'osaka-station'}.*#{'yokohama-station'}/m)
+          expect(page.text).to_not match(/#{'yokohama-station'}.*#{'osaka-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+        end
+      end
+
+      context '新しい順に並び替える場合' do
+        before do
+          click_link '新しい順'
+        end
+
+        it '作成時期が新しい順に並んでいること' do
+          expect(page.text).to match(/#{'yokohama-station'}.*#{'osaka-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+          expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'osaka-station'}.*#{'yokohama-station'}/m)
+        end
+      end
+
+      context '評価が高い順に並び替える場合' do
+        before do
+          click_link '評価が高い順'
+        end
+
+        it 'googleでの評価が高い順(yokohama 5,oska 4,sapporo 3,tokyo 1の順番)に並んでいること' do
+          expect(page.text).to match(/#{'yokohama-station'}.*#{'osaka-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
+          expect(page.text).to_not match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'osaka-station'}.*#{'yokohama-station'}/m)
+        end
+      end
+
+      context '全て表示をクリックした場合' do
+        before do
+          click_link '全て表示'
+        end
+
+        it 'デフォルトの状態(古い順)で並んでいること' do
+          expect(page.text).to match(/#{'tokyo-station'}.*#{'sapporo-station'}.*#{'osaka-station'}.*#{'yokohama-station'}/m)
+          expect(page.text).to_not match(/#{'yokohama-station'}.*#{'osaka-station'}.*#{'sapporo-station'}.*#{'tokyo-station'}/m)
         end
       end
     end

@@ -110,31 +110,4 @@ module SystemHelpers
     fill_in 'おすすめコメント', with: 'good'
     click_button '登録を完了する'
   end
-
-  #   def tokyo_station2_create_use_in_recommend_place
-  #     tokyo_station2_create_use_in_gone_place
-  #     click_link 'tokyo-station2'
-  #     click_button 'おすすめに公開する'
-  #     fill_in '登録名', with: 'tokyo-station2'
-  #     fill_in 'おすすめコメント', with: 'good2'
-  #     click_button '登録を完了する'
-  #   end
-
-  #   def sapporo_station_create_use_in_recommend_place
-  #     sapporo_station_create_use_in_gone_place
-  #     click_link 'sapporo-station'
-  #     click_button 'おすすめに公開する'
-  #     fill_in '登録名', with: 'sapporo-station'
-  #     fill_in 'おすすめコメント', with: 'amazing'
-  #     click_button '登録を完了する'
-  #   end
-
-  #   def yokohama_station_create_use_in_recommend_place
-  #     yokohama_station_create_use_in_gone_place
-  #     click_link 'yokohama-station'
-  #     click_button 'おすすめに公開する'
-  #     fill_in '登録名', with: 'yokohama-station'
-  #     fill_in 'おすすめコメント', with: 'good'
-  #     click_button '登録を完了する'
-  #   end
 end
