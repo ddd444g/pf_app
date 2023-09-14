@@ -594,4 +594,61 @@ RSpec.describe 'GonePlaces_system', type: :system do
       end
     end
   end
+
+  describe 'もう一度行きたいを解除', js: true do
+    before do
+      tokyo_station_create_use_in_gone_place
+      click_button 'もう一度行きたい'
+    end
+
+    it 'beforeで作られたtokyo-stationがもう一度行きたいに登録されていること' do
+      expect(page).to have_content 'tokyo-stationをもう一度行きたいに登録しました'
+      expect(page).to have_content '登録済みです'
+      within('.once-again-places') do
+        expect(page).to have_button('解除する')
+        expect(page).to have_content('tokyo-station')
+      end
+    end
+
+    context 'indexページで解除する場合' do
+      it 'もう一度行きたいが解除されもう一度行きたい一覧から消えること' do
+        click_button '解除する'
+        sleep(2)
+        expect(page).to have_content 'tokyo-stationのもう一度行きたいを解除しました'
+        expect(page).to have_button('もう一度行きたい')
+        within('.once-again-places') do
+          expect(page).to_not have_button('解除する')
+          expect(page).to_not have_content('tokyo-station')
+        end
+      end
+    end
+
+    context '詳細ページで解除する場合' do
+      before do
+        click_link 'tokyo-station'
+      end
+
+      it 'もう一度行きたいに登録されている状態であること' do
+        expect(page).to have_button('解除する')
+      end
+
+      it '解除ボタンを押すと解除メッセージが表示され、登録ボタンに変わること' do
+        click_button '解除する'
+        sleep(2)
+        expect(page).to have_content 'tokyo-stationのもう一度行きたいを解除しました'
+        expect(page).to have_button('登録する')
+      end
+
+      it '解除ボタンを押し一覧ページに戻るともう一度行きたい一覧に登録されていないこと' do
+        click_button '解除する'
+        sleep(2)
+        click_link '訪問済み一覧ページへ'
+        expect(page).to have_button('もう一度行きたい')
+        within('.once-again-places') do
+          expect(page).to_not have_button('解除する')
+          expect(page).to_not have_content('tokyo-station')
+        end
+      end
+    end
+  end
 end
