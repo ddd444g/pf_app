@@ -100,4 +100,14 @@ module SystemHelpers
     select('others', from: 'gone_place_category_id')
     click_button '登録を完了する'
   end
+
+  # recommend_placeで使用
+  def tokyo_station_create_use_in_recommend_place
+    tokyo_station_create_use_in_gone_place
+    click_link 'tokyo-station'
+    click_button 'おすすめに公開する'
+    fill_in '登録名', with: 'tokyo-station'
+    fill_in 'おすすめコメント', with: 'good'
+    click_button '登録を完了する'
+  end
 end
