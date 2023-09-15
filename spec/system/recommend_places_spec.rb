@@ -650,4 +650,87 @@ RSpec.describe 'RecmmendPlaces_system', type: :system do
       end
     end
   end
+
+  describe '行きたい場所への保存機能', js: true do
+    let!(:gone_place) { create(:gone_place, user_id: other_user.id, category_id: category.id) }
+    let!(:osaka) do
+      create(:recommend_place, recommend_place_name: 'osaka-station', recommend_comment: 'nice',
+                               googlemap_name: 'Osaka Station', address: 'Kansai',
+                               rating: 1, user_id: other_user.id,
+                               category_id: category.id, gone_place: gone_place)
+    end
+
+    let!(:gone_place2) { create(:gone_place, user_id: user.id, category_id: category.id) }
+    let!(:tokyo) do
+      create(:recommend_place, recommend_place_name: 'tokyo-station', recommend_comment: 'nice',
+                               googlemap_name: 'Tokyo Station', address: 'Kanto',
+                               rating: 1, user_id: user.id,
+                               category_id: category.id, gone_place: gone_place2)
+    end
+
+    before do
+      click_link 'おすすめ'
+    end
+
+    describe '他の人が投稿したおすすめ場所' do
+      before do
+        click_link 'osaka-station'
+        click_button '行きたい場所に登録'
+        sleep(2)
+      end
+
+      context 'フォームの入力値が正常の場合' do
+        it '行きたい場所への登録が完了すること' do
+          fill_in '登録名', with: 'osaka-station'
+          fill_in 'memo', with: 'Osaka'
+          click_button '登録を完了する'
+          expect(page).to have_content 'osaka-stationを追加しました'
+        end
+      end
+
+      context 'すでに一度行きたい場所に登録している場合' do
+        before do
+          fill_in '登録名', with: 'osaka-station'
+          fill_in 'memo', with: 'Osaka'
+          click_button '登録を完了する'
+          click_link 'おすすめ'
+          click_link 'osaka-station'
+          click_button '行きたい場所に登録'
+          sleep(2)
+        end
+
+        it 'すでに登録済みですのテキストが表示されること' do
+          expect(page).to have_content 'この場所はすでに行きたい場所へ登録済みです'
+        end
+
+        it '一度行きたい場所へ登録済みでも再度行きたい場所に登録できること' do
+          fill_in '登録名', with: 'osaka-station'
+          fill_in 'memo', with: 'Osaka'
+          click_button '登録を完了する'
+          expect(page).to have_content 'osaka-stationを追加しました'
+        end
+      end
+
+      context '登録名がnilの場合' do
+        it '登録名のバリデーションでひっかりエラーメッセージが表示されること' do
+          fill_in '登録名', with: nil
+          fill_in 'memo', with: 'Osaka'
+          click_button '登録を完了する'
+          sleep(3)
+          expect(page).to have_content '登録名を入力してください'
+        end
+      end
+    end
+
+    describe '自分がが投稿したおすすめ場所' do
+      before do
+        click_link 'tokyo-station'
+      end
+
+      it '行きたい場所に登録ボタンが表示されていないこと、代わりに編集ボタンが表示されていること' do
+        expect(page).to have_link '編集する'
+        expect(page).to_not have_button '行きたい場所に登録'
+      end
+    end
+  end
 end
