@@ -2,7 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'PlanPlaces_system', type: :system do
   let!(:user) { create(:user) }
+  let!(:category) { create(:category, name: 'others') }
   let!(:plan) { create(:plan, plan_name: 'trip', start_time: '2023-01-01 12:00:00', end_time: '2023-01-02 12:00:00', user: user) }
+  let!(:plan_place) do
+    create(:plan_place, plan_place_name: 'kobe-station', memo: 'Hyogo', plan: plan, user: user, category: category)
+  end
 
   before do
     visit login_path
@@ -30,7 +34,7 @@ RSpec.describe 'PlanPlaces_system', type: :system do
           # 自動設定されたのを自分で上書き
           fill_in '登録名', with: 'sapporo-station'
           fill_in 'memo', with: 'Hokkaido'
-          select('others', from: 'plan_place_category_id')
+          select('others', from: 'plan_place_category_id', match: :first)
           click_button '登録を完了する'
           sleep(3)
           expect(page).to have_content 'sapporo-station'
@@ -46,7 +50,7 @@ RSpec.describe 'PlanPlaces_system', type: :system do
           # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
           sleep(3)
           fill_in 'memo', with: 'Hokkaido'
-          select('others', from: 'plan_place_category_id')
+          select('others', from: 'plan_place_category_id', match: :first)
           click_button '登録を完了する'
           expect(page).to have_content 'Sapporo Station'
           expect(page).to have_content '未定'
@@ -58,7 +62,7 @@ RSpec.describe 'PlanPlaces_system', type: :system do
         it 'latitude,longitudeのバリデーションでひっかりエラーメッセージが表示されること' do
           fill_in '登録名', with: 'sapporo-station'
           fill_in 'memo', with: 'Hokkaido'
-          select('others', from: 'plan_place_category_id')
+          select('others', from: 'plan_place_category_id', match: :first)
           click_button '登録を完了する'
           sleep(3)
           expect(page).to have_content 'mapで検索し位置を指定してください'
@@ -91,7 +95,7 @@ RSpec.describe 'PlanPlaces_system', type: :system do
           end
           fill_in '登録名', with: 'sapporo-station'
           fill_in 'memo', with: 'Hokkaido'
-          select('others', from: 'plan_place_category_id')
+          select('others', from: 'plan_place_category_id', match: :first)
           click_button '登録を完了する'
           expect(page).to have_content 'mapで検索し位置を指定してください'
           expect(page).to have_content '登録したい位置にピンを刺してください'
@@ -107,7 +111,7 @@ RSpec.describe 'PlanPlaces_system', type: :system do
           sleep(3)
           fill_in '登録名', with: nil
           fill_in 'memo', with: 'Hokkaido'
-          select('others', from: 'plan_place_category_id')
+          select('others', from: 'plan_place_category_id', match: :first)
           click_button '登録を完了する'
           sleep(3)
           expect(page).to have_content '登録名を入力してください'
@@ -116,20 +120,20 @@ RSpec.describe 'PlanPlaces_system', type: :system do
     end
 
     describe '行きたい場所、もう一度行きたい場所から登録' do
-      let!(:category) { create(:category, name: 'others') }
       let!(:place) do
         create(:place, name: 'osaka-station', memo: 'Osaka',
-                       googlemap_name: 'Osaka Station', address: 'Osaka', user_id: user.id,
-                       category_id: category.id)
+                       googlemap_name: 'Osaka Station', address: 'Osaka', user: user,
+                       category: category)
       end
       let!(:gone_place) do
         create(:gone_place, name: 'tokyo-station',
                             googlemap_name: 'Tokyo Station', address: 'Tokyo',
-                            once_again: true, user_id: user.id, category_id: category.id)
+                            once_again: true, user: user, category: category)
       end
       before do
         click_link '一覧ページへ'
       end
+
       describe '行きたい場所から登録' do
         before do
           within('.places') do
@@ -204,6 +208,81 @@ RSpec.describe 'PlanPlaces_system', type: :system do
             expect(page).to have_content '登録名を入力してください'
           end
         end
+      end
+    end
+  end
+
+  describe 'PlanPlace編集', js: true do
+    before do
+      click_link plan_place.plan_place_name
+      click_link '編集する'
+    end
+
+    it 'beforeで作られたテストデータが表示されていること' do
+      expect(page).to have_field('登録名', with: plan_place.plan_place_name)
+      expect(page).to have_field('memo', with: plan_place.memo)
+    end
+
+    context 'フォームの入力値が正常の場合' do
+      it 'PlanPlaceの編集が成功し編集が反映されていること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'tokyo-station'")
+        find_by_id('search-button').click
+        # mapで検索した場所のgooglemapでの正式名称が登録名の入力フォームに自動設定されるのを待つため3秒待機
+        sleep(3)
+        # 自動設定されたのを自分で上書き
+        fill_in '登録名', with: 'tokyo-station'
+        fill_in 'memo', with: 'Tokyo'
+        select('amusement-park', from: 'plan_place_category_id')
+        click_button '編集を完了する'
+        expect(page).to have_content 'tokyo-station'
+        expect(page).to have_content 'Tokyo'
+        expect(page).to have_content 'amusement-park'
+        expect(page).not_to have_content 'kobe-station'
+        expect(page).not_to have_content 'Hyogo'
+      end
+    end
+
+    context '何もせず完了ボタンを押した場合' do
+      it 'PlanPlaceの編集がされず元のままであること' do
+        click_button '編集を完了する'
+        expect(page).to have_content 'kobe-station'
+        expect(page).to have_content 'Hyogo'
+        expect(page).to have_content 'others'
+      end
+    end
+
+    context 'nameがnilの場合' do
+      it 'nameのバリデーションに引っかかりエラーメッセージが表示されること' do
+        fill_in '登録名', with: nil
+        click_button '編集を完了する'
+        expect(page).to have_content '登録名を入力してください'
+      end
+    end
+
+    context 'mapで検索しても場所が出てこない場合' do
+      it 'nilで検索した場合、位置情報は更新されずに編集は完了すること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = ' '")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+        click_button '編集を完了する'
+        expect(page).to have_content 'kobe-station'
+        expect(page).to have_content 'Hyogo'
+        expect(page).to have_content 'others'
+      end
+
+      it '存在しない場所が検索結果の場合、位置情報は更新されずに編集は完了すること' do
+        # mapで検索
+        page.execute_script("document.getElementById('address').value = 'test-test-hoge-hoge'")
+        page.accept_confirm("該当する結果がありませんでした") do
+          find_by_id('search-button').click
+        end
+        click_button '編集を完了する'
+        expect(page).to have_content 'kobe-station'
+        expect(page).to have_content 'Hyogo'
+        expect(page).to have_content 'others'
       end
     end
   end
