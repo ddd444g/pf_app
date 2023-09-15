@@ -124,8 +124,8 @@ RSpec.describe 'PlanPlaces_system', type: :system do
       end
       let!(:gone_place) do
         create(:gone_place, name: 'tokyo-station',
-                       googlemap_name: 'Tokyo Station', address: 'Tokyo',
-                       once_again: true, user_id: user.id, category_id: category.id)
+                            googlemap_name: 'Tokyo Station', address: 'Tokyo',
+                            once_again: true, user_id: user.id, category_id: category.id)
       end
       before do
         click_link '一覧ページへ'
