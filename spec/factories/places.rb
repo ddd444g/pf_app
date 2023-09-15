@@ -5,8 +5,7 @@ FactoryBot.define do
     longitude { 1 }
     memo { "TestMemo" }
     googlemap_name { "TestGooglemapName" }
-    address { "t
-      TestAddress" }
+    address { "TestAddress" }
     rating { 5 }
     visited { false }
     website { "HttpsTestWebsiteJp" }
