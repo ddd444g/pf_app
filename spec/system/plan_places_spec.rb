@@ -286,4 +286,33 @@ RSpec.describe 'PlanPlaces_system', type: :system do
       end
     end
   end
+
+  describe 'PlanPlace削除', js: true do
+    it '作成したデータが存在すること' do
+      expect(page).to have_content plan_place.plan_place_name
+      expect(page).to have_content plan_place.memo
+    end
+
+    context '削除する場合' do
+      it '削除が成功し表示されていないこと' do
+        click_link '削除'
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content "#{plan_place.plan_place_name}を削除しました"
+        # 削除完了メッセージに'{plan_place.plan_place_name'が入っているためリロード
+        visit current_path
+        expect(page).not_to have_content plan_place.plan_place_name
+        expect(page).not_to have_content plan_place.memo
+      end
+    end
+
+    context '削除しない場合' do
+      it 'キャンセルして削除されていないこと' do
+        click_link '削除'
+        # 削除をキャンセル
+        page.driver.browser.switch_to.alert.dismiss
+        expect(page).to have_content plan_place.plan_place_name
+        expect(page).to have_content plan_place.memo
+      end
+    end
+  end
 end
