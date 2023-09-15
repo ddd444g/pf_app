@@ -302,6 +302,7 @@ RSpec.describe 'GonePlaces_system', type: :system do
         fill_in '登録名', with: 'tokyo-station'
         fill_in 'おすすめコメント', with: 'good'
         click_button '登録を完了する'
+        sleep(2)
       end
 
       it '登録ボタンが表示されずにおすすめに公開済みですのテキストが出ること' do
