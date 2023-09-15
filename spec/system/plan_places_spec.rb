@@ -5,7 +5,8 @@ RSpec.describe 'PlanPlaces_system', type: :system do
   let!(:category) { create(:category, name: 'others') }
   let!(:plan) { create(:plan, plan_name: 'trip', start_time: '2023-01-01 12:00:00', end_time: '2023-01-02 12:00:00', user: user) }
   let!(:plan_place) do
-    create(:plan_place, plan_place_name: 'kobe-station', memo: 'Hyogo', plan: plan, user: user, category: category)
+    create(:plan_place, plan_place_name: 'kobe-station', memo: 'Hyogo', plan: plan, user: user, category: category,
+                        start_time: '2023-01-01 12:00:00')
   end
 
   before do
@@ -312,6 +313,34 @@ RSpec.describe 'PlanPlaces_system', type: :system do
         page.driver.browser.switch_to.alert.dismiss
         expect(page).to have_content plan_place.plan_place_name
         expect(page).to have_content plan_place.memo
+      end
+    end
+  end
+
+  describe 'PlanPlace訪問予定時刻の並び順', js: true do
+    let!(:plan_place2) do
+      create(:plan_place, plan_place_name: 'hakata-station', plan: plan, user: user, category: category,
+                          start_time: '2023-01-01 15:00:00')
+    end
+    let!(:plan_place3) do
+      create(:plan_place, plan_place_name: 'sendai-station', plan: plan, user: user, category: category,
+                          start_time: '2023-01-02 10:00:00')
+    end
+
+    context '未定がない場合' do
+      it '予定時刻が早い順に上から並んでいること' do
+        visit current_path
+        expect(page.text).to match(/#{'kobe-station'}.*#{'hakata-station'}.*#{'sendai-station'}/m)
+      end
+    end
+
+    context '未定がある場合' do
+      let!(:plan_place4) do
+        create(:plan_place, plan_place_name: 'sapporo-station', plan: plan, user: user, category: category)
+      end
+      it '未定が一番上でその下から予定時刻が早い順に並んでいること' do
+        visit current_path
+        expect(page.text).to match(/#{'sapporo-station'}.*#{'kobe-station'}.*#{'hakata-station'}.*#{'sendai-station'}/m)
       end
     end
   end
