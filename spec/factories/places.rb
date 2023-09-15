@@ -1,13 +1,14 @@
 FactoryBot.define do
   factory :place do
-    name { "test_place" }
+    name { "TestPlace" }
     latitude { 1 }
     longitude { 1 }
-    memo { "test_memo" }
-    googlemap_name { "test_googlemap_name" }
-    address { "test_address" }
+    memo { "TestMemo" }
+    googlemap_name { "TestGooglemapName" }
+    address { "t
+      TestAddress" }
     rating { 5 }
     visited { false }
-    website { "https.test_website.jp" }
+    website { "HttpsTestWebsiteJp" }
   end
 end

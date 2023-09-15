@@ -19,7 +19,7 @@ RSpec.describe 'PlanPlaces_system', type: :system do
       find_by_id('create').click
     end
 
-    describe 'モーダルフォームから新規作成' do
+    describe 'モーダルフォームから登録' do
       context 'フォームの入力値が正常の場合' do
         it 'PlanPlaceの新規作成が成功し新規作成した場所が表示されていること' do
           # mapで検索
@@ -111,6 +111,46 @@ RSpec.describe 'PlanPlaces_system', type: :system do
           click_button '登録を完了する'
           sleep(3)
           expect(page).to have_content '登録名を入力してください'
+        end
+      end
+    end
+
+    describe '行きたい場所、もう一度行きたい場所からから登録' do
+      let!(:category) { create(:category, name: 'others') }
+      let!(:place) do
+        create(:place, name: 'osaka-station', memo: 'Osaka',
+                       googlemap_name: 'Osaka Station', address: 'Osaka', user_id: user.id,
+                       category_id: category.id)
+      end
+      before do
+        click_link '一覧ページへ'
+      end
+      describe '行きたい場所から登録' do
+        before do
+          within('.places') do
+            click_link '登録する'
+          end
+        end
+
+        context 'フォームの入力値が正常の場合' do
+          it 'PlanPlaceの新規作成が成功し新規作成した場所が表示されていること' do
+            # 自動設定されたのを自分で上書き
+            fill_in '登録名', with: 'osaka-station'
+            fill_in 'memo', with: 'Osaka'
+            click_button '登録を完了する'
+            sleep(3)
+            expect(page).to have_content 'osaka-station'
+            expect(page).to have_content '未定'
+            expect(page).to have_content 'others'
+          end
+
+          it 'nameを登録しなくてもplaceの元のnameが入力されていること' do
+            fill_in 'memo', with: 'Osaka'
+            click_button '登録を完了する'
+            expect(page).to have_content 'osaka-station'
+            expect(page).to have_content '未定'
+            expect(page).to have_content 'others'
+          end
         end
       end
     end
