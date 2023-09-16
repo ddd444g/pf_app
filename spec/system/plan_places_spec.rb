@@ -299,7 +299,7 @@ RSpec.describe 'PlanPlaces_system', type: :system do
         click_link '削除'
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content "#{plan_place.plan_place_name}を削除しました"
-        # 削除完了メッセージに'{plan_place.plan_place_name'が入っているためリロード
+        # 削除完了メッセージに'plan_place.plan_place_name'が入っているためリロード
         visit current_path
         expect(page).not_to have_content plan_place.plan_place_name
         expect(page).not_to have_content plan_place.memo
