@@ -22,7 +22,7 @@
             <td class="px-6 py-4 whitespace-nowrap"><%= place.rating %></td>
             <td class="px-6 py-4 whitespace-nowrap">
               <% if place.website == "websiteはありません" %>
-            websiteはありません
+                websiteはありません
               <% else %>
                 <%= link_to place.website, place.website, target: "_blank", class: "text-blue-500 underline hover:no-underline hover:text-blue-700" %>
               <% end %>

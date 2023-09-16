@@ -1,8 +1,13 @@
 FactoryBot.define do
   factory :place do
-    name { "MyString" }
-    latitude { 1.5 }
-    longitude { 1.5 }
-    user_id { 1 }
+    name { "TestPlace" }
+    latitude { 1 }
+    longitude { 1 }
+    memo { "TestMemo" }
+    googlemap_name { "TestGooglemapName" }
+    address { "TestAddress" }
+    rating { 5 }
+    visited { false }
+    website { "HttpsTestWebsiteJp" }
   end
 end

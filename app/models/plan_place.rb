@@ -5,13 +5,12 @@ class PlanPlace < ApplicationRecord
   belongs_to :gone_place, optional: true
   belongs_to :category
 
-  geocoded_by :plan_place_name
-  after_validation :geocode, if: :plan_place_name_changed?
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
 
   validates :plan_place_name, presence: true
   validates :latitude, presence: { message: "で検索し位置を指定してください" }
   validates :longitude, presence: { message: "したい位置にピンを刺してください" }
-  validates :website, presence: true
 
   validate :plan_place_start_time_within_plan
 

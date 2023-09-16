@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.4.0
+  browser-tools: circleci/browser-tools@1.4.0
 
 jobs:
   build:
@@ -27,12 +28,13 @@ jobs:
 
   rspec:
     docker:
-      - image: cimg/ruby:2.7.3-node
+      - image: cimg/ruby:2.7.3-browsers
       - image: cimg/mysql:5.7
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: myapp_test
           MYSQL_USER: test
+          LANG: 'ja_JP.UTF-8'
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
@@ -42,7 +44,10 @@ jobs:
     steps:
       - checkout:
           path: ~/pf_app
+      - run: sudo apt-get update
       - ruby/install-deps
+      - browser-tools/install-chrome:
+          chrome-version: 116.0.5845.96
       - run:
           name: yarn Install
           command: yarn install
@@ -52,6 +57,9 @@ jobs:
       - run:
           name: Database setup
           command: bundle exec rails db:migrate
+      - run:
+          name: Seed setup
+          command: bundle exec rails db:seed RAILS_ENV=test
       - run:
           name: Run rspec
           command: bundle exec rails spec

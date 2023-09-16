@@ -1,10 +1,11 @@
 FactoryBot.define do
   factory :plan_place do
-    plan_place_name { "MyString" }
-    memo { "MyString" }
-    latitude { 1.5 }
-    longitude { 1.5 }
-    user_id { 1 }
-    plan_id { 1 }
+    plan_place_name { "TestPlace" }
+    latitude { 1 }
+    longitude { 1 }
+    memo { "TestMemo" }
+    googlemap_name { "TestGooglemapName" }
+    address { "TestAddress" }
+    website { "HttpsTestWebsiteJp" }
   end
 end

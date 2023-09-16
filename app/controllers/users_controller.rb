@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = 'ユーザーを新規登録しました'
-      redirect_to user_path(@user)
+      redirect_to places_path
     else
       render 'new'
     end
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(params.require(:user).permit(:name, :email, :password, :password_confirmation))
-      flash[:notice] = "ユーザーIDが「#{@user.id}」の情報を更新しました"
+      flash[:notice] = "編集が完了しました"
       redirect_to user_path(@user)
     else
       render 'edit'

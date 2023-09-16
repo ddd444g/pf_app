@@ -1,7 +1,7 @@
 <h2 class="block text-gray-700 font-bold text-xl mb-2 pt-2">Map</h2>
 
 <input id="address" type="textbox" value="" placeholder="行きたい場所を入力"  class="bg-gray-100 shadow appearance-none border rounded py-2 px-4 mr-2 ml-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300">
-<input type="button" value="検索" onclick="codeAddress()" class="text-gray-100 bg-gray-400 hover:bg-gray-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue">
+<input type="button" value="検索" onclick="codeAddress()" id="search-button" class="text-gray-100 bg-gray-400 hover:bg-gray-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue">
 
 <div class="mt-2 mb-2">
   <p class="block text-gray-700 font-bold mb-2">検索結果</p>
@@ -148,11 +148,11 @@
             }
 
           } else {
-            alert('該当する結果がありませんでした：' + status);
+            alert('該当する結果がありませんでした');
           }
         });
       } else {
-        alert('該当する結果がありませんでした：' + status);
+        alert('該当する結果がありませんでした');
       }
     });
   }
