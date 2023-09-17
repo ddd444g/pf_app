@@ -1,13 +1,13 @@
 <h1 class="text-center mb-4 mt-4 text-2xl font-bold text-gray-600 sm:m-4 md:text-3xl">ユーザー編集</h1>
 
-<%= render "shared/error", obj: @user %>
+<%= render "shared/error", obj: @current_user %>
 
 <div class="bg-blue-200 rounded text-center mx-auto mr-4 ml-4 pt-4 sm:mr-16 sm:ml-16 sm:pt-8 md:mr-32 md:ml-32 lg:mr-64 lg:ml-64">
-  <%= render "shared/user_form", user: @user %>
+  <%= render "shared/user_form", user: @current_user %>
 </div>
 
 <div class="mt-12 mb-8 text-center">
   <ul class="flex justify-center">
-    <li><%= link_to "詳細ページへ", @user, class: "header-btn mr-0" %></li>
+    <li><%= link_to "詳細ページへ", @current_user, class: "header-btn mr-0" %></li>
   </ul>
 </div>

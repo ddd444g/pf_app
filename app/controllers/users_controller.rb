@@ -29,18 +29,16 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
-    if @user.update(params.require(:user).permit(:name, :email, :password, :password_confirmation))
+    @current_user = User.find(params[:id])
+    if @current_user.update(params.require(:user).permit(:name, :email, :password, :password_confirmation))
       flash[:notice] = "編集が完了しました"
-      redirect_to user_path(@user)
+      redirect_to user_path(@current_user)
     else
       render 'edit'
     end
@@ -97,10 +95,9 @@ class UsersController < ApplicationController
   end
 
   def ensure_guest_user
-    @user = User.find(params[:id])
-    if @user.guest?
+    if @current_user.guest?
       flash[:notice] = "ゲストユーザーの編集はできません"
-      redirect_to user_path(@user)
+      redirect_to user_path(@current_user)
     end
   end
 end

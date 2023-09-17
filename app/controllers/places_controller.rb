@@ -3,15 +3,13 @@ class PlacesController < ApplicationController
   before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @user = User.find_by(id: session[:user_id])
-    @places = @user.places.includes(:category).sort_places(params[:sort_param]).search(params[:search])
+    @places = @current_user.places.includes(:category).sort_places(params[:sort_param]).search(params[:search])
     @place = Place.new
     @search_keyword = params[:search]
     @places_count = @places.count
   end
 
   def create
-    @user = User.find_by(id: session[:user_id])
     @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id, :googlemap_name,
 :address, :rating, :category_id, :website))
     if @place.save

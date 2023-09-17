@@ -90,7 +90,7 @@
               </div>
               <%= f.hidden_field :latitude,:value => nil, id: :lat %>
               <%= f.hidden_field :longitude,:value => nil, id: :lng %>
-              <%= f.hidden_field :user_id, value: @user.id %>
+              <%= f.hidden_field :user_id, value: @current_user.id %>
               <%= f.hidden_field :googlemap_name, value: '', id: :name %>
               <%= f.hidden_field :address, value: '', id: :formatted_address %>
               <%= f.hidden_field :rating, value: '', id: :rating %>

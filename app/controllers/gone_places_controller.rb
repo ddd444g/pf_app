@@ -3,9 +3,8 @@ class GonePlacesController < ApplicationController
   before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @user = User.find_by(id: session[:user_id])
-    @gone_places = @user.gone_places.includes(:category).sort_gone_places(params[:sort_param]).search(params[:search])
-    @once_again_places = @user.gone_places.where(once_again: true)
+    @gone_places = @current_user.gone_places.includes(:category).sort_gone_places(params[:sort_param]).search(params[:search])
+    @once_again_places = @current_user.gone_places.where(once_again: true)
     @gone_place = GonePlace.new
     @search_keyword = params[:search]
     @gone_places_count = @gone_places.count
@@ -25,7 +24,6 @@ class GonePlacesController < ApplicationController
   end
 
   def not_from_place_create
-    @user = User.find_by(id: session[:user_id])
     @gone_place = GonePlace.new(params.require(:gone_place).
     permit(:name, :user_id, :review, :score, :latitude, :longitude, :googlemap_name,
 :address, :rating, :category_id, :website))
