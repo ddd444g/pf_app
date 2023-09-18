@@ -1,6 +1,6 @@
 class GonePlacesController < ApplicationController
   before_action :authenticate_user
-  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_gone_place_ensure_correct_user, only: [:show, :edit, :update, :destroy, :once_again, :cancel_once_again]
 
   def index
     @gone_places = @current_user.gone_places.includes(:category).sort_gone_places(params[:sort_param]).search(params[:search])
@@ -35,16 +35,13 @@ class GonePlacesController < ApplicationController
   end
 
   def show
-    @gone_place = GonePlace.find(params[:id])
     @recommend_place = RecommendPlace.new
   end
 
   def edit
-    @gone_place = GonePlace.find(params[:id])
   end
 
   def update
-    @gone_place = GonePlace.find(params[:id])
     if @gone_place.update(params.require(:gone_place).permit(:name, :review, :score, :latitude, :longitude,
 :googlemap_name, :address, :rating, :category_id, :website))
       flash[:notice] = "訪問済み場所の情報を更新しました"
@@ -55,7 +52,6 @@ class GonePlacesController < ApplicationController
   end
 
   def destroy
-    @gone_place = GonePlace.find(params[:id])
     if @gone_place.once_again
       @once_again_place = @gone_place
       @once_again_place.destroy
@@ -66,7 +62,6 @@ class GonePlacesController < ApplicationController
   end
 
   def once_again
-    @gone_place = GonePlace.find(params[:id])
     @once_again_places = @current_user.gone_places.where(once_again: true)
     if @gone_place.once_again
       flash.now[:notice] = "#{@gone_place.name}はすでに登録されています"
@@ -77,7 +72,6 @@ class GonePlacesController < ApplicationController
   end
 
   def cancel_once_again
-    @gone_place = GonePlace.find(params[:id])
     if @gone_place.once_again
       @gone_place.update(once_again: false)
       flash.now[:notice] = "#{@gone_place.name}のもう一度行きたいを解除しました"
@@ -86,7 +80,7 @@ class GonePlacesController < ApplicationController
     end
   end
 
-  def ensure_correct_user
+  def set_gone_place_ensure_correct_user
     @gone_place = GonePlace.find(params[:id])
     if @gone_place.user != @current_user
       flash[:notice] = "権限がありません"

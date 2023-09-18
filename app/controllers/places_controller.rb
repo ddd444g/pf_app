@@ -1,6 +1,6 @@
 class PlacesController < ApplicationController
   before_action :authenticate_user
-  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_place_ensure_correct_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @places = @current_user.places.includes(:category).sort_places(params[:sort_param]).search(params[:search])
@@ -20,16 +20,13 @@ class PlacesController < ApplicationController
   end
 
   def show
-    @place = Place.find(params[:id])
     @gone_place = GonePlace.new
   end
 
   def edit
-    @place = Place.find(params[:id])
   end
 
   def update
-    @place = Place.find(params[:id])
     if @place.update(params.require(:place).permit(:name, :memo, :latitude, :longitude, :googlemap_name, :address,
 :rating, :category_id, :website))
       flash[:notice] = "登録内容を更新しました"
@@ -40,7 +37,6 @@ class PlacesController < ApplicationController
   end
 
   def destroy
-    @place = Place.find(params[:id])
     @place.destroy
     flash.now[:notice] = "#{@place.name}を削除しました"
   end
@@ -56,7 +52,7 @@ class PlacesController < ApplicationController
     end
   end
 
-  def ensure_correct_user
+  def set_place_ensure_correct_user
     @place = Place.find(params[:id])
     if @place.user != @current_user
       flash[:notice] = "権限がありません"

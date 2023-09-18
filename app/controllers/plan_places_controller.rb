@@ -1,6 +1,6 @@
 class PlanPlacesController < ApplicationController
   before_action :authenticate_user
-  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_plan_place_ensure_correct_user, only: [:show, :edit, :update, :destroy]
 
   def create
     @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
@@ -38,15 +38,12 @@ class PlanPlacesController < ApplicationController
   end
 
   def show
-    @plan_place = PlanPlace.find(params[:id])
   end
 
   def edit
-    @plan_place = PlanPlace.find(params[:id])
   end
 
   def update
-    @plan_place = PlanPlace.find(params[:id])
     if @plan_place.update(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
 :start_time, :googlemap_name, :address, :rating, :category_id, :website))
       flash[:notice] = "登録内容を更新しました"
@@ -57,12 +54,11 @@ class PlanPlacesController < ApplicationController
   end
 
   def destroy
-    @plan_place = PlanPlace.find(params[:id])
     @plan_place.destroy
     flash.now[:notice] = "#{@plan_place.plan_place_name}を削除しました"
   end
 
-  def ensure_correct_user
+  def set_plan_place_ensure_correct_user
     @plan_place = PlanPlace.find(params[:id])
     if @plan_place.user != @current_user
       flash[:notice] = "権限がありません"

@@ -1,6 +1,6 @@
 class RecommendPlacesController < ApplicationController
   before_action :authenticate_user
-  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
+  before_action :set_recommend_place_ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
     @recommend_places = RecommendPlace.includes(:user,
@@ -28,12 +28,10 @@ class RecommendPlacesController < ApplicationController
   end
 
   def edit
-    @recommend_place = RecommendPlace.find(params[:id])
     @gone_place = @recommend_place.gone_place
   end
 
   def update
-    @recommend_place = RecommendPlace.find(params[:id])
     if @recommend_place.update(params.require(:recommend_place).permit(:recommend_place_name, :recommend_comment,
 :category_id))
       flash[:notice] = "おすすめの場所の情報を更新しました"
@@ -45,7 +43,6 @@ class RecommendPlacesController < ApplicationController
   end
 
   def destroy
-    @recommend_place = RecommendPlace.find(params[:id])
     @recommend_place.destroy
     @gone_place = @recommend_place.gone_place
     @gone_place.update(recommend: false, recommend_place_id: nil)
@@ -59,7 +56,7 @@ class RecommendPlacesController < ApplicationController
     @recommend_places_count = @recommend_places.count
   end
 
-  def ensure_correct_user
+  def set_recommend_place_ensure_correct_user
     @recommend_place = RecommendPlace.find(params[:id])
     if @recommend_place.user != @current_user
       flash[:notice] = "権限がありません"

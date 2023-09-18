@@ -1,17 +1,8 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user, only: [:index, :show, :edit, :update]
+  before_action :authenticate_user, only: [:show, :edit, :update]
   before_action :forbid_login_user, only: [:new, :create, :login_form, :login]
   before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
   before_action :ensure_guest_user, only: [:edit, :update, :destroy]
-
-  def index
-    @users = User.all
-    @places = Place.all
-    @gone_places = GonePlace.all
-    @once_again_places = GonePlace.where(once_again: true)
-    @recommend_places = RecommendPlace.all
-    @plans = Plan.all
-  end
 
   def new
     @user = User.new
