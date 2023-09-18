@@ -1,4 +1,4 @@
-if Rails.env.development? || Rails.env.production?
+if Rails.env.development?
   Category.create!(name: "宿泊施設")
   Category.create!(name: "飲食店")
   Category.create!(name: "アミューズメントパーク")
