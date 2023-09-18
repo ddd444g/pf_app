@@ -1,11 +1,9 @@
 class PlanPlacesController < ApplicationController
   before_action :authenticate_user
-  before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_plan_place_ensure_correct_user, only: [:show, :edit, :update, :destroy]
 
   def create
-    @user = User.find_by(id: session[:user_id])
-    @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
-:user_id, :plan_id, :start_time, :googlemap_name, :address, :rating, :category_id, :website))
+    @plan_place = PlanPlace.new(plan_place_params_use_in_create)
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       @plan_places = @plan.plan_places
@@ -17,9 +15,7 @@ class PlanPlacesController < ApplicationController
   end
 
   def from_place_to_plan_place_create
-    @user = User.find_by(id: session[:user_id])
-    @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
-:user_id, :plan_id, :place_id, :start_time, :googlemap_name, :address, :rating, :category_id, :website))
+    @plan_place = PlanPlace.new(plan_place_params_use_in_from_place_to_plan_place_create)
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       flash[:notice] = "#{@plan_place.plan_place_name}を追加しました"
@@ -29,9 +25,7 @@ class PlanPlacesController < ApplicationController
   end
 
   def from_once_again_place_to_plan_place_create
-    @user = User.find_by(id: session[:user_id])
-    @plan_place = PlanPlace.new(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
-:user_id, :plan_id, :gone_place_id, :start_time, :googlemap_name, :address, :rating, :category_id, :website))
+    @plan_place = PlanPlace.new(plan_place_params_use_in_from_once_again_place_to_plan_place_create)
     if @plan_place.save
       @plan = Plan.find_by(id: params[:plan_place][:plan_id])
       flash[:notice] = "#{@plan_place.plan_place_name}を追加しました"
@@ -41,17 +35,13 @@ class PlanPlacesController < ApplicationController
   end
 
   def show
-    @plan_place = PlanPlace.find(params[:id])
   end
 
   def edit
-    @plan_place = PlanPlace.find(params[:id])
   end
 
   def update
-    @plan_place = PlanPlace.find(params[:id])
-    if @plan_place.update(params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
-:start_time, :googlemap_name, :address, :rating, :category_id, :website))
+    if @plan_place.update(plan_place_params_update)
       flash[:notice] = "登録内容を更新しました"
       redirect_to plan_place_path(@plan_place)
     else
@@ -60,16 +50,37 @@ class PlanPlacesController < ApplicationController
   end
 
   def destroy
-    @plan_place = PlanPlace.find(params[:id])
     @plan_place.destroy
     flash.now[:notice] = "#{@plan_place.plan_place_name}を削除しました"
   end
 
-  def ensure_correct_user
+  def set_plan_place_ensure_correct_user
     @plan_place = PlanPlace.find(params[:id])
     if @plan_place.user != @current_user
       flash[:notice] = "権限がありません"
       redirect_to @current_user ? user_path(@current_user) : :root
     end
+  end
+
+  private
+
+  def plan_place_params_use_in_create
+    params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
+      :user_id, :plan_id, :start_time, :googlemap_name, :address, :rating, :category_id, :website)
+  end
+
+  def plan_place_params_use_in_from_place_to_plan_place_create
+    params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
+      :user_id, :plan_id, :place_id, :start_time, :googlemap_name, :address, :rating, :category_id, :website)
+  end
+
+  def plan_place_params_use_in_from_once_again_place_to_plan_place_create
+    params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
+      :user_id, :plan_id, :gone_place_id, :start_time, :googlemap_name, :address, :rating, :category_id, :website)
+  end
+
+  def plan_place_params_update
+    params.require(:plan_place).permit(:plan_place_name, :memo, :latitude, :longitude,
+      :start_time, :googlemap_name, :address, :rating, :category_id, :website)
   end
 end

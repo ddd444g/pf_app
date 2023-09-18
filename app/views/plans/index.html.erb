@@ -36,7 +36,7 @@
               <div class="text-center mr-4 ml-4 pb-8 sm:mr-24 sm:ml-24 md:mr-40 md:ml-40 lg:mr-56 lg:ml-56 xl:mr-40 xl:ml-40">
                 <%= f.submit "登録を完了する", class: "w-full bg-blue-500 text-gray-100 hover:bg-blue-700 hover:text-gray-300 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue focus:bg-blue-600" %>
               </div>
-              <%= f.hidden_field :user_id, value: @user.id %>
+              <%= f.hidden_field :user_id, value: @current_user.id %>
             <% end %>
             <button class="mt-8 mb-8 bg-gray-600 text-gray-100 px-4 py-2 rounded no-outline focus:shadow-outline select-none hover:bg-gray-800 hover:text-gray-300" @click="open = false">Close</button>
           </div>

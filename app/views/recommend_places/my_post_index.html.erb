@@ -15,8 +15,8 @@
       <p class="search_keyword text-gray-700 mt-2">入力された検索ワード: <%= @search_keyword %></p>
     <% end %>
 
-    <% if @recommend_places_count > 0 %>
-      <p class="recommend_places_count text-gray-700 mt-2">表示件数: <%= @recommend_places_count %>件</p>
+    <% if @my_post_recommend_places.count > 0 %>
+      <p class="recommend_places_count text-gray-700 mt-2">表示件数: <%= @my_post_recommend_places.count %>件</p>
     <% else %>
       <p class="recommend_places_count text-gray-700 mt-2">該当する結果はありませんでした。</p>
     <% end %>
@@ -74,7 +74,7 @@
           </thead>
 
           <tbody class="bg-white divide-y divide-gray-200">
-            <% @recommend_places.each do |recommend_place| %>
+            <% @my_post_recommend_places.each do |recommend_place| %>
               <tr id="recommend_place-<%= recommend_place.id %>">
                 <td class="px-6 py-4 whitespace-nowrap"><%= link_to recommend_place.recommend_place_name, recommend_place_path(recommend_place), class: "text-gray-800 underline hover:no-underline" %></td>
                 <td class="px-6 py-4 whitespace-nowrap"><%= recommend_place.recommend_comment %></td>

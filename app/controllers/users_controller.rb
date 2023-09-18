@@ -1,17 +1,8 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user, only: [:index, :show, :edit, :update]
+  before_action :authenticate_user, only: [:show, :edit, :update]
   before_action :forbid_login_user, only: [:new, :create, :login_form, :login]
   before_action :ensure_correct_user, only: [:show, :edit, :update, :destroy]
   before_action :ensure_guest_user, only: [:edit, :update, :destroy]
-
-  def index
-    @users = User.all
-    @places = Place.all
-    @gone_places = GonePlace.all
-    @once_again_places = GonePlace.where(once_again: true)
-    @recommend_places = RecommendPlace.all
-    @plans = Plan.all
-  end
 
   def new
     @user = User.new
@@ -29,18 +20,16 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
-    if @user.update(params.require(:user).permit(:name, :email, :password, :password_confirmation))
+    @current_user = User.find(params[:id])
+    if @current_user.update(params.require(:user).permit(:name, :email, :password, :password_confirmation))
       flash[:notice] = "編集が完了しました"
-      redirect_to user_path(@user)
+      redirect_to user_path(@current_user)
     else
       render 'edit'
     end
@@ -97,10 +86,9 @@ class UsersController < ApplicationController
   end
 
   def ensure_guest_user
-    @user = User.find(params[:id])
-    if @user.guest?
+    if @current_user.guest?
       flash[:notice] = "ゲストユーザーの編集はできません"
-      redirect_to user_path(@user)
+      redirect_to user_path(@current_user)
     end
   end
 end

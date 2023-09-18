@@ -59,7 +59,7 @@
     <%= f.hidden_field :address, value: @once_again_place.address %>
     <%= f.hidden_field :rating, value: @once_again_place.rating %>
     <%= f.hidden_field :plan_id, value: @plan.id %>
-    <%= f.hidden_field :user_id, value: @user.id %>
+    <%= f.hidden_field :user_id, value: @current_user.id %>
     <%= f.hidden_field :category_id, value: @once_again_place.category_id %>
     <%= f.hidden_field :website, value: @once_again_place.website %>
   <% end %>

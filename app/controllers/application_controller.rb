@@ -21,4 +21,8 @@ class ApplicationController < ActionController::Base
       redirect_to user_path(@current_user)
     end
   end
+
+  def search_keyword_params
+    @search_keyword = params[:search]
+  end
 end
