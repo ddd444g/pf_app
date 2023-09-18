@@ -1,13 +1,12 @@
 class GonePlacesController < ApplicationController
   before_action :authenticate_user
   before_action :set_gone_place_ensure_correct_user, only: [:show, :edit, :update, :destroy, :once_again, :cancel_once_again]
+  before_action :search_keyword_params, only: [:index]
 
   def index
     @gone_places = @current_user.gone_places.includes(:category).sort_gone_places(params[:sort_param]).search(params[:search])
     @once_again_places = @current_user.gone_places.where(once_again: true)
     @gone_place = GonePlace.new
-    @search_keyword = params[:search]
-    @gone_places_count = @gone_places.count
   end
 
   def create

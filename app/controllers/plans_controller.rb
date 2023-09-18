@@ -6,6 +6,8 @@ only: [
   :update, :destroy,
 ]
 
+  before_action :plan_place_new, only: [:show, :from_place_to_plan_place, :from_once_again_place_to_plan_place]
+
   def index
     @plans = @current_user.plans
     @plan = Plan.new
@@ -24,7 +26,6 @@ only: [
 
   def show
     @plan_places = @plan.plan_places.includes(:category).order(:start_time)
-    @plan_place = PlanPlace.new
   end
 
   def edit
@@ -54,13 +55,11 @@ only: [
   # 行きたい場所からplan_placeに登録するページ
   def from_place_to_plan_place
     @place = Place.find(params[:place_id])
-    @plan_place = PlanPlace.new
   end
 
   # もう一度行きたいに登録している場所をplan_placeに登録するページ
   def from_once_again_place_to_plan_place
     @once_again_place = GonePlace.find(params[:gone_place_id])
-    @plan_place = PlanPlace.new
   end
 
   def set_plan_ensure_correct_user
@@ -75,5 +74,9 @@ only: [
 
   def plan_params
     params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id, :plan_color)
+  end
+
+  def plan_place_new
+    @plan_place = PlanPlace.new
   end
 end

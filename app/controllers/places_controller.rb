@@ -1,12 +1,11 @@
 class PlacesController < ApplicationController
   before_action :authenticate_user
   before_action :set_place_ensure_correct_user, only: [:show, :edit, :update, :destroy]
+  before_action :search_keyword_params, only: [:index]
 
   def index
     @places = @current_user.places.includes(:category).sort_places(params[:sort_param]).search(params[:search])
     @place = Place.new
-    @search_keyword = params[:search]
-    @places_count = @places.count
   end
 
   def create

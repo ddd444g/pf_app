@@ -1,12 +1,11 @@
 class RecommendPlacesController < ApplicationController
   before_action :authenticate_user
   before_action :set_recommend_place_ensure_correct_user, only: [:edit, :update, :destroy]
+  before_action :search_keyword_params, only: [:index, :my_post_index]
 
   def index
     @recommend_places = RecommendPlace.includes(:user,
 :category).all.sort_recommend_places(params[:sort_param]).search(params[:search])
-    @search_keyword = params[:search]
-    @recommend_places_count = @recommend_places.count
   end
 
   def create
@@ -48,10 +47,8 @@ class RecommendPlacesController < ApplicationController
   end
 
   def my_post_index
-    @recommend_places = RecommendPlace.includes(:user,
+    @my_post_recommend_places = RecommendPlace.includes(:user,
 :category).where(user_id: @current_user.id).sort_recommend_places(params[:sort_param]).search(params[:search])
-    @search_keyword = params[:search]
-    @recommend_places_count = @recommend_places.count
   end
 
   def set_recommend_place_ensure_correct_user

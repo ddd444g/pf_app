@@ -15,8 +15,8 @@
       <p class="search_keyword text-gray-700 mt-2">入力された検索ワード: <%= @search_keyword %></p>
     <% end %>
 
-    <% if @gone_places_count > 0 %>
-      <p class="gone_places_count text-gray-700 mt-2">表示件数: <%= @gone_places_count %>件</p>
+    <% if @gone_places.count > 0 %>
+      <p class="gone_places_count text-gray-700 mt-2">表示件数: <%= @gone_places.count %>件</p>
     <% else %>
       <p class="gone_places_count text-gray-700 mt-2">該当する結果はありませんでした。</p>
     <% end %>
