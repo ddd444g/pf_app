@@ -10,8 +10,7 @@ class PlacesController < ApplicationController
   end
 
   def create
-    @place = Place.new(params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id, :googlemap_name,
-:address, :rating, :category_id, :website))
+    @place = Place.new(place_params_use_in_create)
     if @place.save
       flash[:notice] = "#{@place.name}を追加しました"
     else
@@ -27,8 +26,7 @@ class PlacesController < ApplicationController
   end
 
   def update
-    if @place.update(params.require(:place).permit(:name, :memo, :latitude, :longitude, :googlemap_name, :address,
-:rating, :category_id, :website))
+    if @place.update(place_params_update)
       flash[:notice] = "登録内容を更新しました"
       redirect_to place_path(@place)
     else
@@ -42,9 +40,7 @@ class PlacesController < ApplicationController
   end
 
   def new_from_recommend_places
-    @place = Place.new(params.require(:place).
-    permit(:name, :memo, :latitude, :longitude, :user_id, :recommend_place_id, :googlemap_name, :address,
-:rating, :category_id, :website))
+    @place = Place.new(place_params_use_in_new_from_recommend_places)
     if @place.save
       flash[:notice] = "#{@place.name}を追加しました"
     else
@@ -58,5 +54,23 @@ class PlacesController < ApplicationController
       flash[:notice] = "権限がありません"
       redirect_to @current_user ? user_path(@current_user) : :root
     end
+  end
+
+  private
+
+  def place_params_use_in_create
+    params.require(:place).permit(:name, :memo, :latitude, :longitude, :user_id, :googlemap_name,
+      :address, :rating, :category_id, :website)
+  end
+
+  def place_params_use_in_new_from_recommend_places
+    params.require(:place).
+      permit(:name, :memo, :latitude, :longitude, :user_id, :recommend_place_id, :googlemap_name, :address,
+:rating, :category_id, :website)
+  end
+
+  def place_params_update
+    params.require(:place).permit(:name, :memo, :latitude, :longitude, :googlemap_name, :address,
+      :rating, :category_id, :website)
   end
 end

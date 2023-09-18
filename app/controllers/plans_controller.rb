@@ -12,7 +12,7 @@ only: [
   end
 
   def create
-    @plan = Plan.new(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id, :plan_color))
+    @plan = Plan.new(plan_params)
     if @plan.save
       @plans = @current_user.plans
       flash.now[:notice] = "予定を新規登録をしました"
@@ -31,7 +31,7 @@ only: [
   end
 
   def update
-    if @plan.update(params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id, :plan_color))
+    if @plan.update(plan_params)
       flash[:notice] = "登録内容を更新しました"
       redirect_to plan_path(@plan)
     else
@@ -69,5 +69,11 @@ only: [
       flash[:notice] = "権限がありません"
       redirect_to @current_user ? user_path(@current_user) : :root
     end
+  end
+
+  private
+
+  def plan_params
+    params.require(:plan).permit(:plan_name, :start_time, :end_time, :user_id, :plan_color)
   end
 end

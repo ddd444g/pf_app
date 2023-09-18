@@ -10,8 +10,7 @@ class RecommendPlacesController < ApplicationController
   end
 
   def create
-    @recommend_place = RecommendPlace.new(params.require(:recommend_place).permit(:recommend_place_name,
-      :recommend_comment, :gone_place_id, :user_id, :googlemap_name, :address, :rating, :category_id, :website))
+    @recommend_place = RecommendPlace.new(recommend_place_params)
     @gone_place = GonePlace.find_by(id: params[:recommend_place][:gone_place_id])
     if @recommend_place.save
       @gone_place.update(recommend_place_id: @recommend_place.id, recommend: true)
@@ -32,8 +31,7 @@ class RecommendPlacesController < ApplicationController
   end
 
   def update
-    if @recommend_place.update(params.require(:recommend_place).permit(:recommend_place_name, :recommend_comment,
-:category_id))
+    if @recommend_place.update(recommend_place_params_update)
       flash[:notice] = "おすすめの場所の情報を更新しました"
       redirect_to recommend_place_path(@recommend_place)
     else
@@ -62,5 +60,17 @@ class RecommendPlacesController < ApplicationController
       flash[:notice] = "権限がありません"
       redirect_to @current_user ? user_path(@current_user) : :root
     end
+  end
+
+  private
+
+  def recommend_place_params
+    params.require(:recommend_place).permit(:recommend_place_name,
+      :recommend_comment, :gone_place_id, :user_id, :googlemap_name, :address, :rating, :category_id, :website)
+  end
+
+  def recommend_place_params_update
+    params.require(:recommend_place).permit(:recommend_place_name, :recommend_comment,
+      :category_id)
   end
 end

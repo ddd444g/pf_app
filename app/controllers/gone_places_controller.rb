@@ -11,9 +11,7 @@ class GonePlacesController < ApplicationController
   end
 
   def create
-    @gone_place = GonePlace.new(params.require(:gone_place).
-    permit(:name, :user_id, :place_id, :review, :score, :latitude, :longitude,
-:googlemap_name, :address, :rating, :category_id, :website))
+    @gone_place = GonePlace.new(gone_place_params_use_in_create)
     if @gone_place.save
       @place = Place.find_by(id: params[:gone_place][:place_id])
       @place.update(visited: true, gone_place_id: @gone_place.id)
@@ -24,9 +22,7 @@ class GonePlacesController < ApplicationController
   end
 
   def not_from_place_create
-    @gone_place = GonePlace.new(params.require(:gone_place).
-    permit(:name, :user_id, :review, :score, :latitude, :longitude, :googlemap_name,
-:address, :rating, :category_id, :website))
+    @gone_place = GonePlace.new(gone_place_params_use_in_not_from_place_create)
     if @gone_place.save
       flash[:notice] = "#{@gone_place.name}を追加しました"
     else
@@ -42,8 +38,7 @@ class GonePlacesController < ApplicationController
   end
 
   def update
-    if @gone_place.update(params.require(:gone_place).permit(:name, :review, :score, :latitude, :longitude,
-:googlemap_name, :address, :rating, :category_id, :website))
+    if @gone_place.update(gone_place_params_update)
       flash[:notice] = "訪問済み場所の情報を更新しました"
       redirect_to gone_place_path(@gone_place)
     else
@@ -86,5 +81,24 @@ class GonePlacesController < ApplicationController
       flash[:notice] = "権限がありません"
       redirect_to @current_user ? user_path(@current_user) : :root
     end
+  end
+
+  private
+
+  def gone_place_params_use_in_create
+    params.require(:gone_place).
+      permit(:name, :user_id, :place_id, :review, :score, :latitude, :longitude,
+:googlemap_name, :address, :rating, :category_id, :website)
+  end
+
+  def gone_place_params_use_in_not_from_place_create
+    params.require(:gone_place).
+      permit(:name, :user_id, :review, :score, :latitude, :longitude, :googlemap_name,
+:address, :rating, :category_id, :website)
+  end
+
+  def gone_place_params_update
+    params.require(:gone_place).permit(:name, :review, :score, :latitude, :longitude,
+      :googlemap_name, :address, :rating, :category_id, :website)
   end
 end
