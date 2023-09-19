@@ -65,6 +65,9 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano3-unicorn'
+
+  # er図出力
+  gem 'rails-erd'
 end
 
 group :test do
