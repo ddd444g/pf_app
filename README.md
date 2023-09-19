@@ -45,7 +45,7 @@
   - Capistrano
 
 - 静的コード解析
-  - rubocop-airbnb
+  - rubocop
 
 ## インフラ図
-![](/aws.png)
+![](/infrastructure.png)
