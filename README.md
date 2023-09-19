@@ -1,6 +1,7 @@
 # Go To place
 ## URL
-<p><a href="https://gone-place.com/" target="_blank">https://gone-place.com</a></p>
+[https://gone-place.com/](https://gone-place.com/)
+
 ## アプリ概要
 - **行きたい場所を登録できます**
   - サイト内のマップで検索して、行きたい場所の Google マップでの情報を取得し登録できます。
