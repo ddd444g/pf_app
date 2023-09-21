@@ -2,25 +2,108 @@
   <p class="text-center mx-auto w-1/2 text-blue-700 p-4 rounded"><%= flash[:notice] %></p>
 <% end %>
 
+<div class="relative mt-0 lg:mr-48 lg:ml-48">
+  <video autoplay loop muted playsinline class="custom-bg">
+    <source src="/assets/video.mp4" type="video/mp4">
+    <source src="/assets/video.webm" type="video/webm">
+    <source src="/assets/video.ogv" type="video/ogg">
+    Your browser does not support the video tag.
+  </video>
+  <div class="absolute top-0 right-0 left-0 bottom-0 flex flex-col justify-center">
+    <h1 class="text-4xl font-bold text-gray-100 text-center mb-4">GO TO place</h1>
+    <p class="text-center text-xl text-gray-100">行きたい場所を登録しよう</p>
+  </div>
+</div>
+
+<style>
+  .custom-bg {
+    background-position: center center;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+  }
+</style>
+
+<div class="bg-gray-200 px-4 py-2 pt-4 pb-4">
+  <h1 class="text-2xl font-bold text-blue-500 text-center">サイト内のmapで検索</h1>
+</div>
+<div class="bg-gray-100 text-gray-700 lg:mb-32 lg:mt-16 lg:ml-32 lg:mr-32 px-4 py-2 pt-4 pb-4 flex items-center">
+  <!-- 左側のテキストコンテナ -->
+  <div class="w-1/2 p-4">
+    <h2 class="text-2xl font-medium text-blue-500">行きたい場所をMAPで検索</h2>
+    <p class="text-base text-gray-500 mt-2">このサイト内のマップで検索して、行きたい場所の Google マップでの情報を取得し保存できます。</p>
+  </div>
+  <!-- 右側の画像コンテナ -->
+  <div class="w-1/2 p-4">
+    <img src="/assets/place.png" alt="行きたい場所登録画像">
+  </div>
+</div>
+
+<div class="bg-gray-200 px-4 py-2 pt-4 pb-4">
+  <h1 class="text-2xl font-bold text-blue-500 text-center">訪問した場所はレビューを残して保存</h1>
+</div>
+<div class="bg-gray-100 text-gray-700 lg:mb-32 lg:mt-16 lg:ml-32 lg:mr-32 px-4 py-2 pt-4 pb-4 flex items-center">
+  <!-- 左側の画像コンテナ -->
+  <div class="w-1/2 p-4">
+    <img src="/assets/gone_place.png" alt="訪問場所画像">
+  </div>
+  <!-- 右側のテキストコンテナ -->
+  <div class="w-1/2 p-4">
+    <h2 class="text-2xl font-medium text-blue-500">自分だけが見れるレビューとスコアを付けて保存しよう</h2>
+    <p class="text-base text-gray-500 mt-2">もう一度行きたい！と思った場所はワンクリックで、もう一度行きたいリストに登録できます。</p>
+  </div>
+</div>
+
+<div class="bg-gray-200 px-4 py-2 pt-4 pb-4">
+  <h1 class="text-2xl font-bold text-blue-500 text-center">予定を作成</h1>
+</div>
+<div class="bg-gray-100 text-gray-700 lg:mb-32 lg:mt-16 lg:ml-32 lg:mr-32 px-4 py-2 pt-4 pb-4 flex items-center">
+  <!-- 左側のテキストコンテナ -->
+  <div class="w-1/2 p-4">
+    <h2 class="text-2xl font-medium text-blue-500">忘れないようにカレンダーに登録</h2>
+    <p class="text-base text-gray-500 mt-2">行きたい場所、もう一度行きたい場所は予定に追加できます。<br>旅行の計画にも使えます。</p>
+  </div>
+  <!-- 右側の画像コンテナ -->
+  <div class="w-1/2 p-4">
+    <img src="/assets/plan.png" alt="予定画像">
+    <img src="/assets/plan_place.png" class="mt-16" alt="訪問予定画像">
+  </div>
+</div>
+
+<div class="bg-gray-200 px-4 py-2 pt-4 pb-4">
+  <h1 class="text-2xl font-bold text-blue-500 text-center">他の人のおすすめをチェック</h1>
+</div>
+<div class="bg-gray-100 text-gray-700 lg:mb-32 lg:mt-16 lg:ml-32 lg:mr-32 px-4 py-2 pt-4 pb-4 flex items-center">
+  <!-- 左側の画像コンテナ -->
+  <div class="w-1/2 p-4">
+    <img src="/assets/recommend.png" alt="おすすめ一覧画像">
+  </div>
+  <!-- 右側のテキストコンテナ -->
+  <div class="w-1/2 p-4">
+    <h2 class="text-2xl font-medium text-blue-500">おすすめ投稿機能</h2>
+    <p class="text-base text-gray-500 mt-2">自分では見つけられない場所もおすすめ機能で見つけられるかも?<br>公式サイトも見れるので良いところがあれば、行きたい場所へ登録しよう。</p>
+  </div>
+</div>
+
 <div class="bg-gray-200 text-gray-700 px-4 py-2 pt-4 pb-4">
   <h1 class="text-2xl font-bold text-blue-500 text-center">サイトの主な機能</h1>
 </div>
 
 <div class="bg-gray-100 text-gray-700 lg:ml-32 px-4 py-2 pt-4 pb-4">
-  <h2 class="text-2xl font-medium text-blue-500">行きたい場所を保存しよう</h2>
-  <p class="text-base text-gray-500 mt-2">このサイト内のマップで検索して、行きたい場所の Google マップでの情報を取得し保存できます。</p>
+  <h2 class="text-2xl font-medium text-blue-500">行きたい場所を登録</h2>
+  <p class="text-base text-gray-500 mt-2">自分だけの行きたい場所リストが作れます。</p>
 </div>
 
 <div class="bg-gray-50">
   <div class="text-gray-700 lg:ml-32 px-4 py-2 pt-4 pb-4">
     <h2 class="text-2xl font-medium text-blue-500">訪問した場所はレビューを残して保存しよう</h2>
-    <p class="text-base text-gray-500 mt-2">もう一度行きたい場所はワンクリックで「もう一度行きたい」に登録できます。</p>
+    <p class="text-base text-gray-500 mt-2">自分が訪問した場所のスコアとレビューを登録できます。また、ワンクリックで「もう一度行きたい」に登録できます。</p>
   </div>
 </div>
 
 <div class="bg-gray-100 text-gray-700 lg:ml-32 px-4 py-2 pt-4 pb-4">
-  <h2 class="text-2xl font-medium text-blue-500">予定をカレンダーに保存できます</h2>
-  <p class="text-base text-gray-500 mt-2">行きたい場所やもう一度行きたい場所を、訪問予定場所として予定に追加できます。</p>
+  <h2 class="text-2xl font-medium text-blue-500">予定を作りアプリ内カレンダーに表示</h2>
+  <p class="text-base text-gray-500 mt-2">行きたい場所やもう一度行きたい場所を、予定に追加できます。</p>
 </div>
 
 <div class="bg-gray-50">
