@@ -22,9 +22,9 @@ RSpec.describe 'Plans_system', type: :system do
       it 'Planの新規作成が成功し表とカレンダーのどちらにも表示されていること' do
         fill_in '予定名', with: 'trip'
         sleep(2)
-        fill_in 'plan_start_time', with: "09202023\t0000a"
+        fill_in 'plan_start_time', with: "10202023\t0000a"
         sleep(2)
-        fill_in 'plan_end_time', with: "09232023\t0000a"
+        fill_in 'plan_end_time', with: "10232023\t0000a"
         sleep(2)
         select('赤', from: 'plan_plan_color')
         click_button '登録を完了する'
